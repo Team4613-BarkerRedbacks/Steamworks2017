@@ -8,11 +8,12 @@ import redbacks.arachne.lib.input.BtnPOV;
 import redbacks.arachne.lib.input.ButtonGettableWrapper;
 import redbacks.arachne.lib.input.JoystickAxis;
 import static redbacks.arachne.lib.input.ButtonGettableWrapper.*;
+import static redbacks.robot.CommandList.*;
 
 public class OI extends OIBase
 {
 	public void mapOperations() {
-		
+		whenHeld(d_B, shoot.c());
 	}
 	
 	//Set up joysticks and buttons here.

@@ -11,10 +11,12 @@ public class Robot extends ArachneRobot
 	/** The instance of the operator interface. This is used to map inputs to functions. */
 	public static OI oi = new OI();
 
-	public static SubsystemDriver driver = new SubsystemDriver();
-	
 	public static SubsystemSensors sensors = new SubsystemSensors();
 	
+	public static SubsystemDriver driver = new SubsystemDriver();
+	public static SubsystemShooter shooter = new SubsystemShooter();
+	public static SubsystemIntake intake = new SubsystemIntake();
+		
 	public void initDefaultCommands() {
 		driver.setDefaultCommand(drive.c());
 		sensors.setDefaultCommand(readSensors.c());
