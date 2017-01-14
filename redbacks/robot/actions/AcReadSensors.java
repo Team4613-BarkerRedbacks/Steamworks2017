@@ -25,9 +25,11 @@ public class AcReadSensors extends Action
 		SmartDashboard.putNumber("Left Encoder", Robot.sensors.driveLEncoder.get());
 		SmartDashboard.putNumber("Right Encoder", Robot.sensors.driveREncoder.get());
 		
-		SmartDashboard.putNumber("Left Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveLEncoder.get(), driveLEncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
-		SmartDashboard.putNumber("Right Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveREncoder.get(), driveREncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
-		driveEncoder_UpdateMeasurements();
+		if (Timer.getFPGATimestamp()-driveEncoder_TimeLastRun> 0.0025) {//Maximum updating speed of 400hz
+			SmartDashboard.putNumber("Left Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveLEncoder.get(), driveLEncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
+			SmartDashboard.putNumber("Right Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveREncoder.get(), driveREncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
+			driveEncoder_UpdateMeasurements();
+		}
 		
 		SmartDashboard.putNumber("Yaw", Robot.sensors.yaw.get());
 		
