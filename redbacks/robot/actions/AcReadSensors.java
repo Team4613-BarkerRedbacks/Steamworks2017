@@ -12,6 +12,9 @@ public class AcReadSensors extends Action
 	}
 
 	public void onRun() {
-		SmartDashboard.putNumber("Test Encoder", Robot.sensors.testEncoder.get());
+		SmartDashboard.putNumber("Left Encoder", Robot.sensors.driveLEncoder.get());
+		SmartDashboard.putNumber("Right Encoder", Robot.sensors.driveREncoder.get());
+		
+		SmartDashboard.putNumber("Yaw", Robot.sensors.yaw.get());
 	}
 }

@@ -1,11 +1,10 @@
 package redbacks.robot.subsystems;
 
 import redbacks.arachne.core.SubsystemBase;
+import redbacks.arachne.lib.navx.NavX;
 import redbacks.arachne.lib.sensors.SenCANEncoder;
 
-import static redbacks.robot.Robot.*;
-
-import com.ctre.CANTalon;
+import static redbacks.robot.RobotMap.*;
 
 /**
  * The sensor subsystem. Only put sensors here.
@@ -14,14 +13,15 @@ import com.ctre.CANTalon;
  */
 public class SubsystemSensors extends SubsystemBase
 {
-	//Create sensors here. Make sure to use the RobotMap.
 	//Drive
-	//public SenCANEncoder driveLEncoder = new SenCANEncoder(driver.left);
-	//public SenCANEncoder driveREncoder = new SenCANEncoder(driver.right);
+	public SenCANEncoder driveLEncoder = new SenCANEncoder(talon7);
+	public SenCANEncoder driveREncoder = new SenCANEncoder(talon6);
 	
-	public SenCANEncoder testEncoder = new SenCANEncoder(new CANTalon(7));
+	//NavX
+	public NavX.Yaw yaw = new NavX.Yaw();
 		
 	public SubsystemSensors() {
 		super();
+		driveREncoder.setScaleFactor(-1);
 	}
 }
