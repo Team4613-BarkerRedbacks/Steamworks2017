@@ -15,7 +15,8 @@ public class CommandList extends CommandListStart
 {
 	static {subsystemToUse = null;}
 	public static CommandSetup
-		encodersZero = newCom(new AcSetNumSen(Robot.sensors.driveLEncoder, 0.0D), new AcSetNumSen(Robot.sensors.driveREncoder, 0.0D));
+		encodersZero = newCom(new AcSetNumSen(Robot.sensors.driveLEncoder, 0.0D), new AcSetNumSen(Robot.sensors.driveREncoder, 0.0D)),
+		reset = newCom(sensors.new AcReset());
 	
 	static {subsystemToUse = sensors;}
 	public static CommandSetup

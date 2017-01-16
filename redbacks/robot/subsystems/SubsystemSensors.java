@@ -1,6 +1,8 @@
 package redbacks.robot.subsystems;
 
 import redbacks.arachne.core.SubsystemBase;
+import redbacks.arachne.lib.actions.Action;
+import redbacks.arachne.lib.checks.ChTrue;
 import redbacks.arachne.lib.navx.*;
 import redbacks.arachne.lib.sensors.SenCANEncoder;
 
@@ -39,6 +41,17 @@ public class SubsystemSensors extends SubsystemBase
 		driveREncoder.setScaleFactor(-1);
 
 		resetSensors();
+	}
+
+	public class AcReset extends Action
+	{
+		public AcReset() {
+			super(new ChTrue());
+		}
+		
+		public void onFinish() {
+			resetSensors();
+		}
 	}
 
 	public void resetSensors() {

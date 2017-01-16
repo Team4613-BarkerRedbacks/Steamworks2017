@@ -22,8 +22,10 @@ public class Robot extends ArachneRobot
 		
 	public void initDefaultCommands() {
 		driver.setDefaultCommand(drive.c());
-		sensors.setDefaultCommand(readSensors.c());
 		feeder.setDefaultCommand(feedManual.c());
+		
+		sensors.setDefaultCommand(readSensors.c());
+		sensors.resetSensors();
 		
 		oi.mapOperations();
 	}
