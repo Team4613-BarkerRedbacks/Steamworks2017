@@ -23,5 +23,13 @@ public class SubsystemSensors extends SubsystemBase
 	public SubsystemSensors() {
 		super();
 		driveREncoder.setScaleFactor(-1);
+		
+		resetSensors();
+	}
+	
+	public void resetSensors() {
+		driveLEncoder.set(0);
+		driveREncoder.set(0);
+		yaw.set(0);
 	}
 }

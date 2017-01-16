@@ -30,4 +30,8 @@ public class Robot extends ArachneRobot
 	public CommandBase getAutonomous(int autoID) {
 		return Auto.getAutonomous(autoID);
 	}
+	
+	public void disabledInit() {
+		sensors.resetSensors();
+	}
 }
