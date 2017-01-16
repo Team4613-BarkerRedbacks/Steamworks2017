@@ -28,6 +28,8 @@ public class AcReadSensors extends Action
 		if (Timer.getFPGATimestamp()-driveEncoder_TimeLastRun> 0.0025) {//Maximum updating speed of 400hz
 			SmartDashboard.putNumber("Left Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveLEncoder.get(), driveLEncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
 			SmartDashboard.putNumber("Right Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveREncoder.get(), driveREncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
+			SmartDashboard.putNumber("Left Motor Distance Travelled", driveEncoder_CalculateDistance(Robot.sensors.driveLEncoder.get()));
+			SmartDashboard.putNumber("Right Motor Distance Travelled", driveEncoder_CalculateDistance(Robot.sensors.driveREncoder.get()));
 			driveEncoder_UpdateMeasurements();
 		}
 		
@@ -52,6 +54,12 @@ public class AcReadSensors extends Action
 	 */
 	private double driveEncoder_CalculateSpeed(double encoderCurrent, double encoderPrevious, double timeCurrent, double timePrevious) {
 		return (Math.PI* 0.00039290625*(encoderCurrent-encoderPrevious))/(timeCurrent - timePrevious); //Simplified & optimized version of the equation "(circumference of wheel*wheelRotationsPassed)/timePassed"
+	}
+	
+	
+	//TODO add javadoc
+	private double driveEncoder_CalculateDistance(double encoderCurrent) {
+		return(Math.PI*0.00039290625*encoderCurrent);
 	}
 	
 	
