@@ -41,6 +41,11 @@ public class CommandList extends CommandListStart
 
 	static {subsystemToUse = climber;}
 	
+	static {subsystemToUse = spitter;}
+	public static CommandSetup
+		spit = newCom(new AcMotor.Set(spitter.spitter, 1.0D, new ChFalse())),
+		spitIn = newCom(new AcMotor.Set(spitter.spitter, -0.2D, new ChFalse()));
+	
 	static {subsystemToUse = sequencer;}
 	
 }

@@ -18,6 +18,7 @@ public class Robot extends ArachneRobot
 	public static SubsystemFeeder feeder = new SubsystemFeeder();
 	public static SubsystemIntake intake = new SubsystemIntake();
 	public static SubsystemClimber climber = new SubsystemClimber();
+	public static SubsystemSpitter spitter = new SubsystemSpitter();
 		
 	public void initDefaultCommands() {
 		driver.setDefaultCommand(drive.c());
@@ -29,9 +30,5 @@ public class Robot extends ArachneRobot
 
 	public CommandBase getAutonomous(int autoID) {
 		return Auto.getAutonomous(autoID);
-	}
-	
-	public void disabledInit() {
-		sensors.resetSensors();
 	}
 }

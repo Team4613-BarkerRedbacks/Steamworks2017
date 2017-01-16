@@ -14,6 +14,8 @@ public class OI extends OIBase
 {
 	public void mapOperations() {
 		whenPressed(d_B, shoot.c());
+		whenHeld(d_LB, spit.c());
+		whenHeld(d_RB, spitIn.c());
 		whenPressed(d_Start, encodersZero.c());
 	}
 	
