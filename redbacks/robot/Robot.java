@@ -17,6 +17,7 @@ public class Robot extends ArachneRobot
 	public static SubsystemShooter shooter = new SubsystemShooter();
 	public static SubsystemFeeder feeder = new SubsystemFeeder();
 	public static SubsystemIntake intake = new SubsystemIntake();
+	public static SubsystemClimber climber = new SubsystemClimber();
 		
 	public void initDefaultCommands() {
 		driver.setDefaultCommand(drive.c());

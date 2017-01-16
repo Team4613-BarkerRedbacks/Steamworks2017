@@ -33,9 +33,13 @@ public class CommandList extends CommandListStart
 	
 	static {subsystemToUse = intake;}
 	
+<<<<<<< HEAD
 	static {subsystemToUse = feeder;}
 	public static CommandSetup
 		feedManual = newCom(new AcManualFeed());
+=======
+	static {subsystemToUse = climber;}
+>>>>>>> origin/master
 	
 	static {subsystemToUse = sequencer;}
 	
