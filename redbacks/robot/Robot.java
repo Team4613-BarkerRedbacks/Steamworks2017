@@ -15,11 +15,13 @@ public class Robot extends ArachneRobot
 	
 	public static SubsystemDriver driver = new SubsystemDriver();
 	public static SubsystemShooter shooter = new SubsystemShooter();
+	public static SubsystemFeeder feeder = new SubsystemFeeder();
 	public static SubsystemIntake intake = new SubsystemIntake();
 		
 	public void initDefaultCommands() {
 		driver.setDefaultCommand(drive.c());
 		sensors.setDefaultCommand(readSensors.c());
+		feeder.setDefaultCommand(feedManual.c());
 		
 		oi.mapOperations();
 	}

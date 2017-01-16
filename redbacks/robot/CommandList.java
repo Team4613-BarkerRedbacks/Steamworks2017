@@ -1,8 +1,11 @@
 package redbacks.robot;
 
 import redbacks.arachne.core.references.CommandListStart;
-import redbacks.arachne.lib.actions.actuators.AcMotor;
+import redbacks.arachne.lib.actions.*;
+import redbacks.arachne.lib.actions.actuators.*;
 import redbacks.arachne.lib.checks.*;
+import redbacks.arachne.lib.checks.digital.*;
+import redbacks.arachne.lib.checks.analog.*;
 import redbacks.arachne.lib.commands.CommandSetup;
 import redbacks.robot.actions.*;
 
@@ -23,11 +26,16 @@ public class CommandList extends CommandListStart
 	static {subsystemToUse = shooter;}
 	public static CommandSetup
 		shoot = newCom(
-			new AcMotor.Set(shooter.shooter, 1, new ChTrue()),
-			new AcMotor.Set(shooter.feeder, 1, new ChFalse())
+			new AcMotor.RampTime(shooter.shooter, 1, 2),
+			new AcDoNothing(new ChGettableBoolean(OI.d_B, false)),
+			new AcMotor.RampTime(shooter.shooter, 0, 2)
 		);
 	
 	static {subsystemToUse = intake;}
+	
+	static {subsystemToUse = feeder;}
+	public static CommandSetup
+		feedManual = newCom(new AcManualFeed());
 	
 	static {subsystemToUse = sequencer;}
 	

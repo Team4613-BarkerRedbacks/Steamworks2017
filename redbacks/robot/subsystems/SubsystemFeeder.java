@@ -8,11 +8,11 @@ import static redbacks.robot.RobotMap.*;
 /**
  * @author Sean Zammit
  */
-public class SubsystemShooter extends SubsystemBase
+public class SubsystemFeeder extends SubsystemBase
 {
-	public CtrlMotor shooter = new CtrlMotor(talon6);
+	public CtrlMotor feeder = new CtrlMotor(talon8);
 
-	public SubsystemShooter() {
+	public SubsystemFeeder() {
 		super();
 	}
 }

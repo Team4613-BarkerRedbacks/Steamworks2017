@@ -13,7 +13,7 @@ import static redbacks.robot.CommandList.*;
 public class OI extends OIBase
 {
 	public void mapOperations() {
-		whenHeld(d_B, shoot.c());
+		whenPressed(d_B, shoot.c());
 	}
 	
 	//Set up joysticks and buttons here.
