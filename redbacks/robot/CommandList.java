@@ -14,6 +14,8 @@ import static redbacks.robot.Robot.*;
 public class CommandList extends CommandListStart
 {
 	static {subsystemToUse = null;}
+	public static CommandSetup
+		encodersZero = newCom(new AcSetNumSen(Robot.sensors.driveLEncoder, 0.0D), new AcSetNumSen(Robot.sensors.driveREncoder, 0.0D));
 	
 	static {subsystemToUse = sensors;}
 	public static CommandSetup

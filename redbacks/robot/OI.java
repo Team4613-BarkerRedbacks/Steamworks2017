@@ -14,6 +14,7 @@ public class OI extends OIBase
 {
 	public void mapOperations() {
 		whenPressed(d_B, shoot.c());
+		whenPressed(d_Start, encodersZero.c());
 	}
 	
 	//Set up joysticks and buttons here.
