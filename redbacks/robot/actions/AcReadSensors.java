@@ -36,7 +36,7 @@ public class AcReadSensors extends Action
 	}
 	
 	/**
-	 * Calculates the speed that (inputed) drive motor is traveling at in meters/second.
+	 * Calculates the speed that (inputed) drive motor is travelling at in meters/second.
 	 * 
 	 * Assumes no slippage, adding error.
 	 * Gets encoder value from Robot.sensors.driveLEncoder.get()

@@ -29,6 +29,8 @@ public class CommandList extends CommandListStart
 	
 	static {subsystemToUse = intake;}
 	
+	static {subsystemToUse = climber;}
+	
 	static {subsystemToUse = sequencer;}
 	
 }
