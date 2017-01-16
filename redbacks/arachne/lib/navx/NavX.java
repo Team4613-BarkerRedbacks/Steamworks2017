@@ -123,8 +123,11 @@ public class NavX
 		}
 		
 		public void set(double value) {
-			super.set(value);
-			if(value == 0) navx.reset();
+			if(value == 0) {
+				offset = 0;
+				navx.reset();
+			}
+			else super.set(value);
 		}
 	}
 }
