@@ -8,6 +8,7 @@ import redbacks.arachne.lib.checks.digital.*;
 import redbacks.arachne.lib.checks.analog.*;
 import redbacks.arachne.lib.commands.CommandSetup;
 import redbacks.robot.actions.*;
+import redbacks.robot.pid.AcTestPID;
 
 import static redbacks.robot.Robot.*;
 
@@ -24,7 +25,11 @@ public class CommandList extends CommandListStart
 	
 	static {subsystemToUse = driver;}
 	public static CommandSetup
-		drive = newCom(new AcDrive());
+		drive = newCom(new AcDrive()),
+		pidtest = newCom(
+				new AcPrint("Hi!"),
+				new AcTestPID()
+		);
 	
 	static {subsystemToUse = shooter;}
 	public static CommandSetup

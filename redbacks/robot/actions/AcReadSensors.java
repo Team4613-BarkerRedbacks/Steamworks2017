@@ -21,7 +21,7 @@ public class AcReadSensors extends Action
 
 	public void onStart() {
 		driveEncoder_UpdateMeasurements(); //Run first time to initialize variables
-		CameraServer.getInstance().startAutomaticCapture();
+		//CameraServer.getInstance().startAutomaticCapture();
 	}
 	
 	public void onRun() { //Runs every loop

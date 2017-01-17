@@ -1,13 +1,14 @@
 package redbacks.robot.pid;
 
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.SpeedController;
-import redbacks.arachne.lib.actions.actuators.AcMotor;
-import redbacks.arachne.lib.checks.ChFalse;
+import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.motors.CtrlMotor;
 
 public class PIDMotor implements PIDOutput {
-	CtrlMotor motor;
+	public CtrlMotor motor;
+	Action action;
+	
+	double multiplier = 1;
 	
 	public PIDMotor(CtrlMotor motor) {
 		this.motor = motor;
@@ -20,6 +21,15 @@ public class PIDMotor implements PIDOutput {
 	 * @author Tom Schwarz
 	 */
 	public void pidWrite(double outputValue) {
-		new AcMotor.Set(motor, outputValue,  new ChFalse());
+		motor.set(outputValue * multiplier, action.command);
+	}
+	
+	public void setAction(Action action) {
+		this.action = action;
+	}
+	
+	public PIDMotor setMultiplier(double multiplier) {
+		this.multiplier = multiplier;
+		return this;
 	}
 }
