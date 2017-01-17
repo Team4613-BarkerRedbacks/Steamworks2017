@@ -16,7 +16,7 @@ public class OI extends OIBase
 		whenPressed(d_B, shoot.c());
 		whenHeld(d_LB, spit.c());
 		whenHeld(d_RB, spitIn.c());
-		whenPressed(d_Start, encodersZero.c());
+		whenPressed(d_Start, reset.c());
 	}
 	
 	//Set up joysticks and buttons here.
