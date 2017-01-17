@@ -10,7 +10,7 @@ import static redbacks.robot.RobotMap.*;
  */
 public class SubsystemIntake extends SubsystemBase
 {
-	public CtrlMotor intake = new CtrlMotor(talon7);
+	//public CtrlMotor intake = new CtrlMotor(talon7);
 
 	public SubsystemIntake() {
 		super();
