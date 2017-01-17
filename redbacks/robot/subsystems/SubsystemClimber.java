@@ -11,7 +11,7 @@ import static redbacks.robot.RobotMap.*;
  */
 public class SubsystemClimber extends SubsystemBase {
 
-    //public CtrlMotor climber = new CtrlMotor(talon9);
+    public CtrlMotor climber = new CtrlMotor(talon10);
 
     public SubsystemClimber() {
     	super();

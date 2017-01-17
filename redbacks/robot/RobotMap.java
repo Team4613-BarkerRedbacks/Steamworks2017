@@ -12,5 +12,8 @@ public class RobotMap
 		talon6 = new CANTalon(6),
 		talon7 = new CANTalon(7),
 		talon8 = new CANTalon(8),
-		talon9 = new CANTalon(9);
+		talon9 = new CANTalon(9),
+		talon10 = new CANTalon(10),
+		talon11 = new CANTalon(11),
+		talon12 = new CANTalon(12);
 }
