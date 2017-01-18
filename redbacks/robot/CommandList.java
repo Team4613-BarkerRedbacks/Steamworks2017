@@ -9,6 +9,7 @@ import redbacks.arachne.lib.checks.analog.*;
 import redbacks.arachne.lib.commands.CommandSetup;
 import redbacks.robot.actions.*;
 import redbacks.robot.pid.AcPIDControl;
+import redbacks.robot.pid.AcRotatingPIDDrive;
 import redbacks.robot.pid.AcTestPID;
 import redbacks.robot.pid.PIDMotor;
 import redbacks.robot.pid.Tolerances;
@@ -31,7 +32,8 @@ public class CommandList extends CommandListStart
 	public static CommandSetup
 		drive = newCom(new AcDrive()),
 		pidtest = newCom(new AcTestPID()),
-		pidtest2 = newCom(new AcPIDControl(RobotMap.drivePIDMotorkP, RobotMap.drivePIDMotorkI, RobotMap.drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoder, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right)));
+		pidtest2 = newCom(new AcPIDControl(RobotMap.drivePIDMotorkP, RobotMap.drivePIDMotorkI, RobotMap.drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoder, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
+		rotatingpiddrivetest = newCom(new AcRotatingPIDDrive());
 	
 	static {subsystemToUse = shooter;}
 	public static CommandSetup
