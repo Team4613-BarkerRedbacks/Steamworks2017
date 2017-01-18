@@ -18,5 +18,6 @@ public class RobotMap
 		talon12 = new CANTalon(12);
 	
 	public static final double
-		kP = 0.0005D, kI = 0, kD = 0.00005D;
+		drivePIDMotorkP = 0.0005D, drivePIDMotorkI = 0, drivePIDMotorkD = 0.00005D,
+		drivePIDGyrokP = 0.0005D, drivePIDGyrokI = 0, drivePIDGyrokD = 0;
 }
