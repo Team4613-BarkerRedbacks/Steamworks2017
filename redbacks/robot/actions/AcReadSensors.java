@@ -1,6 +1,7 @@
 package redbacks.robot.actions;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import redbacks.arachne.lib.actions.Action;
@@ -22,6 +23,12 @@ public class AcReadSensors extends Action
 	public void onStart() {
 		driveEncoder_UpdateMeasurements(); //Run first time to initialize variables
 		//CameraServer.getInstance().startAutomaticCapture();
+		Robot.sensors.driveLEncoder.setPIDSourceType(PIDSourceType.kRate);
+		SmartDashboard.putNumber("Shooter kP", 0);
+		SmartDashboard.putNumber("Shooter kI", 0);
+		SmartDashboard.putNumber("Shooter kD", 0);
+		SmartDashboard.putNumber("Shooter target", 0);
+		
 	}
 	
 	public void onRun() { //Runs every loop
@@ -40,6 +47,9 @@ public class AcReadSensors extends Action
 			SmartDashboard.putNumber("Veloxity X forward", NavX.getSpeedForward());
 			SmartDashboard.putNumber("Veloxity Y rightleft", NavX.getSpeedRight());
 			SmartDashboard.putNumber("Veloxity Z Upvertical", NavX.getSpeedUp());
+			
+			System.out.println("Motor speed: " + Robot.shooter.shooter.get());
+			
 			driveEncoder_UpdateMeasurements();
 		}
 		

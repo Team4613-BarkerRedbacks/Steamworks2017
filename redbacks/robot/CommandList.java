@@ -17,6 +17,8 @@ import redbacks.robot.pid.Tolerances;
 import static redbacks.robot.Robot.*;
 import static redbacks.robot.RobotMap.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class CommandList extends CommandListStart
 {
 	static {subsystemToUse = null;}
@@ -41,7 +43,8 @@ public class CommandList extends CommandListStart
 			new AcMotor.RampTime(shooter.shooter, 1, 2),
 			new AcDoNothing(new ChGettableBoolean(OI.d_B, false)),
 			new AcMotor.RampTime(shooter.shooter, 0, 2)
-		);
+		),
+		shooterpidtest = newCom(new AcPIDControl(SmartDashboard.getNumber("Shooter kP", 0), SmartDashboard.getNumber("Shooter kI", 0), SmartDashboard.getNumber("Shooter kD", 0), SmartDashboard.getNumber("Shooter target", 0), new Tolerances.Percentage(1.0), Robot.sensors.driveLEncoder, new PIDMotor(shooter.shooter)));
 	
 	static {subsystemToUse = intake;}
 	
