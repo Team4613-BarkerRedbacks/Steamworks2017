@@ -1,6 +1,5 @@
 package redbacks.robot.pid;
 
-import edu.wpi.first.wpilibj.PIDController.Tolerance;
 import edu.wpi.first.wpilibj.*;
 import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChFalse;
@@ -12,7 +11,7 @@ import redbacks.robot.pid.Tolerances.Percentage;
 public class AcPIDControl extends Action
 {
 	double target, minIn, maxIn, minOut, maxOut;
-	boolean isDriveMotor = false, isContinuous, shouldFinish;
+	boolean isContinuous, shouldFinish;
 
 	Tolerances tolerance;
 	PIDSource input;
@@ -41,14 +40,13 @@ public class AcPIDControl extends Action
 		this.maxOut = maxOut;
 		controllers = new PIDController[outputs.length];
 		for(int idx = 0; idx < controllers.length; idx++) {
+			if(outputs[idx] instanceof PIDMotor) ((PIDMotor) outputs[idx]).setAction(this);
 			controllers[idx] = new PIDController(p, i, d, input, outputs[idx]);
-			if(outputs[idx] instanceof PIDMotor && ((PIDMotor) outputs[idx]).motor instanceof CtrlDrive) isDriveMotor = true;
 		}
 	}
 
 	public void onStart() {
 		input.setPIDSourceType(type);
-		if(isDriveMotor) Robot.isIndivDriveControl = true;
 
 		for(PIDController controller : controllers) {
 			controller.setContinuous(isContinuous);
@@ -64,8 +62,7 @@ public class AcPIDControl extends Action
 
 	public void onFinish() {
 		for(PIDController controller : controllers)
-			controller.free();
-		if(isDriveMotor) Robot.isIndivDriveControl = false;
+			controller.disable();
 	}
 
 	public boolean isDone() {

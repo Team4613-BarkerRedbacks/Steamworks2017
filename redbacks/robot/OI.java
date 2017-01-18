@@ -18,7 +18,7 @@ public class OI extends OIBase
 		whenHeld(d_RB, spitIn.c());
 		whenPressed(d_Start, reset.c());
 		
-		toggleWhenPressed(d_Back, pidtest.c());
+		whenPressed(d_Back, pidtest2.c());
 	}
 	
 	//Set up joysticks and buttons here.

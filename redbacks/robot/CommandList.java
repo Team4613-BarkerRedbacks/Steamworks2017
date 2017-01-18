@@ -14,8 +14,7 @@ import redbacks.robot.pid.PIDMotor;
 import redbacks.robot.pid.Tolerances;
 
 import static redbacks.robot.Robot.*;
-
-import edu.wpi.first.wpilibj.PIDController;
+import static redbacks.robot.RobotMap.*;
 
 public class CommandList extends CommandListStart
 {
@@ -32,7 +31,7 @@ public class CommandList extends CommandListStart
 	public static CommandSetup
 		drive = newCom(new AcDrive()),
 		pidtest = newCom(new AcTestPID()),
-		pidtest2 = newCom(new AcPIDControl(0.0005D, 0, 0.00005D, 1000, new Tolerances.Absolute(50), sensors.driveREncoder, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right)));
+		pidtest2 = newCom(new AcPIDControl(kP, kI, kD, 0, new Tolerances.Absolute(50), sensors.driveREncoder, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right)));
 	
 	static {subsystemToUse = shooter;}
 	public static CommandSetup
