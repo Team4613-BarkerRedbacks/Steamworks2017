@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.*;
 import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChFalse;
 import redbacks.arachne.lib.checks.Check;
-import redbacks.arachne.lib.motors.CtrlDrive;
-import redbacks.robot.Robot;
 import redbacks.robot.pid.Tolerances.Percentage;
 
 public class AcPIDControl extends Action
