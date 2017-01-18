@@ -7,27 +7,29 @@ import redbacks.arachne.lib.checks.ChFalse;
 import redbacks.arachne.lib.checks.Check;
 import redbacks.arachne.lib.motors.CtrlDrive;
 import redbacks.robot.Robot;
+import redbacks.robot.pid.Tolerances.Percentage;
 
 public class AcPIDControl extends Action
 {
 	double target, minIn, maxIn, minOut, maxOut;
-	boolean isDriveMotor = false, isContinuous;
+	boolean isDriveMotor = false, isContinuous, shouldFinish;
 
-	Tolerance tolerance;
+	Tolerances tolerance;
 	PIDSource input;
 	PIDSourceType type;
 	PIDController[] controllers;
 
-	public AcPIDControl(double p, double i, double d, double target, Tolerance tolerance, PIDSource input, PIDOutput... outputs) {
-		this(new ChFalse(), p, i, d, target, tolerance, input, false, 0, 0, PIDSourceType.kDisplacement, -1, 1, outputs);
+	public AcPIDControl(double p, double i, double d, double target, Tolerances tolerance, PIDSource input, PIDOutput... outputs) {
+		this(new ChFalse(), true, p, i, d, target, tolerance, input, false, 0, 0, PIDSourceType.kDisplacement, -1, 1, outputs);
 	}
-	
-	public AcPIDControl(double p, double i, double d, double target, Tolerance tolerance, PIDSource input, boolean isContinuous, double minIn, double maxIn, PIDOutput... outputs) {
-		this(new ChFalse(), p, i, d, target, tolerance, input, isContinuous, minIn, maxIn, PIDSourceType.kDisplacement, -1, 1, outputs);
+
+	public AcPIDControl(double p, double i, double d, double target, Tolerances tolerance, PIDSource input, boolean isContinuous, double minIn, double maxIn, PIDOutput... outputs) {
+		this(new ChFalse(), true, p, i, d, target, tolerance, input, isContinuous, minIn, maxIn, PIDSourceType.kDisplacement, -1, 1, outputs);
 	}
-	
-	public AcPIDControl(Check check, double p, double i, double d, double target, Tolerance tolerance, PIDSource input, boolean isContinuous, double minIn, double maxIn, PIDSourceType type, double minOut, double maxOut, PIDOutput... outputs) {
+
+	public AcPIDControl(Check check, boolean shouldFinish, double p, double i, double d, double target, Tolerances tolerance, PIDSource input, boolean isContinuous, double minIn, double maxIn, PIDSourceType type, double minOut, double maxOut, PIDOutput... outputs) {
 		super(check);
+		this.shouldFinish = shouldFinish;
 		this.target = target;
 		this.tolerance = tolerance;
 		this.input = input;
@@ -52,7 +54,8 @@ public class AcPIDControl extends Action
 			controller.setContinuous(isContinuous);
 			controller.setInputRange(minIn, maxIn);
 			controller.setOutputRange(minOut, maxOut);
-			controller.setTolerance(tolerance);
+			if(tolerance instanceof Percentage) controller.setPercentTolerance(tolerance.value);
+			else controller.setAbsoluteTolerance(tolerance.value);
 			controller.setToleranceBuffer(15);
 			controller.setSetpoint(target);
 			controller.enable();
@@ -60,11 +63,12 @@ public class AcPIDControl extends Action
 	}
 
 	public void onFinish() {
-		for(PIDController controller : controllers) controller.free();
+		for(PIDController controller : controllers)
+			controller.free();
 		if(isDriveMotor) Robot.isIndivDriveControl = false;
 	}
 
 	public boolean isDone() {
-		return controllers[0].onTarget() ? true : false;
+		return shouldFinish ? (controllers[0].onTarget() ? true : false) : false;
 	}
 }

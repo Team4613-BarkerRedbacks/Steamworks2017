@@ -8,9 +8,14 @@ import redbacks.arachne.lib.checks.digital.*;
 import redbacks.arachne.lib.checks.analog.*;
 import redbacks.arachne.lib.commands.CommandSetup;
 import redbacks.robot.actions.*;
+import redbacks.robot.pid.AcPIDControl;
 import redbacks.robot.pid.AcTestPID;
+import redbacks.robot.pid.PIDMotor;
+import redbacks.robot.pid.Tolerances;
 
 import static redbacks.robot.Robot.*;
+
+import edu.wpi.first.wpilibj.PIDController;
 
 public class CommandList extends CommandListStart
 {
@@ -26,10 +31,8 @@ public class CommandList extends CommandListStart
 	static {subsystemToUse = driver;}
 	public static CommandSetup
 		drive = newCom(new AcDrive()),
-		pidtest = newCom(
-				new AcPrint("Hi!"),
-				new AcTestPID()
-		);
+		pidtest = newCom(new AcTestPID()),
+		pidtest2 = newCom(new AcPIDControl(0.0005D, 0, 0.00005D, 1000, new Tolerances.Absolute(50), sensors.driveREncoder, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right)));
 	
 	static {subsystemToUse = shooter;}
 	public static CommandSetup
