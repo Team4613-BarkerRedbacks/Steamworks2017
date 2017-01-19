@@ -16,8 +16,8 @@ public class AcRotatingPIDDrive extends Action
 	public RotatingPIDDriveMotor pidDriverRight = new RotatingPIDDriveMotor();
 	public RotatingPIDDriveGyroManager pidDriverGyro = new RotatingPIDDriveGyroManager(pidDriverLeft, pidDriverRight);
 
-	PIDController pidControllerLeft = new PIDController(RobotMap.drivePIDMotorkP, RobotMap.drivePIDMotorkI, RobotMap.drivePIDMotorkD, Robot.sensors.driveLEncoder, pidDriverLeft);
-	PIDController pidControllerRight = new PIDController(RobotMap.drivePIDMotorkP, RobotMap.drivePIDMotorkI, RobotMap.drivePIDMotorkD, Robot.sensors.driveREncoder, pidDriverRight);
+	PIDController pidControllerLeft = new PIDController(RobotMap.drivePIDMotorkP, RobotMap.drivePIDMotorkI, RobotMap.drivePIDMotorkD, Robot.sensors.driveLEncoderDis, pidDriverLeft);
+	PIDController pidControllerRight = new PIDController(RobotMap.drivePIDMotorkP, RobotMap.drivePIDMotorkI, RobotMap.drivePIDMotorkD, Robot.sensors.driveREncoderDis, pidDriverRight);
 	PIDController pidControllerGyro = new PIDController(RobotMap.drivePIDGyrokP, RobotMap.drivePIDGyrokI, RobotMap.drivePIDGyrokD, Robot.sensors.yaw, pidDriverGyro);
 
 	public AcRotatingPIDDrive() {
@@ -36,7 +36,7 @@ public class AcRotatingPIDDrive extends Action
 
 	public void onStart() {
 		//create PID stuff
-		Robot.sensors.driveREncoder.setPIDSourceType(PIDSourceType.kDisplacement); //TODO change to dropped wheel encoder
+		Robot.sensors.driveREncoderDis.setPIDSourceType(PIDSourceType.kDisplacement); //TODO change to dropped wheel encoder
 		Robot.sensors.yaw.setPIDSourceType(PIDSourceType.kDisplacement);
 
 		pidControllerLeft.setContinuous(false);
@@ -76,7 +76,7 @@ public class AcRotatingPIDDrive extends Action
 	}
 
 	public void onRun() {
-		System.out.println("Left Motor: " + Robot.driver.left.get() + "  Right Motor: " + Robot.driver.right.get() + "    REncoder: " + Robot.sensors.driveREncoder.get() + "  Gyro: " + Robot.sensors.yaw.get());
+		System.out.println("Left Motor: " + Robot.driver.left.get() + "  Right Motor: " + Robot.driver.right.get() + "    REncoder: " + Robot.sensors.driveREncoderDis.get() + "  Gyro: " + Robot.sensors.yaw.get());
 	}
 
 	public void onFinish() {

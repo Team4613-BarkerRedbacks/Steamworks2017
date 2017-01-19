@@ -17,8 +17,8 @@ public class AcTestPID extends Action {
 	PIDMotor pidDriverLeft = new PIDMotor(Robot.driver.left).setMultiplier(-1);
 	PIDMotor pidDriverRight= new PIDMotor(Robot.driver.right);
 	
-	PIDController pidControllerLeft = new PIDController(Kp, Ki, Kd, Robot.sensors.driveREncoder, pidDriverLeft);
-	PIDController pidControllerRight = new PIDController(Kp, Ki, Kd, Robot.sensors.driveREncoder, pidDriverRight);
+	PIDController pidControllerLeft = new PIDController(Kp, Ki, Kd, Robot.sensors.driveREncoderDis, pidDriverLeft);
+	PIDController pidControllerRight = new PIDController(Kp, Ki, Kd, Robot.sensors.driveREncoderDis, pidDriverRight);
 	
 	public AcTestPID() {
 		super(new ChFalse());
@@ -27,7 +27,7 @@ public class AcTestPID extends Action {
 	}
 	
 	public void onStart() {
-		Robot.sensors.driveREncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+		Robot.sensors.driveREncoderDis.setPIDSourceType(PIDSourceType.kDisplacement);
 		Robot.isIndivDriveControl = true;
 		
 		pidControllerLeft.setContinuous(false);
@@ -54,7 +54,7 @@ public class AcTestPID extends Action {
 	
 	public void onRun() {
 		System.out.println(pidControllerLeft.get() + ", " +  pidControllerRight.get());
-		System.out.println(Robot.sensors.driveREncoder.pidGet());
+		System.out.println(Robot.sensors.driveREncoderDis.pidGet());
 		double p = SmartDashboard.getNumber("P", 0), i = SmartDashboard.getNumber("I", 0), d = SmartDashboard.getNumber("D", 0);
 		SmartDashboard.putNumber("P", p);
 		SmartDashboard.putNumber("I", i);
@@ -65,8 +65,8 @@ public class AcTestPID extends Action {
 	}
 	
 	public void onFinish() {
-		pidControllerLeft.free();
-		pidControllerRight.free();
+		pidControllerLeft.disable();
+		pidControllerRight.disable();
 		Robot.isIndivDriveControl = false;
 	}
 	

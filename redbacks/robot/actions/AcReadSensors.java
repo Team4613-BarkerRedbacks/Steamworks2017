@@ -1,19 +1,16 @@
 package redbacks.robot.actions;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChFalse;
 import redbacks.arachne.lib.navx.NavX;
-import redbacks.robot.CommandList;
 import redbacks.robot.RobotMap;
 import static redbacks.robot.Robot.*;
 
 public class AcReadSensors extends Action
 {
-	
 	private double driveEncoder_TimeLastRun;
 	private double driveLEncoder_ValueLastRun;
 	private double driveREncoder_ValueLastRun;
@@ -25,15 +22,8 @@ public class AcReadSensors extends Action
 	public void onStart() {
 		driveEncoder_UpdateMeasurements(); //Run first time to initialize variables
 		//CameraServer.getInstance().startAutomaticCapture();
-		Robot.sensors.driveLEncoder.setPIDSourceType(PIDSourceType.kRate);
-		SmartDashboard.putNumber("Shooter kP", 0);
-		SmartDashboard.putNumber("Shooter kI", 0);
-		SmartDashboard.putNumber("Shooter kD", 0);
-		SmartDashboard.putNumber("Shooter target", 0);
-		Robot.shooter.shooter.setInverted(true);
-		
-		SmartDashboard.putNumber("RotatingPIDDrive: DistanceTarget", Robot.sensors.driveREncoder.get());
-		SmartDashboard.putNumber("RotatingPIDDrive: AngleTarget", Robot.sensors.yaw.get());
+		SmartDashboard.putNumber("RotatingPIDDrive: DistanceTarget", sensors.driveREncoderDis.get());
+		SmartDashboard.putNumber("RotatingPIDDrive: AngleTarget", sensors.yaw.get());
 		
 		SmartDashboard.putNumber("tempDrivekP", 0.0);
 		SmartDashboard.putNumber("tempDrivekI", 0.0);
@@ -46,20 +36,17 @@ public class AcReadSensors extends Action
 	}
 	
 	public void onRun() { //Runs every loop
-		SmartDashboard.putNumber("Left Encoder", sensors.driveLEncoder.get());
-		SmartDashboard.putNumber("Right Encoder", sensors.driveREncoder.get());
+		SmartDashboard.putNumber("Left Encoder", sensors.driveLEncoderDis.get());
+		SmartDashboard.putNumber("Right Encoder", sensors.driveREncoderDis.get());
 		
-		SmartDashboard.putString("Source type", sensors.driveLEncoder.getPIDSourceType().toString());
-		SmartDashboard.putNumber("Shooter speed", sensors.driveLEncoder.pidGet());
+		SmartDashboard.putNumber("Shooter speed", sensors.driveLEncoderRate.get());
 		
 		if (Timer.getFPGATimestamp()-driveEncoder_TimeLastRun > 0.05) {//Maximum updating speed of 20hz
-			SmartDashboard.putNumber("Left Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveLEncoder.get(), driveLEncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
-			SmartDashboard.putNumber("Right Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveREncoder.get(), driveREncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
+			SmartDashboard.putNumber("Left Motor Speed", driveEncoder_CalculateSpeed(sensors.driveLEncoderDis.get(), driveLEncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
+			SmartDashboard.putNumber("Right Motor Speed", driveEncoder_CalculateSpeed(sensors.driveREncoderDis.get(), driveREncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
 			SmartDashboard.putNumber("Veloxity X forward", NavX.getSpeedForward());
 			SmartDashboard.putNumber("Veloxity Y rightleft", NavX.getSpeedRight());
 			SmartDashboard.putNumber("Veloxity Z Upvertical", NavX.getSpeedUp());
-			
-			System.out.println("Motor speed: " + shooter.shooter.get());
 			
 			driveEncoder_UpdateMeasurements();
 		}
@@ -116,8 +103,8 @@ public class AcReadSensors extends Action
 	 */
 	private void  driveEncoder_UpdateMeasurements() {
 		this.driveEncoder_TimeLastRun = Timer.getFPGATimestamp();
-		this.driveLEncoder_ValueLastRun = sensors.driveLEncoder.get();
-		this.driveREncoder_ValueLastRun = sensors.driveREncoder.get();
+		this.driveLEncoder_ValueLastRun = sensors.driveLEncoderDis.get();
+		this.driveREncoder_ValueLastRun = sensors.driveREncoderDis.get();
 	}
 	
 }

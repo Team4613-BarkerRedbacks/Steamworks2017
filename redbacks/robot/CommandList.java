@@ -23,7 +23,7 @@ public class CommandList extends CommandListStart
 {
 	static {subsystemToUse = null;}
 	public static CommandSetup
-		encodersZero = newCom(new AcSetNumSen(sensors.driveLEncoder, 0.0D), new AcSetNumSen(sensors.driveREncoder, 0.0D)),
+		encodersZero = newCom(new AcSetNumSen(sensors.driveLEncoderDis, 0.0D), new AcSetNumSen(sensors.driveREncoderDis, 0.0D)),
 		reset = newCom(sensors.new AcReset());
 	
 	static {subsystemToUse = sensors;}
@@ -34,21 +34,28 @@ public class CommandList extends CommandListStart
 	public static CommandSetup
 		drive = newCom(new AcDrive()),
 		pidtest = newCom(new AcTestPID()),
-		pidtest2 = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoder, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
+		pidtest2 = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
 		rotatingpiddrivetest = newCom(new AcRotatingPIDDrive());
 	
 	static {subsystemToUse = shooter;}
 	public static CommandSetup
 		shoot = newCom(
 			new AcMotor.RampTime(shooter.shooter, 1, 2),
-			new AcDoNothing(new ChGettableBoolean(OI.d_B, false)),
+			new AcDoNothing(new ChGettableBoolean(shootButton, false)),
 			new AcMotor.RampTime(shooter.shooter, 0, 2)
 		),
 		shooterpidtest = newCom(
-			new AcMotor.RampTime(shooter.shooter, 0.85D, 2),
-			new AcPIDControl(new ChGettableBoolean(OI.d_B, false), false, 1.0E-5, 0, 5.0E-5, 0.000012D, -7000, new Tolerances.Percentage(1.0), sensors.driveLEncoder, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooter).setMultiplier(-1)),
-			new AcMotor.Set(shooter.shooter, 0.85D, new ChTrue()),
+			new AcMotor.RampTime(shooter.shooter, 0.75D, 2),
+			new AcSeq.Parallel(feeder, new AcMotor.Set(feeder.feeder, 0.6D, new ChGettableBoolean(shootButton, false))),
+			new AcPIDControl(new ChGettableBoolean(shootButton, false), false, 1.0E-5, 0, 5.0E-5, 0.000010D, -6300, new Tolerances.Percentage(1.0), sensors.driveLEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooter).setMultiplier(-1)),
+			new AcMotor.Set(shooter.shooter, 0.75D, new ChTrue()),
 			new AcMotor.RampTime(shooter.shooter, 0, 2)
+		),
+		shooterFeedHopper = newCom(
+			new AcSeq.Parallel(feeder, new AcMotor.Set(feeder.feeder, 0.4D, new ChGettableBoolean(feedButton, false))),
+			new AcMotor.RampTime(shooter.shooter, 0.25D, 0.5D),
+			new AcDoNothing(new ChGettableBoolean(feedButton, false)),
+			new AcMotor.RampTime(shooter.shooter, 0, 0.5D)
 		);
 	
 	static {subsystemToUse = intake;}

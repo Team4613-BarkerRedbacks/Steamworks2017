@@ -2,6 +2,8 @@ package redbacks.robot;
 
 import com.ctre.CANTalon;
 
+import redbacks.arachne.lib.input.ButtonGettableWrapper;
+
 public class RobotMap
 {
 	public static final CANTalon 
@@ -22,4 +24,6 @@ public class RobotMap
 		drivePIDGyrokP = 0.0005D, drivePIDGyrokI = 0, drivePIDGyrokD = 0; //Removed final temporarily for testing
 	
 	public static double drivePIDtestDistance = 0.0D, drivePIDtestAngle = 0.0D;
+	
+	public static ButtonGettableWrapper shootButton = OI.d_B, feedButton = OI.d_A;
 }

@@ -16,9 +16,12 @@ import static redbacks.robot.RobotMap.*;
 public class SubsystemSensors extends SubsystemBase
 {
 	//Drive
-	public SenCANEncoder driveLEncoder = new SenCANEncoder(talon7);
-	public SenCANEncoder driveREncoder = new SenCANEncoder(talon6);
+	public SenCANEncoder.Displacement driveREncoderDis = new SenCANEncoder.Displacement(talon6);
+	public SenCANEncoder.Rate driveREncoderRate = new SenCANEncoder.Rate(talon6);
 
+	public SenCANEncoder.Displacement driveLEncoderDis = new SenCANEncoder.Displacement(talon7);
+	public SenCANEncoder.Rate driveLEncoderRate = new SenCANEncoder.Rate(talon7);
+	
 	//NavX
 	public NavX.Sensor pitch = new NavX.Sensor(NavXReading.ANGLE_PITCH);
 	public NavX.Sensor roll = new NavX.Sensor(NavXReading.ANGLE_ROLL);
@@ -38,7 +41,8 @@ public class SubsystemSensors extends SubsystemBase
 
 	public SubsystemSensors() {
 		super();
-		driveREncoder.setScaleFactor(-1);
+		driveREncoderDis.setScaleFactor(-1);
+		driveREncoderRate.setScaleFactor(-1);
 
 		resetSensors();
 	}
@@ -55,8 +59,8 @@ public class SubsystemSensors extends SubsystemBase
 	}
 
 	public void resetSensors() {
-		driveLEncoder.set(0);
-		driveREncoder.set(0);
+		driveLEncoderDis.set(0);
+		driveREncoderDis.set(0);
 		yaw.set(0);
 	}
 }

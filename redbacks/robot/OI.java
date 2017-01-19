@@ -9,18 +9,19 @@ import redbacks.arachne.lib.input.ButtonGettableWrapper;
 import redbacks.arachne.lib.input.JoystickAxis;
 import static redbacks.arachne.lib.input.ButtonGettableWrapper.*;
 import static redbacks.robot.CommandList.*;
+import static redbacks.robot.RobotMap.*;
 
 public class OI extends OIBase
 {
 	public void mapOperations() {
-		//whenPressed(d_B, shoot.c());
 		whenHeld(d_LB, spit.c());
 		whenHeld(d_RB, spitIn.c());
 		whenPressed(d_Start, reset.c());
 		
 		whenPressed(d_Back, pidtest2.c());
 		whenHeld(d_Y, rotatingpiddrivetest.c());
-		whenHeld(d_A, shooterpidtest.c());
+		whenHeld(shootButton, shooterpidtest.c());
+		whenHeld(feedButton, shooterFeedHopper.c());
 	}
 	
 	//Set up joysticks and buttons here.
