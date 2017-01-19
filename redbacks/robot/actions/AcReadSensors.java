@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChFalse;
 import redbacks.arachne.lib.navx.NavX;
+import redbacks.robot.CommandList;
 import redbacks.robot.Robot;
+import redbacks.robot.RobotMap;
 
 public class AcReadSensors extends Action
 {
@@ -28,6 +30,18 @@ public class AcReadSensors extends Action
 		SmartDashboard.putNumber("Shooter kI", 0);
 		SmartDashboard.putNumber("Shooter kD", 0);
 		SmartDashboard.putNumber("Shooter target", 0);
+		Robot.shooter.shooter.setInverted(true);
+		
+		SmartDashboard.putNumber("RotatingPIDDrive: DistanceTarget", Robot.sensors.driveREncoder.get());
+		SmartDashboard.putNumber("RotatingPIDDrive: AngleTarget", Robot.sensors.yaw.get());
+		
+		SmartDashboard.putNumber("tempDrivekP", 0.0);
+		SmartDashboard.putNumber("tempDrivekI", 0.0);
+		SmartDashboard.putNumber("tempDrivekD", 0.0D);
+		
+		SmartDashboard.putNumber("tempGyrokP", 0.0);
+		SmartDashboard.putNumber("tempGyrokI", 0.0);
+		SmartDashboard.putNumber("tempGyrokD", 0.0);
 		
 	}
 	
@@ -38,12 +52,6 @@ public class AcReadSensors extends Action
 		if (Timer.getFPGATimestamp()-driveEncoder_TimeLastRun > 0.05) {//Maximum updating speed of 20hz
 			SmartDashboard.putNumber("Left Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveLEncoder.get(), driveLEncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
 			SmartDashboard.putNumber("Right Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveREncoder.get(), driveREncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
-			//SmartDashboard.putNumber("Left Motor Distance Travelled", driveEncoder_CalculateDistance(Robot.sensors.driveLEncoder.get()));
-			//SmartDashboard.putNumber("Right Motor Distance Travelled", driveEncoder_CalculateDistance(Robot.sensors.driveREncoder.get()));
-			//System.out.println("Left Motor Speed" + driveEncoder_CalculateSpeed(Robot.sensors.driveLEncoder.get(), driveLEncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
-			//System.out.println("Right Motor Speed" + driveEncoder_CalculateSpeed(Robot.sensors.driveREncoder.get(), driveREncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
-			//System.out.println("Left Encoder: " + (Robot.sensors.driveLEncoder.get() - driveLEncoder_ValueLastRun));
-			//System.out.println("Right Encoder: " + (Robot.sensors.driveREncoder.get() - driveREncoder_ValueLastRun));
 			SmartDashboard.putNumber("Veloxity X forward", NavX.getSpeedForward());
 			SmartDashboard.putNumber("Veloxity Y rightleft", NavX.getSpeedRight());
 			SmartDashboard.putNumber("Veloxity Z Upvertical", NavX.getSpeedUp());
@@ -54,6 +62,17 @@ public class AcReadSensors extends Action
 		}
 		
 		SmartDashboard.putNumber("Yaw", Robot.sensors.yaw.get());
+		
+		RobotMap.drivePIDMotorkP = SmartDashboard.getNumber("tempDrivekP", 0.0);
+		RobotMap.drivePIDMotorkI = SmartDashboard.getNumber("tempDrivekI", 0.0);
+		RobotMap.drivePIDMotorkD = SmartDashboard.getNumber("tempDrivekD", 0.0);
+		
+		RobotMap.drivePIDGyrokP = SmartDashboard.getNumber("tempGyrokP", 0.0);
+		RobotMap.drivePIDGyrokI = SmartDashboard.getNumber("tempGyrokI", 0.0);
+		RobotMap.drivePIDGyrokD = SmartDashboard.getNumber("tempGyrokD", 0.0);
+		
+		RobotMap.drivePIDtestDistance = SmartDashboard.getNumber("RotatingPIDDrive: DistanceTarget", 0.0);
+		RobotMap.drivePIDtestAngle = SmartDashboard.getNumber("RotatingPIDDrive: AngleTarget", 0.0);
 		
 	}
 
