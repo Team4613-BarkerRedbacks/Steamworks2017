@@ -40,11 +40,6 @@ public class CommandList extends CommandListStart
 	static {subsystemToUse = shooter;}
 	public static CommandSetup
 		shoot = newCom(
-			new AcMotor.RampTime(shooter.shooter, 1, 2),
-			new AcDoNothing(new ChGettableBoolean(shootButton, false)),
-			new AcMotor.RampTime(shooter.shooter, 0, 2)
-		),
-		shooterpidtest = newCom(
 			new AcMotor.RampTime(shooter.shooter, 0.75D, 2),
 			new AcSeq.Parallel(feeder, new AcMotor.Set(feeder.feeder, 0.6D, new ChGettableBoolean(shootButton, false))),
 			new AcPIDControl(new ChGettableBoolean(shootButton, false), false, 1.0E-5, 0, 5.0E-5, 0.000010D, -6300, new Tolerances.Percentage(1.0), sensors.driveLEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooter).setMultiplier(-1)),
