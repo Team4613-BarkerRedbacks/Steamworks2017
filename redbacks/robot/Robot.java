@@ -6,6 +6,8 @@ import redbacks.robot.subsystems.*;
 
 import static redbacks.robot.CommandList.*;
 
+import edu.wpi.first.wpilibj.CameraServer;
+
 public class Robot extends ArachneRobot
 {
 	/** The instance of the operator interface. This is used to map inputs to functions. */
@@ -32,5 +34,9 @@ public class Robot extends ArachneRobot
 
 	public CommandBase getAutonomous(int autoID) {
 		return Auto.getAutonomous(autoID);
+	}
+	
+	public void initialiseRobot() {
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 }
