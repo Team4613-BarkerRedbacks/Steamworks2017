@@ -13,7 +13,7 @@ import static redbacks.robot.CommandList.*;
 public class OI extends OIBase
 {
 	public void mapOperations() {
-		whenPressed(d_B, shoot.c());
+		//whenPressed(d_B, shoot.c());
 		whenHeld(d_LB, spit.c());
 		whenHeld(d_RB, spitIn.c());
 		whenPressed(d_Start, reset.c());

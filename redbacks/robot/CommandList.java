@@ -17,13 +17,13 @@ import redbacks.robot.pid.Tolerances;
 import static redbacks.robot.Robot.*;
 import static redbacks.robot.RobotMap.*;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.PIDSourceType;
 
 public class CommandList extends CommandListStart
 {
 	static {subsystemToUse = null;}
 	public static CommandSetup
-		encodersZero = newCom(new AcSetNumSen(Robot.sensors.driveLEncoder, 0.0D), new AcSetNumSen(Robot.sensors.driveREncoder, 0.0D)),
+		encodersZero = newCom(new AcSetNumSen(sensors.driveLEncoder, 0.0D), new AcSetNumSen(sensors.driveREncoder, 0.0D)),
 		reset = newCom(sensors.new AcReset());
 	
 	static {subsystemToUse = sensors;}
@@ -34,7 +34,7 @@ public class CommandList extends CommandListStart
 	public static CommandSetup
 		drive = newCom(new AcDrive()),
 		pidtest = newCom(new AcTestPID()),
-		pidtest2 = newCom(new AcPIDControl(RobotMap.drivePIDMotorkP, RobotMap.drivePIDMotorkI, RobotMap.drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoder, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
+		pidtest2 = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoder, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
 		rotatingpiddrivetest = newCom(new AcRotatingPIDDrive());
 	
 	static {subsystemToUse = shooter;}
@@ -44,7 +44,12 @@ public class CommandList extends CommandListStart
 			new AcDoNothing(new ChGettableBoolean(OI.d_B, false)),
 			new AcMotor.RampTime(shooter.shooter, 0, 2)
 		),
-		shooterpidtest = newCom(new AcPIDControl(SmartDashboard.getNumber("Shooter kP", 0), SmartDashboard.getNumber("Shooter kI", 0), SmartDashboard.getNumber("Shooter kD", 0), SmartDashboard.getNumber("Shooter target", 0), new Tolerances.Percentage(1.0), Robot.sensors.driveLEncoder, new PIDMotor(shooter.shooter)));
+		shooterpidtest = newCom(
+			new AcMotor.RampTime(shooter.shooter, 0.85D, 2),
+			new AcPIDControl(new ChGettableBoolean(OI.d_B, false), false, 1.0E-5, 0, 5.0E-5, 0.000012D, -7000, new Tolerances.Percentage(1.0), sensors.driveLEncoder, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooter).setMultiplier(-1)),
+			new AcMotor.Set(shooter.shooter, 0.85D, new ChTrue()),
+			new AcMotor.RampTime(shooter.shooter, 0, 2)
+		);
 	
 	static {subsystemToUse = intake;}
 	

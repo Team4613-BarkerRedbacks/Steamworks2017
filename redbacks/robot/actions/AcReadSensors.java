@@ -8,8 +8,8 @@ import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChFalse;
 import redbacks.arachne.lib.navx.NavX;
 import redbacks.robot.CommandList;
-import redbacks.robot.Robot;
 import redbacks.robot.RobotMap;
+import static redbacks.robot.Robot.*;
 
 public class AcReadSensors extends Action
 {
@@ -46,8 +46,11 @@ public class AcReadSensors extends Action
 	}
 	
 	public void onRun() { //Runs every loop
-		SmartDashboard.putNumber("Left Encoder", Robot.sensors.driveLEncoder.get());
-		SmartDashboard.putNumber("Right Encoder", Robot.sensors.driveREncoder.get());
+		SmartDashboard.putNumber("Left Encoder", sensors.driveLEncoder.get());
+		SmartDashboard.putNumber("Right Encoder", sensors.driveREncoder.get());
+		
+		SmartDashboard.putString("Source type", sensors.driveLEncoder.getPIDSourceType().toString());
+		SmartDashboard.putNumber("Shooter speed", sensors.driveLEncoder.pidGet());
 		
 		if (Timer.getFPGATimestamp()-driveEncoder_TimeLastRun > 0.05) {//Maximum updating speed of 20hz
 			SmartDashboard.putNumber("Left Motor Speed", driveEncoder_CalculateSpeed(Robot.sensors.driveLEncoder.get(), driveLEncoder_ValueLastRun, Timer.getFPGATimestamp(), driveEncoder_TimeLastRun));
@@ -56,12 +59,12 @@ public class AcReadSensors extends Action
 			SmartDashboard.putNumber("Veloxity Y rightleft", NavX.getSpeedRight());
 			SmartDashboard.putNumber("Veloxity Z Upvertical", NavX.getSpeedUp());
 			
-			System.out.println("Motor speed: " + Robot.shooter.shooter.get());
+			System.out.println("Motor speed: " + shooter.shooter.get());
 			
 			driveEncoder_UpdateMeasurements();
 		}
 		
-		SmartDashboard.putNumber("Yaw", Robot.sensors.yaw.get());
+		SmartDashboard.putNumber("Yaw", sensors.yaw.get());
 		
 		RobotMap.drivePIDMotorkP = SmartDashboard.getNumber("tempDrivekP", 0.0);
 		RobotMap.drivePIDMotorkI = SmartDashboard.getNumber("tempDrivekI", 0.0);
@@ -80,7 +83,7 @@ public class AcReadSensors extends Action
 	 * Calculates the speed that (inputed) drive motor is travelling at in meters/second.
 	 * 
 	 * Assumes no slippage, adding error.
-	 * Gets encoder value from Robot.sensors.driveLEncoder.get()
+	 * Gets encoder value from sensors.driveLEncoder.get()
 	 * 
 	 * @param encoderCurrent double of current encoder value
 	 * @param encoderPrevious double of previous encoder value (encoder value must have been set at same time as timePrevious set)
@@ -113,8 +116,8 @@ public class AcReadSensors extends Action
 	 */
 	private void  driveEncoder_UpdateMeasurements() {
 		this.driveEncoder_TimeLastRun = Timer.getFPGATimestamp();
-		this.driveLEncoder_ValueLastRun = Robot.sensors.driveLEncoder.get();
-		this.driveREncoder_ValueLastRun = Robot.sensors.driveREncoder.get();
+		this.driveLEncoder_ValueLastRun = sensors.driveLEncoder.get();
+		this.driveREncoder_ValueLastRun = sensors.driveREncoder.get();
 	}
 	
 }
