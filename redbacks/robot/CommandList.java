@@ -8,6 +8,7 @@ import redbacks.arachne.lib.checks.digital.*;
 import redbacks.arachne.lib.checks.analog.*;
 import redbacks.arachne.lib.commands.CommandSetup;
 import redbacks.robot.actions.*;
+import redbacks.robot.pid.AcMultiPID;
 import redbacks.robot.pid.AcPIDControl;
 import redbacks.robot.pid.AcRotatingPIDDrive;
 import redbacks.robot.pid.AcTestPID;
@@ -36,7 +37,19 @@ public class CommandList extends CommandListStart
 		pidtest = newCom(new AcTestPID()),
 		pidtest2 = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
 		rotatingpiddrivetest = newCom(new AcRotatingPIDDrive()),
-		regainDriverControl = newCom(new AcInterrupt.KillSubsystem(driver));
+		regainDriverControl = newCom(new AcInterrupt.KillSubsystem(driver));System.out.println("1: LMPR" + leftMotorPIDResult + " RMPR" + rightMotorPIDResult +  " GDPR" + gyroDifferencePIDResult + " LMFR" + leftMotorFinalResult + " RMFR" + rightMotorFinalResult + " REV" + Robot.sensors.driveREncoderDis + " LEV" + Robot.sensors.driveLEncoderDis + " GYV" + Robot.sensors.yaw.get());System.out.println("1: LMPR" + leftMotorPIDResult + " RMPR" + rightMotorPIDResult +  " GDPR" + gyroDifferencePIDResult + " LMFR" + leftMotorFinalResult + " RMFR" + rightMotorFinalResult + " REV" + Robot.sensors.driveREncoderDis + " LEV" + Robot.sensors.driveLEncoderDis + " GYV" + Robot.sensors.yaw.get());
+		multiAxisTest = newCom(
+				new AcMulti(
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.left), new double[]{-1, -1}, 
+								new AcMultiPID.PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis),
+								new AcMultiPID.PIDParams(0.025, 0.0001, 0.001, 0, new Tolerances.Absolute(3), sensors.yaw)
+						),
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.right), new double[]{1, -1},
+								new AcMultiPID.PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis),
+								new AcMultiPID.PIDParams(0.025, 0.0001, 0.001, 0, new Tolerances.Absolute(3), sensors.yaw)
+						)
+				)
+		);
 	
 	static {subsystemToUse = shooter;}
 	public static CommandSetup

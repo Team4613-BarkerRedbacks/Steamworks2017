@@ -23,6 +23,7 @@ public class OI extends OIBase
 		whenPressed(d_X, regainDriverControl.c());
 		whenHeld(shootButton, shoot.c());
 		whenHeld(feedButton, shooterFeedHopper.c());
+		whenHeld(d_RStick, multiAxisTest.c());
 	}
 	
 	//Set up joysticks and buttons here.
