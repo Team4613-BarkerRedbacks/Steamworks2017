@@ -35,7 +35,8 @@ public class CommandList extends CommandListStart
 		drive = newCom(new AcDrive()),
 		pidtest = newCom(new AcTestPID()),
 		pidtest2 = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
-		rotatingpiddrivetest = newCom(new AcRotatingPIDDrive());
+		rotatingpiddrivetest = newCom(new AcRotatingPIDDrive()),
+		regainDriverControl = newCom(new AcInterrupt.KillSubsystem(driver));
 	
 	static {subsystemToUse = shooter;}
 	public static CommandSetup

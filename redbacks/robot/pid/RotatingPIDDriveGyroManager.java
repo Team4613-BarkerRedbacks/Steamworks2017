@@ -3,6 +3,7 @@ package redbacks.robot.pid;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import redbacks.arachne.lib.motors.CtrlMotor;
+import redbacks.robot.CommandList;
 import redbacks.robot.Robot;
 
 public class RotatingPIDDriveGyroManager implements PIDOutput
@@ -27,11 +28,10 @@ public class RotatingPIDDriveGyroManager implements PIDOutput
 	}
 
 	public void updateMotors(double leftMotorPIDResult, double rightMotorPIDResult, double gyroDifferencePIDResult) {
-		SmartDashboard.putNumber("leftMotorPIDResult", leftMotorPIDResult);
-		SmartDashboard.putNumber("rightMotorPIDResult",  rightMotorPIDResult);
-		SmartDashboard.putNumber("gyroDifferencePIDResult",  gyroDifferencePIDResult);
+		System.out.println("1: LMPR" + leftMotorPIDResult + " RMPR" + rightMotorPIDResult +  " GDPR" + gyroDifferencePIDResult + " LMFR" + leftMotorFinalResult + " RMFR" + rightMotorFinalResult + " REV" + Robot.sensors.driveREncoderDis.get() + " LEV" + Robot.sensors.driveLEncoderDis.get() + " GYV" + Robot.sensors.yaw.get());
 		leftMotorFinalResult = leftMotorPIDResult + gyroDifferencePIDResult;
 		rightMotorFinalResult = rightMotorPIDResult - gyroDifferencePIDResult;
+		System.out.println("2: LMPR" + leftMotorPIDResult + " RMPR" + rightMotorPIDResult +  " GDPR" + gyroDifferencePIDResult + " LMFR" + leftMotorFinalResult + " RMFR" + rightMotorFinalResult + " REV" + Robot.sensors.driveREncoderDis.get() + " LEV" + Robot.sensors.driveLEncoderDis.get() + " GYV" + Robot.sensors.yaw.get());
 		
 		if (leftMotorFinalResult > 1.0D) {
 			rightMotorFinalResult -= leftMotorFinalResult - 1.0D;
@@ -49,8 +49,10 @@ public class RotatingPIDDriveGyroManager implements PIDOutput
 			leftMotorFinalResult -= leftMotorFinalResult + 1.0D;
 		}
 		
-		Robot.driver.left.set(leftMotorFinalResult);
-		Robot.driver.right.set(rightMotorFinalResult);
+		System.out.println("3: LMPR" + leftMotorPIDResult + " RMPR" + rightMotorPIDResult +  " GDPR" + gyroDifferencePIDResult + " LMFR" + leftMotorFinalResult + " RMFR" + rightMotorFinalResult + " REV" + Robot.sensors.driveREncoderDis.get() + " LEV" + Robot.sensors.driveLEncoderDis.get() + " GYV" + Robot.sensors.yaw.get()); 
+		
+		Robot.driver.left.set(leftMotorFinalResult*-1, CommandList.rotatingpiddrivetest.c());
+		Robot.driver.right.set(rightMotorFinalResult, CommandList.rotatingpiddrivetest.c());
 		
 	}
 }

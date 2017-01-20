@@ -25,13 +25,13 @@ public class AcReadSensors extends Action
 		SmartDashboard.putNumber("RotatingPIDDrive: DistanceTarget", sensors.driveREncoderDis.get());
 		SmartDashboard.putNumber("RotatingPIDDrive: AngleTarget", sensors.yaw.get());
 		
-		SmartDashboard.putNumber("tempDrivekP", 0.0);
-		SmartDashboard.putNumber("tempDrivekI", 0.0);
-		SmartDashboard.putNumber("tempDrivekD", 0.0D);
+		SmartDashboard.putNumber("tempDrivekP", RobotMap.drivePIDMotorkP);
+		SmartDashboard.putNumber("tempDrivekI", RobotMap.drivePIDMotorkI);
+		SmartDashboard.putNumber("tempDrivekD", RobotMap.drivePIDMotorkD);
 		
-		SmartDashboard.putNumber("tempGyrokP", 0.0);
-		SmartDashboard.putNumber("tempGyrokI", 0.0);
-		SmartDashboard.putNumber("tempGyrokD", 0.0);
+		SmartDashboard.putNumber("tempGyrokP", RobotMap.drivePIDGyrokP);
+		SmartDashboard.putNumber("tempGyrokI", RobotMap.drivePIDGyrokI);
+		SmartDashboard.putNumber("tempGyrokD", RobotMap.drivePIDGyrokD);
 		
 	}
 	

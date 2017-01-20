@@ -16,7 +16,7 @@ public class AcRotatingPIDDrive extends Action
 	public RotatingPIDDriveMotor pidDriverRight = new RotatingPIDDriveMotor();
 	public RotatingPIDDriveGyroManager pidDriverGyro = new RotatingPIDDriveGyroManager(pidDriverLeft, pidDriverRight);
 
-	PIDController pidControllerLeft = new PIDController(RobotMap.drivePIDMotorkP, RobotMap.drivePIDMotorkI, RobotMap.drivePIDMotorkD, Robot.sensors.driveLEncoderDis, pidDriverLeft);
+	PIDController pidControllerLeft = new PIDController(RobotMap.drivePIDMotorkP, RobotMap.drivePIDMotorkI, RobotMap.drivePIDMotorkD, Robot.sensors.driveREncoderDis, pidDriverLeft);
 	PIDController pidControllerRight = new PIDController(RobotMap.drivePIDMotorkP, RobotMap.drivePIDMotorkI, RobotMap.drivePIDMotorkD, Robot.sensors.driveREncoderDis, pidDriverRight);
 	PIDController pidControllerGyro = new PIDController(RobotMap.drivePIDGyrokP, RobotMap.drivePIDGyrokI, RobotMap.drivePIDGyrokD, Robot.sensors.yaw, pidDriverGyro);
 
@@ -38,6 +38,7 @@ public class AcRotatingPIDDrive extends Action
 		//create PID stuff
 		Robot.sensors.driveREncoderDis.setPIDSourceType(PIDSourceType.kDisplacement); //TODO change to dropped wheel encoder
 		Robot.sensors.yaw.setPIDSourceType(PIDSourceType.kDisplacement);
+		System.out.println("Yeah im running 12EFG98");
 
 		pidControllerLeft.setContinuous(false);
 		pidControllerRight.setContinuous(false);
@@ -51,9 +52,9 @@ public class AcRotatingPIDDrive extends Action
 		pidControllerRight.setPercentTolerance(1.0D);
 		pidControllerGyro.setPercentTolerance(1.0D);
 
-		pidControllerLeft.setToleranceBuffer(5);
-		pidControllerRight.setToleranceBuffer(5);
-		pidControllerGyro.setToleranceBuffer(5);
+		pidControllerLeft.setToleranceBuffer(15);
+		pidControllerRight.setToleranceBuffer(15);
+		pidControllerGyro.setToleranceBuffer(15);
 
 		distance = SmartDashboard.getNumber("RotatingPIDDrive: Distance", 0); //TODO: find better solution or whatever than this testing setup
 		angle = SmartDashboard.getNumber("RotatingPIDDrive: Angle", 0);

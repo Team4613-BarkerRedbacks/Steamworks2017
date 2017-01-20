@@ -20,6 +20,7 @@ public class OI extends OIBase
 		
 		whenPressed(d_Back, pidtest2.c());
 		whenHeld(d_Y, rotatingpiddrivetest.c());
+		whenPressed(d_X, regainDriverControl.c());
 		whenHeld(shootButton, shoot.c());
 		whenHeld(feedButton, shooterFeedHopper.c());
 	}
