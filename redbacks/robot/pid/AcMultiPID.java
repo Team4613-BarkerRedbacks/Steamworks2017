@@ -11,6 +11,7 @@ public class AcMultiPID extends Action
 {
 	double min, max;
 	boolean shouldFinish;
+	MultiPIDCombiner combiner;
 	
 	PIDAxis[] axes;
 	PIDParams[] params;
@@ -18,7 +19,7 @@ public class AcMultiPID extends Action
 	
 	AcPIDControl[] actions;
 
-	public AcMultiPID(Check check, boolean shouldFinish, PIDOutput output, double[] multipliers, PIDParams... params) {
+	public AcMultiPID(Check check, boolean shouldFinish, PIDOutput output, double[] multipliers, MultiPIDCombiner combiner, PIDParams... params) {
 		super(check);
 		this.output = output;
 		if(output instanceof PIDMotor) ((PIDMotor) output).setAction(this);
@@ -28,6 +29,11 @@ public class AcMultiPID extends Action
 			this.axes[i] = new PIDAxis(multipliers[i]);
 		this.params = params;
 		this.shouldFinish = shouldFinish;
+		this.combiner = combiner;
+	}
+	
+	public AcMultiPID(Check check, boolean shouldFinish, PIDOutput output, double[] multipliers, PIDParams... params) {
+		this(check, shouldFinish, output, multipliers, new MultiPIDCombiner(), params);
 	}
 
 	public void onStart() {
@@ -39,10 +45,8 @@ public class AcMultiPID extends Action
 	}
 
 	public void onRun() {
-		double sum = 0;
 		for(AcPIDControl action : actions) action.execute();
-		for(PIDAxis axis : axes) sum += axis.output;
-		output.pidWrite(sum);
+		output.pidWrite(combiner.combine(axes));
 	}
 
 	public void onFinish() {
