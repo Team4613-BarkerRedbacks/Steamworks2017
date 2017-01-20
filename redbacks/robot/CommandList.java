@@ -37,7 +37,7 @@ public class CommandList extends CommandListStart
 		pidtest = newCom(new AcTestPID()),
 		pidtest2 = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
 		rotatingpiddrivetest = newCom(new AcRotatingPIDDrive()),
-		regainDriverControl = newCom(new AcInterrupt.KillSubsystem(driver));System.out.println("1: LMPR" + leftMotorPIDResult + " RMPR" + rightMotorPIDResult +  " GDPR" + gyroDifferencePIDResult + " LMFR" + leftMotorFinalResult + " RMFR" + rightMotorFinalResult + " REV" + Robot.sensors.driveREncoderDis + " LEV" + Robot.sensors.driveLEncoderDis + " GYV" + Robot.sensors.yaw.get());System.out.println("1: LMPR" + leftMotorPIDResult + " RMPR" + rightMotorPIDResult +  " GDPR" + gyroDifferencePIDResult + " LMFR" + leftMotorFinalResult + " RMFR" + rightMotorFinalResult + " REV" + Robot.sensors.driveREncoderDis + " LEV" + Robot.sensors.driveLEncoderDis + " GYV" + Robot.sensors.yaw.get());
+		regainDriverControl = newCom(new AcInterrupt.KillSubsystem(driver)),
 		multiAxisTest = newCom(
 				new AcMulti(
 						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.left), new double[]{-1, -1}, 
