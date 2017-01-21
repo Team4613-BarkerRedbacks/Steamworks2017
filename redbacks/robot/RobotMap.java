@@ -24,6 +24,7 @@ public class RobotMap
 		drivePIDGyrokP = 0.005D, drivePIDGyrokI = 0.001, drivePIDGyrokD = 0; //Removed final temporarily for testing
 	
 	public static double drivePIDtestDistance = 0.0D, drivePIDtestAngle = 0.0D;
+	public static double multiPIDDriveCombinerLeftOverflow = 0.0D, mutiPIDDriveCombinerRightOverflow = 0.0D;
 	
 	public static ButtonGettableWrapper shootButton = OI.d_B, feedButton = OI.d_A;
 }

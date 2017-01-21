@@ -1,6 +1,5 @@
 package redbacks.robot.pid;
 
-import redbacks.arachne.lib.motors.CtrlMotor;
 import redbacks.robot.RobotMap;
 import redbacks.robot.pid.AcMultiPID.PIDAxis;
 
@@ -33,21 +32,21 @@ public class MultiPIDDriveCombiner extends MultiPIDCombiner
 		//If output > 1 or - 1 get difference and put it somewhere for other motor PID loop
 		if (output > 1.0D) {
 			if(isLeftMotor) {
-				MultiPIDDriveCombinerOverflowAnonymous.multiPIDDriveCombinerLeftOverflow = (output - 1.0D);
+				RobotMap.multiPIDDriveCombinerLeftOverflow = (output - 1.0D);
 			}
 			else{
-				MultiPIDDriveCombinerOverflowAnonymous.mutiPIDDriveCombinerRightOverflow = (output - 1.0D);
+				RobotMap.mutiPIDDriveCombinerRightOverflow = (output - 1.0D);
 			}
 		}
 		else if (output < -1.0D) {
 			if(isLeftMotor) {
-				MultiPIDDriveCombinerOverflowAnonymous.multiPIDDriveCombinerLeftOverflow = (output + 1.0D);
+				RobotMap.multiPIDDriveCombinerLeftOverflow = (output + 1.0D);
 			}
 			else{
-				MultiPIDDriveCombinerOverflowAnonymous.mutiPIDDriveCombinerRightOverflow = (output + 1.0D);
+				RobotMap.mutiPIDDriveCombinerRightOverflow = (output + 1.0D);
 			}
 		}
 		
-		return isLeftMotor ? (output + MultiPIDDriveCombinerOverflowAnonymous.mutiPIDDriveCombinerRightOverflow) : (output + MultiPIDDriveCombinerOverflowAnonymous.multiPIDDriveCombinerLeftOverflow); 
+		return isLeftMotor ? (output + RobotMap.mutiPIDDriveCombinerRightOverflow) : (output + RobotMap.multiPIDDriveCombinerLeftOverflow); 
 	}
 }
