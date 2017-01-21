@@ -1,6 +1,5 @@
 package redbacks.robot.actions;
 
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import redbacks.arachne.lib.actions.Action;
@@ -52,14 +51,6 @@ public class AcReadSensors extends Action
 		}
 		
 		SmartDashboard.putNumber("Yaw", sensors.yaw.get());
-		
-		RobotMap.drivePIDMotorkP = SmartDashboard.getNumber("tempDrivekP", 0.0);
-		RobotMap.drivePIDMotorkI = SmartDashboard.getNumber("tempDrivekI", 0.0);
-		RobotMap.drivePIDMotorkD = SmartDashboard.getNumber("tempDrivekD", 0.0);
-		
-		RobotMap.drivePIDGyrokP = SmartDashboard.getNumber("tempGyrokP", 0.0);
-		RobotMap.drivePIDGyrokI = SmartDashboard.getNumber("tempGyrokI", 0.0);
-		RobotMap.drivePIDGyrokD = SmartDashboard.getNumber("tempGyrokD", 0.0);
 		
 		RobotMap.drivePIDtestDistance = SmartDashboard.getNumber("RotatingPIDDrive: DistanceTarget", 0.0);
 		RobotMap.drivePIDtestAngle = SmartDashboard.getNumber("RotatingPIDDrive: AngleTarget", 0.0);
