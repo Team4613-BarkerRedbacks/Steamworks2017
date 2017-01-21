@@ -10,8 +10,6 @@ import redbacks.arachne.lib.commands.CommandSetup;
 import redbacks.robot.actions.*;
 import redbacks.robot.pid.AcMultiPID;
 import redbacks.robot.pid.AcPIDControl;
-import redbacks.robot.pid.AcRotatingPIDDrive;
-import redbacks.robot.pid.AcTestPID;
 import redbacks.robot.pid.PIDMotor;
 import redbacks.robot.pid.Tolerances;
 
@@ -34,11 +32,9 @@ public class CommandList extends CommandListStart
 	static {subsystemToUse = driver;}
 	public static CommandSetup
 		drive = newCom(new AcDrive()),
-		pidtest = newCom(new AcTestPID()),
-		pidtest2 = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
-		rotatingpiddrivetest = newCom(new AcRotatingPIDDrive()),
+		pidExample = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
 		regainDriverControl = newCom(new AcInterrupt.KillSubsystem(driver)),
-		multiAxisTest = newCom(
+		multiAxisExample = newCom(
 				new AcMulti(
 						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.left), new double[]{-1, -1}, 
 								new AcMultiPID.PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis),

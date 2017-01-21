@@ -23,7 +23,6 @@ public class RobotMap
 		drivePIDMotorkP = 0.0005D, drivePIDMotorkI = 0.000005D, drivePIDMotorkD = 0.00005D,
 		drivePIDGyrokP = 0.025D, drivePIDGyrokI = 0.0001, drivePIDGyrokD = 0.001;
 	
-	public static double drivePIDtestDistance = 0.0D, drivePIDtestAngle = 0.0D;
 	public static double multiPIDDriveCombinerLeftOverflow = 0.0D, mutiPIDDriveCombinerRightOverflow = 0.0D;
 	
 	public static ButtonGettableWrapper shootButton = OI.d_B, feedButton = OI.d_A;

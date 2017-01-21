@@ -19,19 +19,7 @@ public class AcReadSensors extends Action
 	}
 
 	public void onStart() {
-		driveEncoder_UpdateMeasurements(); //Run first time to initialize variables
-		//CameraServer.getInstance().startAutomaticCapture();
-		SmartDashboard.putNumber("RotatingPIDDrive: DistanceTarget", sensors.driveREncoderDis.get());
-		SmartDashboard.putNumber("RotatingPIDDrive: AngleTarget", sensors.yaw.get());
-		
-		SmartDashboard.putNumber("tempDrivekP", RobotMap.drivePIDMotorkP);
-		SmartDashboard.putNumber("tempDrivekI", RobotMap.drivePIDMotorkI);
-		SmartDashboard.putNumber("tempDrivekD", RobotMap.drivePIDMotorkD);
-		
-		SmartDashboard.putNumber("tempGyrokP", RobotMap.drivePIDGyrokP);
-		SmartDashboard.putNumber("tempGyrokI", RobotMap.drivePIDGyrokI);
-		SmartDashboard.putNumber("tempGyrokD", RobotMap.drivePIDGyrokD);
-		
+		driveEncoder_UpdateMeasurements(); //Run first time to initialize variables		
 	}
 	
 	public void onRun() { //Runs every loop
@@ -50,11 +38,7 @@ public class AcReadSensors extends Action
 			driveEncoder_UpdateMeasurements();
 		}
 		
-		SmartDashboard.putNumber("Yaw", sensors.yaw.get());
-		
-		RobotMap.drivePIDtestDistance = SmartDashboard.getNumber("RotatingPIDDrive: DistanceTarget", 0.0);
-		RobotMap.drivePIDtestAngle = SmartDashboard.getNumber("RotatingPIDDrive: AngleTarget", 0.0);
-		
+		SmartDashboard.putNumber("Yaw", sensors.yaw.get());		
 	}
 
 	/**
