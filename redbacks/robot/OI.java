@@ -18,14 +18,10 @@ public class OI extends OIBase
 		whenHeld(d_RB, spitIn.c());
 		whenPressed(d_Start, reset.c());
 		
-		whenPressed(d_Back, pidExample.c());
-		whenPressed(d_X, regainDriverControl.c());
 		whenHeld(shootButton, shoot.c());
 		whenHeld(feedButton, shooterFeedHopper.c());
-		whenHeld(d_RStick, multiAxisExample.c());
 	}
 	
-	//Set up joysticks and buttons here.
 	private static final Joystick stick_d = new Joystick(0);
 	
 	public static final JoystickAxis

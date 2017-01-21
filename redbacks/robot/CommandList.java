@@ -23,6 +23,7 @@ public class CommandList extends CommandListStart
 	static {subsystemToUse = null;}
 	public static CommandSetup
 		encodersZero = newCom(new AcSetNumSen(sensors.driveLEncoderDis, 0.0D), new AcSetNumSen(sensors.driveREncoderDis, 0.0D)),
+		interruptDriver = newCom(new AcInterrupt.KillSubsystem(driver)),
 		reset = newCom(sensors.new AcReset());
 	
 	static {subsystemToUse = sensors;}
@@ -33,7 +34,6 @@ public class CommandList extends CommandListStart
 	public static CommandSetup
 		drive = newCom(new AcDrive()),
 		pidExample = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
-		regainDriverControl = newCom(new AcInterrupt.KillSubsystem(driver)),
 		multiAxisExample = newCom(
 				new AcMulti(
 						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.left), new double[]{-1, -1}, 
@@ -66,8 +66,6 @@ public class CommandList extends CommandListStart
 	static {subsystemToUse = intake;}
 	
 	static {subsystemToUse = feeder;}
-	public static CommandSetup
-		feedManual = newCom(new AcManualFeed());
 
 	static {subsystemToUse = climber;}
 	

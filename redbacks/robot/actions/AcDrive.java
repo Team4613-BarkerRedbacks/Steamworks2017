@@ -18,16 +18,6 @@ public class AcDrive extends Action
 	}
 	
 	/**
-	 * Tank drive method of control. Calculate adjustments to the inputs in this method.
-	 * 
-	 * @param l Left wheel speed.
-	 * @param r Right wheel speed.
-	 */
-	public void tankDrive(double l, double r) {
-		Robot.driver.drivetrain.tankDrive(l, r);
-	}
-	
-	/**
 	 * Pseudo-arcade drive method of control. Calculate adjustments to the inputs in this method.
 	 * 
 	 * @param sp The parallel speed and direction of the robot.

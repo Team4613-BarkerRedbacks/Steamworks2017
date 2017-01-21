@@ -1,7 +1,7 @@
 package redbacks.robot.pid;
 
 import redbacks.robot.RobotMap;
-import redbacks.robot.pid.AcMultiPID.PIDAxis;
+import redbacks.robot.pid.AcMultiPID.*;
 
 /**
  * A class to combines the MultiPID results of the drive to distance and gyro to let you drive to a distance and angle.
@@ -13,12 +13,12 @@ public class MultiPIDDriveCombiner extends MultiPIDCombiner
 	double multiplier, angle, output;
 	boolean isLeftMotor;
 	
-	public MultiPIDDriveCombiner(Boolean isLeftMotor, double multiplier) {
+	public MultiPIDDriveCombiner(boolean isLeftMotor, double multiplier) {
 		this.isLeftMotor = isLeftMotor;
 		this.multiplier = multiplier;
 	}
 	
-	public MultiPIDDriveCombiner(Boolean isLeftMotor) {
+	public MultiPIDDriveCombiner(boolean isLeftMotor) {
 		this(isLeftMotor, 1);
 	}
 

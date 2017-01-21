@@ -41,12 +41,10 @@ public class NavX
 	}
 
 	public static double getAccelRight() {
-		//TEST Axes
 		return navx.getWorldLinearAccelY();
 	}
 
 	public static double getAccelUp() {
-		//TEST Axes
 		return navx.getWorldLinearAccelZ();
 	}
 
@@ -56,12 +54,10 @@ public class NavX
 	}
 
 	public static double getSpeedRight() {
-		//TEST Axes
 		return navx.getVelocityY();
 	}
 
 	public static double getSpeedUp() {
-		//TEST Axes
 		return navx.getVelocityZ();
 	}
 

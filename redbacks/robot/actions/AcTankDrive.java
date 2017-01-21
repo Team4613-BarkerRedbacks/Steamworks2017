@@ -7,7 +7,6 @@ import redbacks.robot.Robot;
 public class AcTankDrive extends Action
 {
 	double l, r;
-	double lEnc, rEnc;
 	
 	public AcTankDrive(Check check, double lSpeed, double rSpeed) {
 		super(check);
@@ -24,6 +23,6 @@ public class AcTankDrive extends Action
 	}
 
 	public void onFinish() {
-		Robot.driver.drivetrain.tankDrive(-l, -r);
+		onRun();
 	}
 }
