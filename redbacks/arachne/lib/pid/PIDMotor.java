@@ -1,4 +1,4 @@
-package redbacks.robot.pid;
+package redbacks.arachne.lib.pid;
 
 import edu.wpi.first.wpilibj.PIDOutput;
 import redbacks.arachne.lib.actions.Action;

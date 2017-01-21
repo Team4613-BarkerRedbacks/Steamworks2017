@@ -7,11 +7,11 @@ import redbacks.arachne.lib.checks.*;
 import redbacks.arachne.lib.checks.digital.*;
 import redbacks.arachne.lib.checks.analog.*;
 import redbacks.arachne.lib.commands.CommandSetup;
+import redbacks.arachne.lib.pid.AcMultiPID;
+import redbacks.arachne.lib.pid.AcPIDControl;
+import redbacks.arachne.lib.pid.PIDMotor;
+import redbacks.arachne.lib.pid.Tolerances;
 import redbacks.robot.actions.*;
-import redbacks.robot.pid.AcMultiPID;
-import redbacks.robot.pid.AcPIDControl;
-import redbacks.robot.pid.PIDMotor;
-import redbacks.robot.pid.Tolerances;
 
 import static redbacks.robot.Robot.*;
 import static redbacks.robot.RobotMap.*;
