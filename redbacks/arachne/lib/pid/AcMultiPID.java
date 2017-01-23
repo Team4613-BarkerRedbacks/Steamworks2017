@@ -1,5 +1,6 @@
 package redbacks.arachne.lib.pid;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -7,6 +8,12 @@ import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChFalse;
 import redbacks.arachne.lib.checks.Check;
 
+/**
+ * An action to output to a {@link PIDOutput}, based on the value of multiple {@link PIDController PIDControllers}.
+ * This can be useful in combining a driven distance with a desired angle, for example.
+ *
+ * @author Sean Zammit
+ */
 public class AcMultiPID extends Action
 {
 	double min, max;
@@ -18,7 +25,30 @@ public class AcMultiPID extends Action
 	PIDOutput output;
 	
 	AcPIDControl[] actions;
+	
+	/**
+	 * Constructor for an action to output to a {@link PIDOutput}, based on the value of multiple {@link PIDController PIDControllers}.
+	 * 
+	 * @param check A check that will determine whether the action should stop.
+	 * @param shouldFinish Whether the action should finish once all the PIDControllers are on target.
+	 * @param output The single PIDOutput to be set after combining the PIDController values.
+	 * @param multipliers The multipliers to be used for each of the PIDControllers created using the {@link PIDParams}. This array should be equally as long.
+	 * @param params The parameters used to create {@link AcPIDControl} actions that will determine the PIDController output values to be combined.
+	 */
+	public AcMultiPID(Check check, boolean shouldFinish, PIDOutput output, double[] multipliers, PIDParams... params) {
+		this(check, shouldFinish, output, multipliers, new MultiPIDCombiner(), params);
+	}
 
+	/**
+	 * Constructor for an action to output to a {@link PIDOutput}, based on the value of multiple {@link PIDController PIDControllers}.
+	 * 
+	 * @param check A check that will determine whether the action should stop.
+	 * @param shouldFinish Whether the action should finish once all the PIDControllers are on target.
+	 * @param output The single PIDOutput to be set after combining the PIDController values.
+	 * @param multipliers The multipliers to be used for each of the PIDControllers created using the {@link PIDParams}. This array should be equally as long.
+	 * @param combiner The method of combining the outputs from the PIDControllers. By default, they are just summed.
+	 * @param params The parameters used to create {@link AcPIDControl} actions that will determine the PIDController output values to be combined.
+	 */
 	public AcMultiPID(Check check, boolean shouldFinish, PIDOutput output, double[] multipliers, MultiPIDCombiner combiner, PIDParams... params) {
 		super(check);
 		this.output = output;
@@ -30,10 +60,6 @@ public class AcMultiPID extends Action
 		this.params = params;
 		this.shouldFinish = shouldFinish;
 		this.combiner = combiner;
-	}
-	
-	public AcMultiPID(Check check, boolean shouldFinish, PIDOutput output, double[] multipliers, PIDParams... params) {
-		this(check, shouldFinish, output, multipliers, new MultiPIDCombiner(), params);
 	}
 
 	public void onStart() {
@@ -61,10 +87,21 @@ public class AcMultiPID extends Action
 		return allTargeted;
 	}
 
+	/**
+	 * A {@link PIDOutput} that stores the output value, instead of doing anything with it.
+	 * This is used by {@link AcMultiPID} to combine multiple {@link PIDController} outputs.
+	 *
+	 * @author Sean Zammit
+	 */
 	public static class PIDAxis implements PIDOutput
 	{
 		public double output = 0, multiplier;
 
+		/**
+		 * Constructor for a {@link PIDOutput} that stores the output value, instead of doing anything with it.
+		 * 
+		 * @param multiplier The multiplier to be used on the output.
+		 */
 		public PIDAxis(double multiplier) {
 			this.multiplier = multiplier;
 		}
@@ -74,6 +111,13 @@ public class AcMultiPID extends Action
 		}
 	}
 
+	/**
+	 * An object that holds all PID parameters required to create a {@link PIDController}.
+	 * This is used by {@link AcMultiPID} to allow multiple PIDControllers to be created.
+	 * As it passes all its values to an {@link AcPIDControl} instances, see it instead.
+	 *
+	 * @author Sean Zammit
+	 */
 	public static class PIDParams
 	{
 		public Check check;
@@ -85,18 +129,34 @@ public class AcMultiPID extends Action
 		public PIDSource input;
 		public PIDSourceType type;
 
+		/**
+		 * Constructor for an object that holds the required parameters for a {@link PIDController}.
+		 * See {@link AcPIDControl#AcPIDControl(double, double, double, double, Tolerances, PIDSource, PIDOutput...) AcPIDControl}.
+		 */
 		public PIDParams(double p, double i, double d, double target, Tolerances tolerance, PIDSource input) {
 			this(new ChFalse(), true, p, i, d, 0, target, tolerance, input, false, 0, 0, PIDSourceType.kDisplacement, -1, 1);
 		}
 
+		/**
+		 * Constructor for an object that holds the required parameters for a {@link PIDController}.
+		 * See {@link AcPIDControl#AcPIDControl(double, double, double, double, Tolerances, PIDSource, boolean, double, double, PIDOutput...) AcPIDControl}.
+		 */
 		public PIDParams(double p, double i, double d, double target, Tolerances tolerance, PIDSource input, boolean isContinuous, double minIn, double maxIn) {
 			this(new ChFalse(), true, p, i, d, 0, target, tolerance, input, isContinuous, minIn, maxIn, PIDSourceType.kDisplacement, -1, 1);
 		}
 
+		/**
+		 * Constructor for an object that holds the required parameters for a {@link PIDController}.
+		 * See {@link AcPIDControl#AcPIDControl(Check, boolean, double, double, double, double, Tolerances, PIDSource, boolean, double, double, PIDSourceType, double, double, PIDOutput...) AcPIDControl}.
+		 */
 		public PIDParams(Check check, boolean shouldFinish, double p, double i, double d, double target, Tolerances tolerance, PIDSource input, boolean isContinuous, double minIn, double maxIn, PIDSourceType type, double minOut, double maxOut) {
 			this(check, shouldFinish, p, i, d, 0, target, tolerance, input, isContinuous, minIn, maxIn, type, minOut, maxOut);
 		}
 
+		/**
+		 * Constructor for an object that holds the required parameters for a {@link PIDController}.
+		 * See {@link AcPIDControl#AcPIDControl(Check, boolean, double, double, double, double, double, Tolerances, PIDSource, boolean, double, double, PIDSourceType, double, double, PIDOutput...) AcPIDControl}.
+		 */
 		public PIDParams(Check check, boolean shouldFinish, double p, double i, double d, double f, double target, Tolerances tolerance, PIDSource input, boolean isContinuous, double minIn, double maxIn, PIDSourceType type, double minOut, double maxOut) {
 			this.check = check;
 			this.shouldFinish = shouldFinish;
@@ -117,8 +177,10 @@ public class AcMultiPID extends Action
 	}
 	
 	/**
+	 * TODO Complete documentation
+	 * 
 	 * A generic class to combine multiple PID outputs into one output for motor control, e.g. to combine directional and angling PID to create a rotating PID drive base that will rotate to both angle and difference.
-	 * This class will sum together all inputs for generic simple functionality. For more advanced control extend and override the combine() function with your own combining code. Comining code should only take
+	 * This class will sum together all inputs for generic simple functionality. For more advanced control extend and override the combine() function with your own combining code. Combining code should only take
 	 * 
 	 * @author SchwarzT18
 	 */
