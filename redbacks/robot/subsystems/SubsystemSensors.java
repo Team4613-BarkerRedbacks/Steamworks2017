@@ -5,7 +5,6 @@ import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChTrue;
 import redbacks.arachne.lib.navx.*;
 import redbacks.arachne.lib.sensors.SenCANEncoder;
-
 import static redbacks.robot.RobotMap.*;
 
 /**

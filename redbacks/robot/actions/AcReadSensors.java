@@ -22,6 +22,6 @@ public class AcReadSensors extends Action
 		SmartDashboard.putNumber("Velocity Left", NavX.getSpeedRight());
 		SmartDashboard.putNumber("Velocity Vertical", NavX.getSpeedUp());
 		
-		SmartDashboard.putNumber("Yaw", sensors.yaw.get());		
+		SmartDashboard.putNumber("Yaw", sensors.yaw.get());
 	}	
 }
