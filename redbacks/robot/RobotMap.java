@@ -6,6 +6,10 @@ import redbacks.arachne.lib.input.ButtonGettableWrapper;
 
 public class RobotMap
 {
+	//FIXME Determine correct ticks per metre.
+	public static final int
+		encoderTicksPerMetre = 2000;
+	
 	public static final CANTalon 
 		talon2 = new CANTalon(2),
 		talon3 = new CANTalon(3),
@@ -25,5 +29,5 @@ public class RobotMap
 	
 	public static double multiPIDDriveCombinerLeftOverflow = 0.0D, mutiPIDDriveCombinerRightOverflow = 0.0D;
 	
-	public static ButtonGettableWrapper shootButton = OI.d_B, feedButton = OI.d_A;
+	public static final ButtonGettableWrapper shootButton = OI.d_B, feedButton = OI.d_A;
 }

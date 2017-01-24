@@ -10,6 +10,7 @@ import redbacks.arachne.lib.commands.CommandSetup;
 import redbacks.arachne.lib.pid.AcMultiPID;
 import redbacks.arachne.lib.pid.AcPIDControl;
 import redbacks.arachne.lib.pid.PIDMotor;
+import redbacks.arachne.lib.pid.PIDParams;
 import redbacks.arachne.lib.pid.Tolerances;
 import redbacks.robot.actions.*;
 
@@ -37,12 +38,12 @@ public class CommandList extends CommandListStart
 		multiAxisExample = newCom(
 				new AcMulti(
 						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.left), new double[]{-1, -1}, 
-								new AcMultiPID.PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis),
-								new AcMultiPID.PIDParams(0.025, 0.0001, 0.001, 0, new Tolerances.Absolute(3), sensors.yaw)
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis),
+								new PIDParams(0.025, 0.0001, 0.001, 0, new Tolerances.Absolute(3), sensors.yaw)
 						),
 						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.right), new double[]{1, -1},
-								new AcMultiPID.PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis),
-								new AcMultiPID.PIDParams(0.025, 0.0001, 0.001, 0, new Tolerances.Absolute(3), sensors.yaw)
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis),
+								new PIDParams(0.025, 0.0001, 0.001, 0, new Tolerances.Absolute(3), sensors.yaw)
 						)
 				)
 		);
