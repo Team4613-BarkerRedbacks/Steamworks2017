@@ -1,6 +1,7 @@
 package redbacks.arachne.lib.trajectories;
 
 import edu.wpi.first.wpilibj.PIDSourceType;
+import redbacks.arachne.lib.actions.AcPrint;
 import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChFalse;
 import redbacks.arachne.lib.checks.Check;
@@ -9,6 +10,7 @@ import redbacks.arachne.lib.pid.AcPIDControl;
 import redbacks.arachne.lib.pid.Tolerances;
 import redbacks.arachne.lib.pid.AcMultiPID.PIDAxis;
 import redbacks.arachne.lib.sensors.NumericSensor;
+import redbacks.robot.Robot;
 
 public class AcTrajectory extends Action
 {
@@ -41,17 +43,20 @@ public class AcTrajectory extends Action
 		this.invertEncoder = invertEncoder;
 		
 		this.linearOut = new PIDAxis(1);
-		this.acLinear = new AcPIDControl(new ChFalse(), shouldFinish, p, i, d, 0, trajectory.totalDistance * (invertEncoder ? -1 : 1), tolerance, encoder, isContinuous, minIn, maxIn, PIDSourceType.kDisplacement, -1, 1, linearOut);
+		this.acLinear = new AcPIDControl(new ChFalse(), shouldFinish, p, i, d, 0, trajectory.totalDistance * (invertEncoder ? -1 : 1), tolerance, encoder, isContinuous, minIn, maxIn, PIDSourceType.kDisplacement, -0.5, 0.5, linearOut);
 	}
 	
 	public void onStart() {
 		trajectory.reset();
+		gyro.set(0);
+		encoder.set(0);
+		Robot.isIndivDriveControl = false;
 		acLinear.initialise(command);
 	}
 	
 	public void onRun() {
 		acLinear.execute();
-		drivetrain.tankDrive((linearOut.output - getGyro() * gyroComp) * driveMults[0], (linearOut.output + getGyro() * gyroComp) * driveMults[1]);
+		drivetrain.tankDrive((linearOut.output - (getGyro() - trajectory.getAngleFromDistance(Math.abs(encoder.get()))) * gyroComp) * driveMults[0], (linearOut.output + (getGyro() - trajectory.getAngleFromDistance(Math.abs(encoder.get()))) * gyroComp) * driveMults[1]);
 	}
 	
 	public void onFinish() {

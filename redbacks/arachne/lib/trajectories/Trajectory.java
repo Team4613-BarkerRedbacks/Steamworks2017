@@ -1,7 +1,5 @@
 package redbacks.arachne.lib.trajectories;
 
-import redbacks.robot.RobotMap;
-
 public class Trajectory
 {
 	public double[][] waypoints;
@@ -10,6 +8,7 @@ public class Trajectory
 	
 	public Trajectory(double[]... waypoints) {
 		this.waypoints = waypoints;
+		totalDistance = waypoints[waypoints.length-1][0];
 	}
 	
 	public void reset() {
@@ -17,7 +16,9 @@ public class Trajectory
 	}
 	
 	public double getAngleFromDistance(double distance) {
-		for(; progressIndex < waypoints.length && distance * RobotMap.encoderTicksPerMetre < waypoints[progressIndex][0]; progressIndex++);
+		while(progressIndex < waypoints.length - 1 && distance > waypoints[progressIndex][0]) {
+			progressIndex++;
+		}
 		return waypoints[progressIndex][1];
 	}
 	

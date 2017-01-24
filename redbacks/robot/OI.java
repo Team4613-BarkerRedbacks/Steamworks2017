@@ -20,6 +20,8 @@ public class OI extends OIBase
 		
 		whenHeld(shootButton, shoot.c());
 		whenHeld(feedButton, shooterFeedHopper.c());
+		
+		whenHeld(d_X, trajectoryTest.c());
 	}
 	
 	private static final Joystick stick_d = new Joystick(0);

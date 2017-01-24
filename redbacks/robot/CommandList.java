@@ -12,6 +12,7 @@ import redbacks.arachne.lib.pid.AcPIDControl;
 import redbacks.arachne.lib.pid.PIDMotor;
 import redbacks.arachne.lib.pid.PIDParams;
 import redbacks.arachne.lib.pid.Tolerances;
+import redbacks.arachne.lib.trajectories.AcTrajectory;
 import redbacks.robot.actions.*;
 
 import static redbacks.robot.Robot.*;
@@ -46,6 +47,10 @@ public class CommandList extends CommandListStart
 								new PIDParams(0.025, 0.0001, 0.001, 0, new Tolerances.Absolute(3), sensors.yaw)
 						)
 				)
+		),
+		trajectoryTest = newCom(
+				new AcTrajectory(new ChFalse(), true, TrajectoryList.testTrajectory, driver.drivetrain, -1, -1, 
+				sensors.yaw, 0.02, sensors.driveREncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(50), false, 0, 0)
 		);
 	
 	static {subsystemToUse = shooter;}
