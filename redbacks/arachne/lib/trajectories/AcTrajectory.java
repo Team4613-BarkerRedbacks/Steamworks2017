@@ -56,7 +56,7 @@ public class AcTrajectory extends Action
 	
 	public void onRun() {
 		acLinear.execute();
-		drivetrain.tankDrive((linearOut.output - (getGyro() - trajectory.getAngleFromDistance(Math.abs(encoder.get()))) * gyroComp) * driveMults[0], (linearOut.output + (getGyro() - trajectory.getAngleFromDistance(Math.abs(encoder.get()))) * gyroComp) * driveMults[1]);
+		drivetrain.tankDrive((linearOut.output - (getGyro() - trajectory.getAngleFromDistance(Math.abs(encoder.get()))) * gyroComp * Math.abs(linearOut.output)) * driveMults[0], (linearOut.output + (getGyro() - trajectory.getAngleFromDistance(Math.abs(encoder.get()))) * gyroComp * Math.abs(linearOut.output)) * driveMults[1]);
 	}
 	
 	public void onFinish() {
