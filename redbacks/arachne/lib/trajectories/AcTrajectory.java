@@ -1,7 +1,6 @@
 package redbacks.arachne.lib.trajectories;
 
 import edu.wpi.first.wpilibj.PIDSourceType;
-import redbacks.arachne.lib.actions.AcPrint;
 import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChFalse;
 import redbacks.arachne.lib.checks.Check;

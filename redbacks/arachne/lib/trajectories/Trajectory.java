@@ -16,7 +16,7 @@ public class Trajectory
 	}
 	
 	public double getAngleFromDistance(double distance) {
-		while(progressIndex < waypoints.length - 1 && distance > waypoints[progressIndex][0]) {
+		while(progressIndex < waypoints.length - 1 && Math.abs(distance) > Math.abs(waypoints[progressIndex][0])) {
 			progressIndex++;
 		}
 		return waypoints[progressIndex][1];
