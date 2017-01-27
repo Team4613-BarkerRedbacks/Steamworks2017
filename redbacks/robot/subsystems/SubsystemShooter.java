@@ -13,13 +13,13 @@ import com.ctre.CANTalon.TalonControlMode;
  */
 public class SubsystemShooter extends SubsystemBase
 {
-	public CtrlMotor shooter = new CtrlMotor(talon6);
-	public CANTalon shootSlave = talon7;
+	public CtrlMotor shooterMotor = new CtrlMotor(idMotShoot1);
+	public CANTalon shooterSlave = idMotShoot2;
 
 	public SubsystemShooter() {
 		super();
 		
-		shootSlave.setControlMode(TalonControlMode.Follower.value);
-		shootSlave.set(((CANTalon) shooter.controller).getDeviceID());
+		shooterSlave.setControlMode(TalonControlMode.Follower.value);
+		shooterSlave.set(((CANTalon) shooterMotor.controller).getDeviceID());
 	}
 }

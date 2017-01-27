@@ -14,22 +14,22 @@ import static redbacks.robot.RobotMap.*;
 public class SubsystemDriver extends SubsystemBase
 {
 	//Set up motors and solenoids here. Make sure to use the RobotMap.
-	public CtrlDrive left = new CtrlDrive(talon3);
-	public CtrlDrive right = new CtrlDrive(talon2);
+	public CtrlDrive leftMotor = new CtrlDrive(idMotLDrive1);
+	public CtrlDrive rightMotor = new CtrlDrive(idMotRDrive1);
 
-	protected CANTalon lSlave1 = talon5;
-	protected CANTalon rSlave1 = talon4;
+	protected CANTalon leftSlave = idMotLDrive2;
+	protected CANTalon rightSlave = idMotRDrive2;
 
-	public CtrlDrivetrain drivetrain = new CtrlDrivetrain(left, right);
+	public CtrlDrivetrain drivetrain = new CtrlDrivetrain(leftMotor, rightMotor);
 
 	public SubsystemDriver() {
 		super();
 		//Left side
-		lSlave1.setControlMode(TalonControlMode.Follower.value);
-		lSlave1.set(((CANTalon) left.controller).getDeviceID());
+		leftSlave.setControlMode(TalonControlMode.Follower.value);
+		leftSlave.set(((CANTalon) leftMotor.controller).getDeviceID());
 
 		//Right side
-		rSlave1.setControlMode(TalonControlMode.Follower.value);
-		rSlave1.set(((CANTalon) right.controller).getDeviceID());
+		rightSlave.setControlMode(TalonControlMode.Follower.value);
+		rightSlave.set(((CANTalon) rightMotor.controller).getDeviceID());
 	}
 }

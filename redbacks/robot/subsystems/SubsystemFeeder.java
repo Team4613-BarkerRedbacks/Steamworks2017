@@ -13,13 +13,13 @@ import com.ctre.CANTalon.TalonControlMode;
  */
 public class SubsystemFeeder extends SubsystemBase
 {
-	public CtrlMotor feeder = new CtrlMotor(talon8);
-	protected CANTalon feedSlave = talon9;
+	public CtrlMotor feederMotor = new CtrlMotor(idMotFeed1);
+	protected CANTalon feederSlave = idMotFeed2;
 
 	public SubsystemFeeder() {
 		super();
 		
-		feedSlave.setControlMode(TalonControlMode.Follower.value);
-		feedSlave.set(((CANTalon) feeder.controller).getDeviceID());
+		feederSlave.setControlMode(TalonControlMode.Follower.value);
+		feederSlave.set(((CANTalon) feederMotor.controller).getDeviceID());
 	}
 }

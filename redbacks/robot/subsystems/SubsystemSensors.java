@@ -4,7 +4,8 @@ import redbacks.arachne.core.SubsystemBase;
 import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChTrue;
 import redbacks.arachne.lib.navx.*;
-import redbacks.arachne.lib.sensors.SenCANEncoder;
+import redbacks.arachne.lib.sensors.*;
+
 import static redbacks.robot.RobotMap.*;
 
 /**
@@ -15,11 +16,22 @@ import static redbacks.robot.RobotMap.*;
 public class SubsystemSensors extends SubsystemBase
 {
 	//Drive
-	public SenCANEncoder.Displacement driveREncoderDis = new SenCANEncoder.Displacement(talon6);
-	public SenCANEncoder.Rate driveREncoderRate = new SenCANEncoder.Rate(talon6);
+	public SenCANEncoder.Displacement rightEncoderDis = new SenCANEncoder.Displacement(talon2);
+	public SenCANEncoder.Rate rightEncoderRate = new SenCANEncoder.Rate(talon2);
 
-	public SenCANEncoder.Displacement driveLEncoderDis = new SenCANEncoder.Displacement(talon7);
-	public SenCANEncoder.Rate driveLEncoderRate = new SenCANEncoder.Rate(talon7);
+	public SenCANEncoder.Displacement leftEncoderDis = new SenCANEncoder.Displacement(talon3);
+	public SenCANEncoder.Rate leftEncoderRate = new SenCANEncoder.Rate(talon3);
+
+	public SenCANEncoder.Displacement centreEncoderDis = new SenCANEncoder.Displacement(talon6);
+	public SenCANEncoder.Rate centreEncoderRate = new SenCANEncoder.Rate(talon6);
+	
+	//Shooter
+	public SenCANEncoder.Rate shooterEncoderRate = new SenCANEncoder.Rate(talon8);
+	
+	//Spitter
+	public SenCANDigitalInput 
+		gearLight1 = new SenCANDigitalInput(talon10, true),
+		gearLight2 = new SenCANDigitalInput(talon10, false);
 	
 	//NavX
 	public NavX.Sensor pitch = new NavX.Sensor(NavXReading.ANGLE_PITCH);
@@ -40,8 +52,8 @@ public class SubsystemSensors extends SubsystemBase
 
 	public SubsystemSensors() {
 		super();
-		driveREncoderDis.setScaleFactor(-1);
-		driveREncoderRate.setScaleFactor(-1);
+		rightEncoderDis.setScaleFactor(-1);
+		rightEncoderRate.setScaleFactor(-1);
 
 		resetSensors();
 	}
@@ -58,8 +70,9 @@ public class SubsystemSensors extends SubsystemBase
 	}
 
 	public void resetSensors() {
-		driveLEncoderDis.set(0);
-		driveREncoderDis.set(0);
+		leftEncoderDis.set(0);
+		rightEncoderDis.set(0);
+		centreEncoderDis.set(0);
 		yaw.set(0);
 	}
 }

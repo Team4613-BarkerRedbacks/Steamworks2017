@@ -2,6 +2,7 @@ package redbacks.robot.subsystems;
 
 import redbacks.arachne.core.SubsystemBase;
 import redbacks.arachne.lib.motors.CtrlMotor;
+import redbacks.arachne.lib.solenoids.SolSingle;
 
 import static redbacks.robot.RobotMap.*;
 
@@ -10,7 +11,8 @@ import static redbacks.robot.RobotMap.*;
  */
 public class SubsystemSpitter extends SubsystemBase
 {
-	public CtrlMotor spitter = new CtrlMotor(talon12);
+	public CtrlMotor spitterMotor = new CtrlMotor(idMotSpit);
+	public SolSingle spitterSol = new SolSingle(idSolSpit);
 
 	public SubsystemSpitter() {
 		super();

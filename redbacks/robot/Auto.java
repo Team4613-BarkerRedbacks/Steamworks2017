@@ -16,7 +16,7 @@ public class Auto extends AutoStart
 		switch(autoNumber) {
 			case(1): return createAuto(
 					sensors.new AcReset(),
-					new AcTankDrive(new ChNumSen(3000, sensors.driveREncoderDis), 0.83D, 0.9D),
+					new AcTankDrive(new ChNumSen(3000, sensors.rightEncoderDis), 0.83D, 0.9D),
 					new AcTankDrive(new ChNumSen(8, sensors.yaw, true, false, false), 0.9D, 0.8D),
 					new AcTankDrive(new ChTime(0.2D), 0.4D, 0.4D)
 			);

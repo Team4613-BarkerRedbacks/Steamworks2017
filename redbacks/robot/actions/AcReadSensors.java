@@ -13,10 +13,10 @@ public class AcReadSensors extends Action
 	}
 
 	public void onRun() { //Runs every loop
-		SmartDashboard.putNumber("Left Encoder", sensors.driveLEncoderDis.get());
-		SmartDashboard.putNumber("Right Encoder", sensors.driveREncoderDis.get());
+		SmartDashboard.putNumber("Left Encoder", sensors.leftEncoderDis.get());
+		SmartDashboard.putNumber("Right Encoder", sensors.rightEncoderDis.get());
 		
-		SmartDashboard.putNumber("Shooter speed", sensors.driveLEncoderRate.get());
+		SmartDashboard.putNumber("Shooter speed", sensors.leftEncoderRate.get());
 		
 		SmartDashboard.putNumber("Velocity Forward", NavX.getSpeedForward());
 		SmartDashboard.putNumber("Velocity Left", NavX.getSpeedRight());

@@ -24,9 +24,15 @@ public class CommandList extends CommandListStart
 {
 	static {subsystemToUse = null;}
 	public static CommandSetup
-		encodersZero = newCom(new AcSetNumSen(sensors.driveLEncoderDis, 0.0D), new AcSetNumSen(sensors.driveREncoderDis, 0.0D)),
+		encodersZero = newCom(new AcSetNumSen(sensors.leftEncoderDis, 0.0D), new AcSetNumSen(sensors.rightEncoderDis, 0.0D)),
 		interruptDriver = newCom(new AcInterrupt.KillSubsystem(driver)),
-		reset = newCom(sensors.new AcReset());
+		reset = newCom(sensors.new AcReset()),
+
+		intakeDown = newCom(new AcSolenoid.Single(intake.intakeSol, false)),
+		intakeUp = newCom(new AcSolenoid.Single(intake.intakeSol, true)),
+
+		spitterDown = newCom(new AcSolenoid.Single(spitter.spitterSol, false)),
+		spitterUp = newCom(new AcSolenoid.Single(spitter.spitterSol, true));
 	
 	static {subsystemToUse = sensors;}
 	public static CommandSetup
@@ -35,38 +41,38 @@ public class CommandList extends CommandListStart
 	static {subsystemToUse = driver;}
 	public static CommandSetup
 		drive = newCom(new AcDrive()),
-		pidExample = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis, new PIDMotor(driver.left).setMultiplier(-1), new PIDMotor(driver.right))),
+		pidExample = newCom(new AcPIDControl(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.rightEncoderDis, new PIDMotor(driver.leftMotor).setMultiplier(-1), new PIDMotor(driver.rightMotor))),
 		multiAxisExample = newCom(
 				new AcMulti(
-						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.left), new double[]{-1, -1}, 
-								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis),
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.leftMotor), new double[]{-1, -1}, 
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.rightEncoderDis),
 								new PIDParams(0.025, 0.0001, 0.001, 0, new Tolerances.Absolute(3), sensors.yaw)
 						),
-						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.right), new double[]{1, -1},
-								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.driveREncoderDis),
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.rightMotor), new double[]{1, -1},
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, 0, new Tolerances.Absolute(50), sensors.rightEncoderDis),
 								new PIDParams(0.025, 0.0001, 0.001, 0, new Tolerances.Absolute(3), sensors.yaw)
 						)
 				)
 		),
 		trajectoryTest = newCom(
-				new AcTrajectory(new ChFalse(), true, TrajectoryList.testTrajectory, driver.drivetrain, -1, -1, 
-				sensors.yaw, 0.02, sensors.driveREncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(50), false, 0, 0)
+				new AcTrajectory(new ChFalse(), true, TrajectoryList.trajectoryTest, driver.drivetrain, -1, -1, 
+				sensors.yaw, 0.02, sensors.rightEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(50), false, 0, 0)
 		);
 	
 	static {subsystemToUse = shooter;}
 	public static CommandSetup
 		shoot = newCom(
-			new AcMotor.RampTime(shooter.shooter, 0.75D, 2),
-			new AcSeq.Parallel(feeder, new AcMotor.Set(feeder.feeder, 0.6D, new ChGettableBoolean(shootButton, false))),
-			new AcPIDControl(new ChGettableBoolean(shootButton, false), false, 1.0E-5, 0, 5.0E-5, 0.000010D, -6300, new Tolerances.Percentage(1.0), sensors.driveLEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooter).setMultiplier(-1)),
-			new AcMotor.Set(shooter.shooter, 0.75D, new ChTrue()),
-			new AcMotor.RampTime(shooter.shooter, 0, 2)
+			new AcMotor.RampTime(shooter.shooterMotor, 0.75D, 2),
+			new AcSeq.Parallel(feeder, new AcMotor.Set(feeder.feederMotor, 0.6D, new ChGettableBoolean(shootButton, false))),
+			new AcPIDControl(new ChGettableBoolean(shootButton, false), false, 1.0E-5, 0, 5.0E-5, 0.000010D, -6300, new Tolerances.Percentage(1.0), sensors.leftEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooterMotor).setMultiplier(-1)),
+			new AcMotor.Set(shooter.shooterMotor, 0.75D, new ChTrue()),
+			new AcMotor.RampTime(shooter.shooterMotor, 0, 2)
 		),
 		shooterFeedHopper = newCom(
-			new AcSeq.Parallel(feeder, new AcMotor.Set(feeder.feeder, 0.4D, new ChGettableBoolean(feedButton, false))),
-			new AcMotor.RampTime(shooter.shooter, 0.25D, 0.5D),
+			new AcSeq.Parallel(feeder, new AcMotor.Set(feeder.feederMotor, 0.4D, new ChGettableBoolean(feedButton, false))),
+			new AcMotor.RampTime(shooter.shooterMotor, 0.25D, 0.5D),
 			new AcDoNothing(new ChGettableBoolean(feedButton, false)),
-			new AcMotor.RampTime(shooter.shooter, 0, 0.5D)
+			new AcMotor.RampTime(shooter.shooterMotor, 0, 0.5D)
 		);
 	
 	static {subsystemToUse = intake;}
@@ -77,8 +83,8 @@ public class CommandList extends CommandListStart
 	
 	static {subsystemToUse = spitter;}
 	public static CommandSetup
-		spit = newCom(new AcMotor.Set(spitter.spitter, 1.0D, new ChFalse())),
-		spitIn = newCom(new AcMotor.Set(spitter.spitter, -0.2D, new ChFalse()));
+		spit = newCom(new AcMotor.Set(spitter.spitterMotor, 1.0D, new ChFalse())),
+		spitIn = newCom(new AcMotor.Set(spitter.spitterMotor, -0.2D, new ChFalse()));
 	
 	static {subsystemToUse = sequencer;}
 	
