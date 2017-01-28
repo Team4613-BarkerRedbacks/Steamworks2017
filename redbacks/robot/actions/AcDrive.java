@@ -1,5 +1,6 @@
 package redbacks.robot.actions;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChFalse;
 import redbacks.robot.OI;
@@ -14,7 +15,9 @@ public class AcDrive extends Action
 	double minR = 0.4D, difR = 0.5D;
 
 	public void onRun() {
-		if(!Robot.isIndivDriveControl) arcadeDrive(-OI.axis_d_RY.get(), OI.axis_d_LX.get());
+		boolean invertDrive = SmartDashboard.getBoolean("invertDrive", false);
+		SmartDashboard.putBoolean("invertDrive", invertDrive);
+		if(!Robot.isIndivDriveControl) arcadeDrive(OI.axis_d_RY.get() * (invertDrive ? 1 : -1), OI.axis_d_LX.get());
 	}
 	
 	/**
