@@ -27,11 +27,10 @@ public class SubsystemSensors extends SubsystemBase
 	
 	//Shooter
 	public SenCANEncoder.Rate shooterEncoderRate = new SenCANEncoder.Rate(talon8);
+	public SenCANDigitalInput shooterLight = new SenCANDigitalInput(talon10, true);
 	
 	//Spitter
-	public SenCANDigitalInput 
-		gearLight1 = new SenCANDigitalInput(talon10, true),
-		gearLight2 = new SenCANDigitalInput(talon10, false);
+	public SenCANDigitalInput gearLight = new SenCANDigitalInput(talon10, false);
 	
 	//NavX
 	public NavX.Sensor pitch = new NavX.Sensor(NavXReading.ANGLE_PITCH);

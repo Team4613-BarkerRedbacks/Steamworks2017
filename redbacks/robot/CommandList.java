@@ -62,17 +62,20 @@ public class CommandList extends CommandListStart
 	static {subsystemToUse = shooter;}
 	public static CommandSetup
 		shoot = newCom(
-			new AcMotor.RampTime(shooter.shooterMotor, 0.75D, 2),
-			new AcSeq.Parallel(feeder, new AcMotor.Set(feeder.feederMotor, 0.6D, new ChGettableBoolean(shootButton, false))),
-			new AcPIDControl(new ChGettableBoolean(shootButton, false), false, 1.0E-5, 0, 5.0E-5, 0.000010D, -6300, new Tolerances.Percentage(1.0), sensors.leftEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooterMotor).setMultiplier(-1)),
-			new AcMotor.Set(shooter.shooterMotor, 0.75D, new ChTrue()),
-			new AcMotor.RampTime(shooter.shooterMotor, 0, 2)
+				new AcMotor.RampTime(shooter.shooterMotor, 0.75D, 2),
+				new AcMotor.Set(feeder.feederMotor, 0.6D, new ChTrue()).setDependencies(feeder),
+				new AcPIDControl(new ChFalse(), false, 1.0E-5, 0, 5.0E-5, 0.000010D, -6300, new Tolerances.Percentage(1.0), sensors.leftEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooterMotor).setMultiplier(-1))
+		),
+		rel_shoot = newCom(
+				new AcMotor.Set(shooter.shooterMotor, 0.75D, new ChTrue()),
+				new AcMotor.RampTime(shooter.shooterMotor, 0, 2)
 		),
 		shooterFeedHopper = newCom(
-			new AcSeq.Parallel(feeder, new AcMotor.Set(feeder.feederMotor, 0.4D, new ChGettableBoolean(feedButton, false))),
-			new AcMotor.RampTime(shooter.shooterMotor, 0.25D, 0.5D),
-			new AcDoNothing(new ChGettableBoolean(feedButton, false)),
-			new AcMotor.RampTime(shooter.shooterMotor, 0, 0.5D)
+				new AcMotor.Set(feeder.feederMotor, 0.4D, new ChTrue()).setDependencies(feeder),
+				new AcMotor.RampTime(shooter.shooterMotor, 0.25D, 0.5D)
+		),
+		rel_shooterFeedHopper = newCom(
+				new AcMotor.RampTime(shooter.shooterMotor, 0, 0.5D)
 		);
 	
 	static {subsystemToUse = intake;}
@@ -80,6 +83,9 @@ public class CommandList extends CommandListStart
 	static {subsystemToUse = feeder;}
 
 	static {subsystemToUse = climber;}
+	public static CommandSetup
+		climbSlow = newCom(new AcMotor.Set(climber.climberMotor, 0.3D, new ChFalse())),
+		climb = newCom(new AcMotor.Set(climber.climberMotor, 1.0D, new ChFalse()));
 	
 	static {subsystemToUse = spitter;}
 	public static CommandSetup

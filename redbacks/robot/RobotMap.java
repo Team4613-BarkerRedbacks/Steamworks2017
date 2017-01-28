@@ -2,8 +2,6 @@ package redbacks.robot;
 
 import com.ctre.CANTalon;
 
-import redbacks.arachne.lib.input.ButtonGettableWrapper;
-
 public class RobotMap
 {
 	//FIXME Determine correct ticks per metre.
@@ -47,6 +45,4 @@ public class RobotMap
 		drivePIDGyrokP = 0.025D, drivePIDGyrokI = 0.0001, drivePIDGyrokD = 0.001;
 	
 	public static double multiPIDDriveCombinerLeftOverflow = 0.0D, mutiPIDDriveCombinerRightOverflow = 0.0D;
-	
-	public static final ButtonGettableWrapper shootButton = OI.d_B, feedButton = OI.d_A;
 }
