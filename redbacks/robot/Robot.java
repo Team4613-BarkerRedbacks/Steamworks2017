@@ -8,6 +8,9 @@ import static redbacks.robot.CommandList.*;
 
 import edu.wpi.first.wpilibj.CameraServer;
 
+/**
+ * @author Sean Zammit
+ */
 public class Robot extends ArachneRobot
 {
 	/** The instance of the operator interface. This is used to map inputs to functions. */
@@ -17,7 +20,7 @@ public class Robot extends ArachneRobot
 	
 	public static SubsystemDriver driver = new SubsystemDriver();
 	public static SubsystemShooter shooter = new SubsystemShooter();
-	public static SubsystemFeeder feeder = new SubsystemFeeder();
+	public static SubsystemHopper hopper = new SubsystemHopper();
 	public static SubsystemIntake intake = new SubsystemIntake();
 	public static SubsystemClimber climber = new SubsystemClimber();
 	public static SubsystemSpitter spitter = new SubsystemSpitter();

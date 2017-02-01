@@ -12,8 +12,9 @@ import static redbacks.robot.RobotMap.*;
 public class SubsystemSpitter extends SubsystemBase
 {
 	public CtrlMotor spitterMotor = new CtrlMotor(idMotSpit);
+	
 	public SolSingle spitterSol = new SolSingle(idSolSpit);
-
+	
 	public SubsystemSpitter() {
 		super();
 	}

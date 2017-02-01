@@ -20,25 +20,31 @@ public class RobotMap
 		talon10	= new CANTalon(10),
 		talon11	= new CANTalon(11),
 		talon12	= new CANTalon(12),
-		talon13	= new CANTalon(13);
+		talon13	= new CANTalon(13),
+		talon14	= new CANTalon(14),
+		talon15	= new CANTalon(15),
+		talon16	= new CANTalon(16);
 	
 	public static final CANTalon
-		idMotRDrive1	= talon2,
-		idMotLDrive1	= talon3,
-		idMotRDrive2	= talon4,
-		idMotLDrive2	= talon5,
-		idMotShoot1		= talon6,
-		idMotShoot2		= talon7,
-		idMotFeed1		= talon8,
-		idMotFeed2		= talon9,
-		idMotClimb1		= talon10,
-		idMotClimb2		= talon11,
-		idMotIntake		= talon12,
-		idMotSpit		= talon13;
+		idMotDriveRF	= talon2,
+		idMotDriveLF	= talon3,
+		idMotDriveRB	= talon4,
+		idMotDriveLB	= talon5,
+		idMotDriveRT	= talon6,
+		idMotDriveLT	= talon7,
+		idMotHopperR	= talon8,
+		idMotHopperL	= talon9,
+		idMotSpit		= talon10,
+		idMotShootL		= talon11,
+		idMotShootR		= talon12,
+		idMotIntakeF	= talon13,
+		idMotIntakeB	= talon14,
+		idMotClimbL		= talon15,
+		idMotClimbR		= talon16;
 	
 	public static final int
-		idSolIntake	= 0,
-		idSolSpit	= 1;
+		idSolSpit	= 4,
+		idSolIntake	= 5;
 	
 	public static final double
 		drivePIDMotorkP = 0.0005D, drivePIDMotorkI = 0.000005D, drivePIDMotorkD = 0.00005D,

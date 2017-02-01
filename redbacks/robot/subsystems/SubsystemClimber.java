@@ -2,26 +2,25 @@ package redbacks.robot.subsystems;
 
 import redbacks.arachne.core.SubsystemBase;
 import redbacks.arachne.lib.motors.CtrlMotor;
+import redbacks.arachne.lib.motors.CtrlMotorList;
 
 import static redbacks.robot.RobotMap.*;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
-
 /**
- * @author Matthew Brian
- * 
+ * @author Matthew Brian, Sean Zammit
  */
-public class SubsystemClimber extends SubsystemBase {
-
-    public CtrlMotor climberMotor = new CtrlMotor(idMotClimb1);
-	protected CANTalon climberSlave = idMotClimb2;
-
-    public SubsystemClimber() {
-    	super();
+public class SubsystemClimber extends SubsystemBase
+{
+	CtrlMotor motClimbL = new CtrlMotor(idMotClimbL);
+	CtrlMotor motClimbR = new CtrlMotor(idMotClimbR);
+	
+	public CtrlMotorList climberMotor = new CtrlMotorList(
+			motClimbL, motClimbR
+	);
+	
+	public SubsystemClimber() {
+		super();
 		
-    	climberSlave.setControlMode(TalonControlMode.Follower.value);
-    	climberSlave.set(((CANTalon) climberMotor.controller).getDeviceID());
-    	climberSlave.setInverted(true);
-    }
+		motClimbR.setInverted(true);
+	}
 }

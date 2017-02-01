@@ -22,15 +22,15 @@ public class SubsystemSensors extends SubsystemBase
 	public SenCANEncoder.Displacement leftEncoderDis = new SenCANEncoder.Displacement(talon3);
 	public SenCANEncoder.Rate leftEncoderRate = new SenCANEncoder.Rate(talon3);
 
-	public SenCANEncoder.Displacement centreEncoderDis = new SenCANEncoder.Displacement(talon6);
-	public SenCANEncoder.Rate centreEncoderRate = new SenCANEncoder.Rate(talon6);
+	public SenCANEncoder.Displacement centreEncoderDis = new SenCANEncoder.Displacement(talon10);
+	public SenCANEncoder.Rate centreEncoderRate = new SenCANEncoder.Rate(talon10);
 	
 	//Shooter
 	public SenCANEncoder.Rate shooterEncoderRate = new SenCANEncoder.Rate(talon8);
-	public SenCANDigitalInput shooterLight = new SenCANDigitalInput(talon10, true);
+	public SenCANDigitalInput shooterLight = new SenCANDigitalInput(talon6, true);
 	
 	//Spitter
-	public SenCANDigitalInput gearLight = new SenCANDigitalInput(talon10, false);
+	public SenCANDigitalInput gearLight = new SenCANDigitalInput(talon6, false);
 	
 	//NavX
 	public NavX.Sensor pitch = new NavX.Sensor(NavXReading.ANGLE_PITCH);

@@ -14,11 +14,11 @@ import static redbacks.robot.RobotMap.*;
 public class SubsystemDriver extends SubsystemBase
 {
 	//Set up motors and solenoids here. Make sure to use the RobotMap.
-	public CtrlDrive leftMotor = new CtrlDrive(idMotLDrive1);
-	public CtrlDrive rightMotor = new CtrlDrive(idMotRDrive1);
+	public CtrlDrive leftMotor = new CtrlDrive(idMotDriveLF);
+	public CtrlDrive rightMotor = new CtrlDrive(idMotDriveRF);
 
-	protected CANTalon leftSlave = idMotLDrive2;
-	protected CANTalon rightSlave = idMotRDrive2;
+	protected CANTalon leftSlave = idMotDriveLB;
+	protected CANTalon rightSlave = idMotDriveRB;
 
 	public CtrlDrivetrain drivetrain = new CtrlDrivetrain(leftMotor, rightMotor);
 
