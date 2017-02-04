@@ -32,6 +32,17 @@ public class Auto extends AutoStart
 					new AcTankDrive(new ChNumSen(45, sensors.yaw, true, false, false), 1.0D, 0.8D),
 					new AcTankDrive(new ChTime(0.3D), 0.5D, 0.5D)
 			);
+			
+			case(3): return createAuto(
+					new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_wallToBottomGear, driver.drivetrain, -1, -1,
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(150), false, 0, 0),
+					new AcWait(1D),
+					new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_bottomGearToBottomRightHopper, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(600), false, 0, 0),
+					new AcWait(1D),
+					new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_bottomRightHopperToBoiler, driver.drivetrain, -1, -1,
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(600), false, 0, 0)
+			);
 			default: return null;
 		}
 	}
