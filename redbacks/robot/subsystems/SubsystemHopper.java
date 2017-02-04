@@ -20,7 +20,7 @@ public class SubsystemHopper extends SubsystemBase
 	
 	public SubsystemHopper() {
 		super();
-		
-		motHopperR.setInverted(true);
+
+		motHopperL.setInverted(true);
 	}
 }

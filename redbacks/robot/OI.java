@@ -18,16 +18,17 @@ public class OI extends OIBase
 	
 	public void mapOperations() {
 		whenPressed(d_Start, reset.c());
-		whenHeld(d_RT, intakeIn.c());
+		//whenHeld(d_RT, intakeIn.c());
 		whenHeld(d_Back, climbSlow.c());
 		whenHeld(d_RStick, climbRamp.c());
 		
 		whenPressedReleased(d_RT, shoot.c(), rel_shoot.c());
-		//whenPressedReleased(d_RB, shooterFeedHopper.c(), rel_shooterFeedHopper.c());
+		//whenPressedReleased(d_RT, shooterFeedHopper.c(), rel_shooterFeedHopper.c());
 		
 		whenPressed(d_RB, spitterUp.c());
 		whenReleased(d_RB, spitterDown.c());
 		
+		whenHeld(d_B, hopperOn.c());
 		whenHeld(d_LT, spit.c());
 		whenHeld(d_LB, spitIn.c());
 		
@@ -38,13 +39,17 @@ public class OI extends OIBase
 							new BtnCheck(new ChGettableBoolean(Robot.spitter.spitterSol, true)),
 							new BtnCheck(new ChGettableBooleanList(LogicOperators.NOR, 
 									d_LB, 
-									Robot.sensors.gearLight,
-									Robot.sensors.shooterLight)
+									Robot.sensors.gearLight)
 							)
 					),
 					spit.c()
 			);
 		}
+
+		whenHeld(d_A, pidExample.c());
+		whenHeld(d_X, multiAxisExample.c());
+//		whenHeld(d_Y, trajTest.c());
+		whenHeld(d_Y, trajAutoTom.c());
 		
 		//JARVIS
 		whenPressed(new BtnCheck(new ChGettableBooleanList(LogicOperators.OR, Robot.sensors.gearLight, Robot.sensors.shooterLight)), spitterUp.c());

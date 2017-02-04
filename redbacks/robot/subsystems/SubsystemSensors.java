@@ -32,6 +32,9 @@ public class SubsystemSensors extends SubsystemBase
 	//Spitter
 	public SenCANDigitalInput gearLight = new SenCANDigitalInput(talon6, false);
 	
+	//Intake
+	public SenCANEncoder intakeEncoderRate = new SenCANEncoder.Rate(talon14);
+	
 	//NavX
 	public NavX.Sensor pitch = new NavX.Sensor(NavXReading.ANGLE_PITCH);
 	public NavX.Sensor roll = new NavX.Sensor(NavXReading.ANGLE_ROLL);
@@ -53,6 +56,9 @@ public class SubsystemSensors extends SubsystemBase
 		super();
 		rightEncoderDis.setScaleFactor(-1);
 		rightEncoderRate.setScaleFactor(-1);
+		
+		centreEncoderDis.setScaleFactor(-1);
+		centreEncoderRate.setScaleFactor(-1);
 
 		resetSensors();
 	}

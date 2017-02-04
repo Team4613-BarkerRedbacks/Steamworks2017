@@ -4,9 +4,8 @@ import com.ctre.CANTalon;
 
 public class RobotMap
 {
-	//FIXME Determine correct ticks per metre.
 	public static final int
-		encoderTicksPerMetre = 2000;
+		encoderTicksPerMetre = 7500;
 	
 	public static final CANTalon
 		talon2	= new CANTalon(2),
@@ -47,8 +46,9 @@ public class RobotMap
 		idSolIntake	= 5;
 	
 	public static final double
-		drivePIDMotorkP = 0.0005D, drivePIDMotorkI = 0.000005D, drivePIDMotorkD = 0.00005D,
-		drivePIDGyrokP = 0.025D, drivePIDGyrokI = 0.0001, drivePIDGyrokD = 0.001;
+	//P = 0.0001 D=0.000,000,1
+		drivePIDMotorkP = 0.00008D, drivePIDMotorkI = 0.0000001D, drivePIDMotorkD = 0.000005,
+		drivePIDGyrokP = 0.03D, drivePIDGyrokI = 0.0001, drivePIDGyrokD = 0.002;
 	
 	public static double multiPIDDriveCombinerLeftOverflow = 0.0D, mutiPIDDriveCombinerRightOverflow = 0.0D;
 }

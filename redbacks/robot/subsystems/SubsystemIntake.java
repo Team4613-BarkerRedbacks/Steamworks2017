@@ -12,8 +12,8 @@ import static redbacks.robot.RobotMap.*;
  */
 public class SubsystemIntake extends SubsystemBase
 {
-	CtrlMotor motIntakeF = new CtrlMotor(idMotIntakeF);
-	CtrlMotor motIntakeB = new CtrlMotor(idMotIntakeB);
+	public CtrlMotor motIntakeF = new CtrlMotor(idMotIntakeF);
+	public CtrlMotor motIntakeB = new CtrlMotor(idMotIntakeB);
 	
 	public CtrlMotorList intakeMotor = new CtrlMotorList(
 			motIntakeF, motIntakeB

@@ -6,19 +6,25 @@ import redbacks.arachne.lib.actions.actuators.*;
 import redbacks.arachne.lib.checks.*;
 import redbacks.arachne.lib.checks.analog.*;
 import redbacks.arachne.lib.commands.CommandBase;
+import redbacks.arachne.lib.pid.Tolerances;
+import redbacks.arachne.lib.trajectories.AcTrajectory;
 import redbacks.robot.actions.*;
 
 import static redbacks.robot.Robot.*;
+import static redbacks.robot.RobotMap.drivePIDMotorkD;
+import static redbacks.robot.RobotMap.drivePIDMotorkI;
+import static redbacks.robot.RobotMap.drivePIDMotorkP;
 
 public class Auto extends AutoStart
 {
 	public static CommandBase getAutonomous(int autoNumber) {
 		switch(autoNumber) {
 			case(1): return createAuto(
-					sensors.new AcReset(),
-					new AcTankDrive(new ChNumSen(3000, sensors.rightEncoderDis), 0.83D, 0.9D),
-					new AcTankDrive(new ChNumSen(8, sensors.yaw, true, false, false), 0.9D, 0.8D),
-					new AcTankDrive(new ChTime(0.2D), 0.4D, 0.4D)
+					new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_wallToBottomGear, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(150), false, 0, 0),
+					new AcWait(1D),
+					new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_bottomGearToBottomRightHopper, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(150), false, 0, 0)
 			);
 			
 			case(2): return createAuto(
