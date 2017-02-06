@@ -4,6 +4,7 @@ import redbacks.arachne.core.references.CommandListStart;
 import redbacks.arachne.lib.actions.*;
 import redbacks.arachne.lib.actions.actuators.*;
 import redbacks.arachne.lib.checks.*;
+import redbacks.arachne.lib.checks.digital.ChGettableBoolean;
 import redbacks.arachne.lib.commands.CommandSetup;
 import redbacks.arachne.lib.pid.*;
 import redbacks.arachne.lib.trajectories.AcTrajectory;
@@ -12,18 +13,22 @@ import redbacks.robot.actions.*;
 import static redbacks.robot.Robot.*;
 import static redbacks.robot.RobotMap.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class CommandList extends CommandListStart
 {
 	static {subsystemToUse = null;}
 	public static CommandSetup
 		interruptDriver = newCom(new AcInterrupt.KillSubsystem(driver)),
-		reset = newCom(sensors.new AcReset()),
+		switchDir = newCom(driver.new AcInvertDrive()),
+		resetSensors = newCom(sensors.new AcReset()),
+		killAll = newCom(new AcInterrupt.KillAllCommands()),
 
 		intakeDown = newCom(new AcSolenoid.Single(intake.intakeSol, false)),
 		intakeUp = newCom(new AcSolenoid.Single(intake.intakeSol, true)),
 
-		spitterDown = newCom(new AcSolenoid.Single(spitter.spitterSol, false)),
-		spitterUp = newCom(new AcSolenoid.Single(spitter.spitterSol, true));
+		spitterDown = newCom(new AcSolenoid.Single(spitter.spitterSol, true)),
+		spitterUp = newCom(new AcSolenoid.Single(spitter.spitterSol, false));
 	
 	static {subsystemToUse = sensors;}
 	public static CommandSetup
@@ -51,58 +56,51 @@ public class CommandList extends CommandListStart
 		),
 		trajAutoTom = newCom(
 				new AcMulti(
-						sensors.new AcReset(),
 						new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_wallToBottomGear, driver.drivetrain, -1, -1, sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(100), false, 0, 0),
-						sensors.new AcReset(),
 						new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_bottomGearToBottomRightHopper, driver.drivetrain, -1, -1, sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(100), false, 0, 0),
-						sensors.new AcReset(),
 						new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_bottomRightHopperToBoiler, driver.drivetrain, -1, -1, sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(100), false, 0, 0)
 				)
 		);
-//	public static double p, i, d, f;
-//	public static int t;
 	
-	static {subsystemToUse = shooter;
-//		boolean hasSet = false;
-//		while(!hasSet) {
-//			try {
-//				p = SmartDashboard.getNumber("p", 1.0E-5);
-//				i = SmartDashboard.getNumber("i", 0);
-//				d = SmartDashboard.getNumber("d", 5.0E-5);
-//				f = SmartDashboard.getNumber("f", 1.0E-5);
-//				t = (int) SmartDashboard.getNumber("t", -6600);
-//				hasSet = true;
-//			}
-//			catch(TableKeyNotDefinedException e) {
-//				SmartDashboard.putNumber(e.getMessage().substring(e.getMessage().length() - 1), 0);
-//			}
-//		}
-	}
+	static {subsystemToUse = intake;}
+	private static double intakeFast = 1.0D, intakeMid = 0.6D, intakeSlow = 0.4D;
+	public static CommandSetup
+		intakeIn = newCom(new AcMotor.Set(intake.intakeMotor, intakeFast, new ChFalse())),
+		intakeOut = newCom(new AcMotor.Set(intake.intakeMotor, -intakeFast, new ChFalse()));
+	
+	static {subsystemToUse = shooter;}
+	private static double shootFast = 1.0D, shootPIDBase = 0.85D, shootFeed = 0.25D;
 	public static CommandSetup
 		shoot = newCom(
-				new AcMotor.RampTime(shooter.shooterMotor, 1D, 2),
-				new AcMotor.Set(intake.intakeMotor, 1D, new ChTrue()),
+				new AcMotor.Set(shooter.shooterMotor, 1, new ChTrue()),
+				new AcMotor.Set(hopper.hopperMotor, 0.6D, new ChTrue()),
+				new AcMotor.Set(intake.intakeMotor, intakeFast, new ChTrue()),
+				new AcDoNothing()),
+		shootSpeed = newCom(new AcMotor.Set(shooter.shooterMotor, 1, new ChFalse())),
+		shootSeq = newCom(
+				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, 2),
+				new AcMotor.Set(intake.intakeMotor, intakeFast, new ChTrue()),
 				new AcDoNothing()
-//				new AcPIDControl(new ChFalse(), false, 
-//						1.0E-5, 0, 1.0E-5, 0.000006D, -4000, 
-//						new Tolerances.Percentage(1.0), sensors.shooterEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooterMotor).setMultiplier(-1))
 		),
 		rel_shoot = newCom(
-				new AcMotor.Set(shooter.shooterMotor, 0.85D, new ChTrue()),
+				new AcMotor.Set(shooter.shooterMotor, shootPIDBase, new ChTrue()),
 				new AcMotor.RampTime(shooter.shooterMotor, 0, 2)
 		),
 		shooterFeedHopper = newCom(
-				new AcMotor.Set(intake.motIntakeF, 1D, new ChTrue()),
-				new AcMotor.RampTime(shooter.shooterMotor, 0.25D, 0.5D, new ChFalse(), false)
+				new AcMotor.Set(intake.intakeMotor, intakeFast, new ChTrue()),
+				new AcMotor.RampTime(shooter.shooterMotor, shootFeed, 0.5D, new ChFalse(), false)
 		),
 		rel_shooterFeedHopper = newCom(
+				new AcMotor.Set(shooter.shooterMotor, shootFeed, new ChTrue()),
+				new AcMotor.RampTime(shooter.shooterMotor, 0, 0.5D)
+		),
+		shooterIn = newCom(
+				new AcMotor.RampTime(shooter.shooterMotor, -0.5D, 0.5D, new ChFalse(), false)
+		),
+		rel_shooterIn = newCom(
+				new AcMotor.Set(shooter.shooterMotor, -0.5D, new ChTrue()),
 				new AcMotor.RampTime(shooter.shooterMotor, 0, 0.5D)
 		);
-	
-	static {subsystemToUse = intake;}
-	public static CommandSetup
-		intakeIn = newCom(new AcMotor.Set(intake.intakeMotor, 1D, new ChFalse())),
-		intakeOut = newCom(new AcMotor.Set(intake.intakeMotor, -1D, new ChFalse()));
 	
 	static {subsystemToUse = hopper;}
 	public static CommandSetup
@@ -115,10 +113,35 @@ public class CommandList extends CommandListStart
 		climbRamp = newCom(new AcMotor.RampTime(climber.climberMotor, 1D, 2D, new ChFalse(), false));
 	
 	static {subsystemToUse = spitter;}
+	private static double spitFast = 1.0D, spitMid = 0.7D, spitSlow = 0.3D;
 	public static CommandSetup
-		spit = newCom(new AcMotor.Set(spitter.spitterMotor, 1.0D, new ChFalse())),
-		spitIn = newCom(new AcMotor.Set(spitter.spitterMotor, -0.2D, new ChFalse()));
+		deflect = newCom(
+				new AcSeq.Parallel(spitterDown),
+				new AcMotor.Set(spitter.spitterMotor, spitFast, new ChFalse())
+		),
+		rel_deflect = newCom(
+				new AcSeq.Parallel(spitterUp),
+				new AcMotor.Set(spitter.spitterMotor, 0, new ChFalse())
+		),
+		spitOut = newCom(new AcMotor.Set(spitter.spitterMotor, spitSlow, new ChFalse())),
+		spitIn = newCom(new AcMotor.Set(spitter.spitterMotor, -spitSlow, new ChFalse())),
+		
+		gearFromGround = newCom(
+				new AcSeq.Parallel(spitterDown),
+				new AcMotor.Set(spitter.spitterMotor, -spitSlow, new ChFalse()),//TODO ChGettableBoolean(sensors.gearLight, true)),
+				new AcSeq.Parallel(spitterUp),
+				new AcWait(1D)
+		),
+		gearFromHP = newCom(
+				new AcSeq.Parallel(spitterUp),
+				new AcMotor.Set(spitter.spitterMotor, -spitMid, new ChFalse()),//TODO ChGettableBoolean(sensors.gearLight, true)),
+				new AcWait(0.5D)
+		),
+		gearPlace = newCom(
+				new AcSeq.Parallel(spitterDown),
+				new AcMotor.Set(spitter.spitterMotor, spitSlow, new ChFalse()),//TODO new ChGettableBoolean(sensors.gearLight, false)),
+				new AcWait(0.5D)
+		);
 	
 	static {subsystemToUse = sequencer;}
-	
 }

@@ -14,13 +14,15 @@ import static redbacks.robot.CommandList.*;
 
 public class OI extends OIBase
 {
-	public static boolean isSingleControl = true;
+	public static boolean isSingleControl = false;
 	
 	public void mapOperations() {
-		whenPressed(d_Start, reset.c());
+		/*whenPressed(d_Start, resetSensors.c());
 		//whenHeld(d_RT, intakeIn.c());
 		whenHeld(d_Back, climbSlow.c());
 		whenHeld(d_RStick, climbRamp.c());
+		
+		//whenPressed(d_LStick, switchDir.c());
 		
 		whenPressedReleased(d_RT, shoot.c(), rel_shoot.c());
 		//whenPressedReleased(d_RT, shooterFeedHopper.c(), rel_shooterFeedHopper.c());
@@ -29,7 +31,7 @@ public class OI extends OIBase
 		whenReleased(d_RB, spitterDown.c());
 		
 		whenHeld(d_B, hopperOn.c());
-		whenHeld(d_LT, spit.c());
+		whenHeld(d_LT, deflect.c());
 		whenHeld(d_LB, spitIn.c());
 		
 		if(isSingleControl) {
@@ -42,17 +44,27 @@ public class OI extends OIBase
 									Robot.sensors.gearLight)
 							)
 					),
-					spit.c()
+					deflect.c()
 			);
 		}
 
-		whenHeld(d_A, pidExample.c());
-		whenHeld(d_X, multiAxisExample.c());
-//		whenHeld(d_Y, trajTest.c());
-		whenHeld(d_Y, trajAutoTom.c());
-		
 		//JARVIS
-		whenPressed(new BtnCheck(new ChGettableBooleanList(LogicOperators.OR, Robot.sensors.gearLight, Robot.sensors.shooterLight)), spitterUp.c());
+		//whenPressed(new BtnCheck(new ChGettableBooleanList(LogicOperators.OR, Robot.sensors.gearLight, Robot.sensors.shooterLight)), spitterUp.c());*/
+
+		whenHeld(o_POV_U, gearFromHP.c());
+		whenHeld(o_POV_D, gearFromGround.c());
+		whenHeld(d_LT, gearPlace.c());
+		
+		whenPressedReleased(o_LT, shooterFeedHopper.c(), rel_shooterFeedHopper.c());
+		
+		whenPressedReleased(o_RT, deflect.c(), rel_deflect.c());
+		
+		whenPressed(o_B, shootSpeed.c());
+		whenHeld(d_RT, shoot.c());
+		
+		whenPressedReleased(o_A, shooterIn.c(), rel_shooterIn.c());
+		
+		whenPressed(d_Start, killAll.c());
 	}
 	
 	private static final Joystick stick_d = new Joystick(0);
@@ -85,7 +97,7 @@ public class OI extends OIBase
 		d_LT = wrap(new BtnAxis(axis_d_LT, false, 0.5D)),
 		d_RT = wrap(new BtnAxis(axis_d_RT, false, 0.5D));
 	
-	private static final Joystick stick_o = new Joystick(0);
+	private static final Joystick stick_o = new Joystick(1);
 	
 	public static final JoystickAxis
 		axis_o_LX = new JoystickAxis(stick_o, 0),

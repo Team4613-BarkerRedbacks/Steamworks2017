@@ -15,7 +15,7 @@ public class AcDrive extends Action
 	double minR = 0.4D, difR = 0.5D;
 
 	public void onRun() {
-		boolean invertDrive = SmartDashboard.getBoolean("Invert Drive", false);
+		boolean invertDrive = SmartDashboard.getBoolean("Invert Drive", true);
 		SmartDashboard.putBoolean("Invert Drive", invertDrive);
 		if(!Robot.isIndivDriveControl) arcadeDrive(OI.axis_d_RY.get() * (invertDrive ? 1 : -1), OI.axis_d_LX.get());
 	}
