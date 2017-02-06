@@ -5,6 +5,7 @@ import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.ChFalse;
 import redbacks.arachne.lib.checks.Check;
 import redbacks.arachne.lib.pid.Tolerances.Percentage;
+import redbacks.robot.Robot;
 
 /**
  * An action for a {@link PIDController}. With a set of PID parameters, it will output to any number of valid {@link PIDOutput PIDOutputs}.
@@ -128,12 +129,16 @@ public class AcPIDControl extends Action
 			controller.setToleranceBuffer(15);
 			controller.setSetpoint(target);
 			controller.enable();
+			
+			Robot.activePIDs.add(controller);
 		}
 	}
 
 	public void onFinish() {
-		for(PIDController controller : controllers)
+		for(PIDController controller : controllers) {
 			controller.disable();
+			Robot.activePIDs.remove(controller);
+		}
 	}
 
 	public boolean isDone() {
