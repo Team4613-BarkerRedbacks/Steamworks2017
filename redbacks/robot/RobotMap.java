@@ -5,7 +5,7 @@ import com.ctre.CANTalon;
 public class RobotMap
 {
 	public static final int
-		encoderTicksPerMetre = 7500;
+		encoderTicksPerMetre = 7200;//(int) ((1/(Math.PI*0.048))*1024);
 	
 	public static final CANTalon
 		talon2	= new CANTalon(2),
@@ -46,8 +46,8 @@ public class RobotMap
 		idSolIntake	= 5;
 	
 	public static final double
-	//P = 0.0001 D=0.000,000,1
-		drivePIDMotorkP = 0.00008D, drivePIDMotorkI = 0.0000001D, drivePIDMotorkD = 0.000005,
+	//P = 0.00008D
+		drivePIDMotorkP = 0.00007D, drivePIDMotorkI = 0.0000001D, drivePIDMotorkD = 0.00001,
 		drivePIDGyrokP = 0.03D, drivePIDGyrokI = 0.0001, drivePIDGyrokD = 0.002;
 	
 	public static double multiPIDDriveCombinerLeftOverflow = 0.0D, mutiPIDDriveCombinerRightOverflow = 0.0D;
