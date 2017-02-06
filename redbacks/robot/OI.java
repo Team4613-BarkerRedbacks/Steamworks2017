@@ -49,7 +49,8 @@ public class OI extends OIBase
 		whenHeld(d_A, pidExample.c());
 		whenHeld(d_X, multiAxisExample.c());
 //		whenHeld(d_Y, trajTest.c());
-		whenHeld(d_Y, trajAutoTom.c());
+//		whenHeld(d_Y, trajAutoTom.c());
+		whenHeld(d_Y, trajStraightTest.c());
 		
 		//JARVIS
 		whenPressed(new BtnCheck(new ChGettableBooleanList(LogicOperators.OR, Robot.sensors.gearLight, Robot.sensors.shooterLight)), spitterUp.c());

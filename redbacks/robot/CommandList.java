@@ -58,6 +58,8 @@ public class CommandList extends CommandListStart
 				new AcWait(1D),
 				new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_bottomRightHopperToBoiler, driver.drivetrain, -1, -1,
 						sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(150), false, 0, 0)
+		),
+		trajStraightTest = newCom(new AcTrajectory(TrajectoryList.testBlue)
 		);
 //	public static double p, i, d, f;
 //	public static int t;
