@@ -7,7 +7,8 @@ import redbacks.arachne.lib.checks.*;
 import redbacks.arachne.lib.checks.analog.*;
 import redbacks.arachne.lib.commands.CommandBase;
 import redbacks.arachne.lib.pid.Tolerances;
-import redbacks.arachne.lib.trajectories.AcTrajectory;
+import redbacks.arachne.lib.trajectories.AcTrajectoryFast;
+import redbacks.arachne.lib.trajectories.AcTrajectoryMid;
 import redbacks.arachne.lib.trajectories.AcTrajectorySlow;
 import redbacks.robot.actions.*;
 
@@ -20,27 +21,57 @@ public class Auto extends AutoStart
 	public static CommandBase getAutonomous(int autoNumber) {
 		switch(autoNumber) {
 			case(1): return createAuto(
-					new AcTrajectorySlow(new ChFalse(), true, TrajectoryList.blue_wallToBottomGear, driver.drivetrain, -1, -1, 
-							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(150), false, 0, 0),
-					new AcWait(1D),
-					new AcSeq.Parallel(gearPlace)
+					new AcTrajectorySlow(new ChFalse(), true, TrajectoryList.ambi_leftGear, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0)
 			);
-			
+
 			case(2): return createAuto(
-					sensors.new AcReset(),
-					new AcTankDrive(new ChNumSen(45, sensors.yaw, true, false, false), 1.0D, 0.8D),
-					new AcTankDrive(new ChTime(0.3D), 0.5D, 0.5D)
+					new AcTrajectorySlow(new ChFalse(), true, TrajectoryList.ambi_middleGear, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0)
+			);
+
+			case(3): return createAuto(
+					new AcTrajectorySlow(new ChFalse(), true, TrajectoryList.ambi_rightGear, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0)
+			);
+
+			case(11): return createAuto(
+					new AcTrajectorySlow(new ChFalse(), true, TrajectoryList2.blue_wallToBottomRightHopper3, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(2.5D), 0.5D, 0.5D)
 			);
 			
-			case(3): return createAuto(
-					new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_wallToBottomGear, driver.drivetrain, -1, -1,
-							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(150), false, 0, 0),
-					new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_bottomGearToBottomRightHopper, driver.drivetrain, -1, -1, 
-							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(150), false, 0, 0),
-					new AcWait(1D),
-					new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_bottomRightHopperToBoiler, driver.drivetrain, -1, -1,
-							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(150), false, 0, 0)
+			case(12): return createAuto(
+					new AcTrajectorySlow(new ChFalse(), true, TrajectoryList2.blue_wallToBottomGearS, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D)
 			);
+			
+			case(13): return createAuto(
+					new AcTrajectorySlow(new ChFalse(), true, TrajectoryList2.blue_wallToBottomGearArc, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D)
+			);
+
+			case(14): return createAuto(
+					new AcTrajectoryMid(new ChFalse(), true, TrajectoryList2.blue_wallToBottomRightHopper3, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(2.5D), 0.5D, 0.5D),
+					new AcTrajectoryMid(new ChFalse(), true, TrajectoryList2.blue_bottomRightHopperToBoiler, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D)
+			);
+			
+			case(15): return createAuto(
+					new AcTrajectoryFast(new ChTime(2), true, TrajectoryList2.test3, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(1.3D), 0.8D, 0.8D),
+					new AcSeq.Parallel(deflect),
+					new AcTrajectoryFast(new ChFalse(), true, TrajectoryList2.testa5, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.05, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(0.7D), -0.8D, -0.8D)
+			);
+
 			default: return null;
 		}
 	}

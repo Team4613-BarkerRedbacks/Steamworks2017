@@ -48,9 +48,7 @@ public class Robot extends ArachneRobot
 	}
 	
 	public void disabledInit() {
-		for(PIDController pid : activePIDs) {
-			pid.disable();
-			activePIDs.remove(pid);
-		}
+		for(PIDController pid : activePIDs) pid.disable();
+		activePIDs.clear();
 	}
 }

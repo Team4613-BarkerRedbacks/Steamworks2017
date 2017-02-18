@@ -60,9 +60,12 @@ public class OI extends OIBase
 		whenPressedReleased(o_RT, deflect.c(), rel_deflect.c());
 		
 		whenPressed(o_B, shootSpeed.c());
-		whenHeld(d_RT, shoot.c());
+		whenHeld(d_RT, hopperFeed.c());
+		whenReleased(d_RT, rel_shoot.c());
 		
 		whenPressedReleased(o_A, shooterIn.c(), rel_shooterIn.c());
+		
+		whenHeld(new BtnMulti(LogicOperators.AND, o_LB, o_RB), climbRamp.c());
 		
 		whenPressed(d_Start, killAll.c());
 	}
@@ -126,6 +129,26 @@ public class OI extends OIBase
 
 		o_LT = wrap(new BtnAxis(axis_o_LT, false, 0.5D)),
 		o_RT = wrap(new BtnAxis(axis_o_RT, false, 0.5D));
+	
+	private static final Joystick pad = new Joystick(2);
+	
+	public static final ButtonGettableWrapper
+		pad_IntakeBIn = wrap(new JoystickButton(pad, 1)),
+		pad_IntakeFIn = wrap(new JoystickButton(pad, 2)),
+		pad_IntakeBOut = wrap(new JoystickButton(pad, 3)),
+		pad_IntakeLower = wrap(new JoystickButton(pad, 4)),
+		pad_IntakeFOut = wrap(new JoystickButton(pad, 6)),
+		pad_Climb = wrap(new JoystickButton(pad, 9)),
+		pad_HopperOn = wrap(new JoystickButton(pad, 10)),
+		pad_ClimberFunnel = wrap(new JoystickButton(pad, 11)),
+		pad_HopperExpand = wrap(new JoystickButton(pad, 12)),
+		pad_ShooterOut = wrap(new JoystickButton(pad, 17)),
+		pad_ShooterIn = wrap(new JoystickButton(pad, 18)),
+		pad_SpitterOut = wrap(new JoystickButton(pad, 19)),
+		pad_DriveDirection = wrap(new JoystickButton(pad, 20)),
+		pad_SpitterLower = wrap(new JoystickButton(pad, 21)),
+		pad_SpitterIn = wrap(new JoystickButton(pad, 23)),
+		pad_Reset = wrap(new JoystickButton(pad, 32));
 	
 	public void whenPressedReleased(Button button, CommandBase onPressed, CommandBase onReleased) {
 		button.whenPressed(onPressed);

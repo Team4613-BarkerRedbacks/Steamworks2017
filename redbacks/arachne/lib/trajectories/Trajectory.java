@@ -21,12 +21,12 @@ public class Trajectory
 		while(progressIndex < waypoints.length - 1 && Math.abs(distance) > Math.abs(waypoints[progressIndex][0] * RobotMap.encoderTicksPerMetre)) {
 			progressIndex++;
 		}
-		
-		double[] angles = new double[Math.min(30, waypoints.length - progressIndex)];
-		
-		for(int i = 0; i < Math.min(30, waypoints.length - progressIndex); i++) angles[i] = waypoints[i + progressIndex][1];
-		
-		return avg(angles);
+		return waypoints[progressIndex][1];
+//		double[] angles = new double[Math.min(30, waypoints.length - progressIndex)];
+//		
+//		for(int i = 0; i < Math.min(30, waypoints.length - progressIndex); i++) angles[i] = waypoints[i + progressIndex][1];
+//		
+//		return avg(angles);
 	}
 	
 	public boolean isPathComplete() {

@@ -13,6 +13,7 @@ import redbacks.robot.actions.*;
 import static redbacks.robot.Robot.*;
 import static redbacks.robot.RobotMap.*;
 
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CommandList extends CommandListStart
@@ -49,38 +50,47 @@ public class CommandList extends CommandListStart
 								new PIDParams(0.025, 0.0001, 0.001, 0, new Tolerances.Absolute(3), sensors.yaw)
 						)
 				)
-		),
-		trajTest = newCom(
-				new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_wallToBottomGear, driver.drivetrain, -1, -1, 
-				sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(50), false, 0, 0)
-		),
-		trajAutoTom = newCom(
-				new AcMulti(
-						new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_wallToBottomGear, driver.drivetrain, -1, -1, sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(100), false, 0, 0),
-						new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_bottomGearToBottomRightHopper, driver.drivetrain, -1, -1, sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(100), false, 0, 0),
-						new AcTrajectory(new ChFalse(), true, TrajectoryList.blue_bottomRightHopperToBoiler, driver.drivetrain, -1, -1, sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP*3, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(100), false, 0, 0)
-				)
 		);
 	
 	static {subsystemToUse = intake;}
-	private static double intakeFast = 1.0D, intakeMid = 0.6D, intakeSlow = 0.4D;
+	private static double intakeFast = 1D, intakeMid = 0.60D, intakeSlow = 0.3D, iPS = 0.6D, iPF = 0.5D;
 	public static CommandSetup
 		intakeIn = newCom(new AcMotor.Set(intake.intakeMotor, intakeFast, new ChFalse())),
 		intakeOut = newCom(new AcMotor.Set(intake.intakeMotor, -intakeFast, new ChFalse()));
 	
-	static {subsystemToUse = shooter;}
-	private static double shootFast = 1.0D, shootPIDBase = 0.85D, shootFeed = 0.25D;
+	static {subsystemToUse = hopper;}
+	private static double hopperFast = 0.6D;
 	public static CommandSetup
-		shoot = newCom(
-				new AcMotor.Set(shooter.shooterMotor, 1, new ChTrue()),
-				new AcMotor.Set(hopper.hopperMotor, 0.6D, new ChTrue()),
-				new AcMotor.Set(intake.intakeMotor, intakeFast, new ChTrue()),
-				new AcDoNothing()),
-		shootSpeed = newCom(new AcMotor.Set(shooter.shooterMotor, 1, new ChFalse())),
-		shootSeq = newCom(
-				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, 2),
-				new AcMotor.Set(intake.intakeMotor, intakeFast, new ChTrue()),
-				new AcDoNothing()
+		hopperFeed = newCom(
+				new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChTrue()),
+				new AcMotor.Set(intake.intakeMotor, iPS, new ChTrue()),
+				new AcMotor.RampTime(intake.intakeMotor, iPF, 10, new ChFalse(), true)
+//				new AcMotor.Set(intake.motIntakeB, intakeMid, new ChTrue()),
+//				new AcMotor.Set(intake.motIntakeF, intakeMid, new ChFalse())
+		),
+		hopperOn = newCom(new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChFalse()));
+	
+	static {subsystemToUse = shooter;}
+	private static double shootFast = 1.0D, shootPIDBase = 0.7D, shootFeed = 0.25D;
+	public static CommandSetup
+		shootSpeed = newCom(
+//				new AcMotor.Set(shooter.shooterMotor, 1, new ChFalse())
+//				new AcMotor.RampTime(shooter.shooterMotor, shootFast, 2D, new ChFalse(), false)
+				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, 2D, new ChFalse(), true),
+				new AcPIDControl(0.01D, new ChFalse(), false, 
+						3.0E-6, 0, 5.0E-5, 0.000004D, -22000,
+						new Tolerances.Percentage(1.0), sensors.shooterEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.shooterMotor).setMultiplier(-1)
+				)
+//				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, 2D, new ChFalse(), true),
+//				new AcPIDControl(0.01D, new ChFalse(), false, 
+//						1.0E-6, 0, 5.0E-5, 0.000008D, -5750,
+//						new Tolerances.Percentage(1.0), sensors.shooterEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooterMotor).setMultiplier(-1)
+//				)
+//				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, 2D, new ChFalse(), true),
+//				new AcPIDControl(0.01D, new ChFalse(), false, 
+//						1.0E-6, 0, 5.0E-5, 0.000008D, -7400,
+//						new Tolerances.Percentage(1.0), sensors.shooterEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooterMotor).setMultiplier(-1)
+//				)
 		),
 		rel_shoot = newCom(
 				new AcMotor.Set(shooter.shooterMotor, shootPIDBase, new ChTrue()),
@@ -101,10 +111,6 @@ public class CommandList extends CommandListStart
 				new AcMotor.Set(shooter.shooterMotor, -0.5D, new ChTrue()),
 				new AcMotor.RampTime(shooter.shooterMotor, 0, 0.5D)
 		);
-	
-	static {subsystemToUse = hopper;}
-	public static CommandSetup
-		hopperOn = newCom(new AcMotor.Set(hopper.hopperMotor, 0.6D, new ChFalse()));
 
 	static {subsystemToUse = climber;}
 	public static CommandSetup

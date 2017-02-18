@@ -8,6 +8,10 @@ import redbacks.arachne.lib.sensors.*;
 
 import static redbacks.robot.RobotMap.*;
 
+import com.ctre.CANTalon.StatusFrameRate;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+
 /**
  * The sensor subsystem. Only put sensors here.
  * 
@@ -22,15 +26,15 @@ public class SubsystemSensors extends SubsystemBase
 	public SenCANEncoder.Displacement leftEncoderDis = new SenCANEncoder.Displacement(talon3);
 	public SenCANEncoder.Rate leftEncoderRate = new SenCANEncoder.Rate(talon3);
 
-	public SenCANEncoder.Displacement centreEncoderDis = new SenCANEncoder.Displacement(talon10);
-	public SenCANEncoder.Rate centreEncoderRate = new SenCANEncoder.Rate(talon10);
+	public SenCANEncoder.Displacement centreEncoderDis = new SenCANEncoder.Displacement(talon4);
+	public SenCANEncoder.Rate centreEncoderRate = new SenCANEncoder.Rate(talon4);
 	
 	//Shooter
-	public SenCANEncoder.Rate shooterEncoderRate = new SenCANEncoder.Rate(talon8);
-	public SenCANDigitalInput shooterLight = new SenCANDigitalInput(talon6, true);
+	public SenCANEncoder.Rate shooterEncoderRate = new SenCANEncoder.Rate(idMotShootR);
+//	public SenCANDigitalInput shooterLight = new SenCANDigitalInput(talon6, true);
 	
 	//Spitter
-	public SenCANDigitalInput gearLight = new SenCANDigitalInput(talon6, false);
+	public SenDI gearLight = new SenDI(new DigitalInput(0));
 	
 	//Intake
 	public SenCANEncoder intakeEncoderRate = new SenCANEncoder.Rate(talon14);
@@ -59,8 +63,10 @@ public class SubsystemSensors extends SubsystemBase
 		
 		centreEncoderDis.setScaleFactor(-1);
 		centreEncoderRate.setScaleFactor(-1);
-
+		
 		resetSensors();
+
+		idMotShootR.setStatusFrameRateMs(StatusFrameRate.QuadEncoder, 10);
 	}
 
 	public class AcReset extends Action
