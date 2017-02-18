@@ -11,8 +11,8 @@ import static redbacks.robot.RobotMap.*;
  */
 public class SubsystemShooter extends SubsystemBase
 {
-	CtrlMotor motShootL = new CtrlMotor(idMotShootL);
-	CtrlMotor motShootR = new CtrlMotor(idMotShootR);
+	public CtrlMotor motShootL = new CtrlMotor(idMotShootL);
+	public CtrlMotor motShootR = new CtrlMotor(idMotShootR);
 	
 	public CtrlMotorList shooterMotor = new CtrlMotorList(
 			motShootL, motShootR

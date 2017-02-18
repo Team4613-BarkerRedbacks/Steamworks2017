@@ -77,9 +77,15 @@ public class CommandList extends CommandListStart
 //				new AcMotor.Set(shooter.shooterMotor, 1, new ChFalse())
 //				new AcMotor.RampTime(shooter.shooterMotor, shootFast, 2D, new ChFalse(), false)
 				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, 2D, new ChFalse(), true),
-				new AcPIDControl(0.01D, new ChFalse(), false, 
-						3.0E-6, 0, 5.0E-5, 0.000004D, -22000,
-						new Tolerances.Percentage(1.0), sensors.shooterEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.shooterMotor).setMultiplier(-1)
+				new AcMulti(
+						new AcPIDControl(0.01D, new ChFalse(), false, 
+								3.0E-6, 0, 5.0E-5, 0.000004D, -22000,
+								new Tolerances.Percentage(1.0), sensors.shooterEncoderRateL, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootL).setMultiplier(-1)
+						),
+						new AcPIDControl(0.01D, new ChFalse(), false, 
+								3.0E-6, 0, 5.0E-5, 0.000004D, -22000,
+								new Tolerances.Percentage(1.0), sensors.shooterEncoderRateR, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootR).setMultiplier(-1)
+						)
 				)
 //				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, 2D, new ChFalse(), true),
 //				new AcPIDControl(0.01D, new ChFalse(), false, 

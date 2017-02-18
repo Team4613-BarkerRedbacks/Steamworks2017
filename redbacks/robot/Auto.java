@@ -21,18 +21,33 @@ public class Auto extends AutoStart
 	public static CommandBase getAutonomous(int autoNumber) {
 		switch(autoNumber) {
 			case(1): return createAuto(
-					new AcTrajectorySlow(new ChFalse(), true, TrajectoryList.ambi_leftGear, driver.drivetrain, -1, -1, 
-							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0)
+					new AcTrajectorySlow(new ChTime(7), true, TrajectoryList.ambi_leftGear, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D),
+					new AcWait(2D),
+					new AcTankDrive(new ChTime(0.5D), 0.5D, 0.5D),
+					new AcWait(1D),
+					new AcTankDrive(new ChTime(1.5D), -0.5D, -0.5D)
 			);
 
 			case(2): return createAuto(
-					new AcTrajectorySlow(new ChFalse(), true, TrajectoryList.ambi_middleGear, driver.drivetrain, -1, -1, 
-							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0)
+					new AcTrajectorySlow(new ChTime(20), true, TrajectoryList.ambi_circle, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D),
+					new AcWait(2D),
+					new AcTankDrive(new ChTime(0.5D), 0.5D, 0.5D),
+					new AcWait(1D),
+					new AcTankDrive(new ChTime(1.5D), -0.5D, -0.5D)
 			);
 
 			case(3): return createAuto(
-					new AcTrajectorySlow(new ChFalse(), true, TrajectoryList.ambi_rightGear, driver.drivetrain, -1, -1, 
-							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0)
+					new AcTrajectorySlow(new ChTime(7), true, TrajectoryList.ambi_rightGear, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D),
+					new AcWait(2D),
+					new AcTankDrive(new ChTime(0.5D), 0.5D, 0.5D),
+					new AcWait(1D),
+					new AcTankDrive(new ChTime(1.5D), -0.5D, -0.5D)
 			);
 
 			case(11): return createAuto(

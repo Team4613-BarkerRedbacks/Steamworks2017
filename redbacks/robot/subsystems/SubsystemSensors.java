@@ -30,7 +30,8 @@ public class SubsystemSensors extends SubsystemBase
 	public SenCANEncoder.Rate centreEncoderRate = new SenCANEncoder.Rate(talon4);
 	
 	//Shooter
-	public SenCANEncoder.Rate shooterEncoderRate = new SenCANEncoder.Rate(idMotShootR);
+	public SenCANEncoder.Rate shooterEncoderRateL = new SenCANEncoder.Rate(idMotShootL);
+	public SenCANEncoder.Rate shooterEncoderRateR = new SenCANEncoder.Rate(idMotShootR);
 //	public SenCANDigitalInput shooterLight = new SenCANDigitalInput(talon6, true);
 	
 	//Spitter
@@ -63,6 +64,8 @@ public class SubsystemSensors extends SubsystemBase
 		
 		centreEncoderDis.setScaleFactor(-1);
 		centreEncoderRate.setScaleFactor(-1);
+		
+		shooterEncoderRateR.setScaleFactor(-1);
 		
 		resetSensors();
 
