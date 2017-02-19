@@ -31,11 +31,17 @@ public class Auto extends AutoStart
 			);
 
 			case(2): return createAuto(
-					new AcTrajectorySlow(new ChTime(20), true, TrajectoryList.ambi_circle, driver.drivetrain, -1, -1, 
+					new AcTrajectoryMid(new ChTime(5), true, TrajectoryList.ambi_middleGear, driver.drivetrain, -1, -1, 
 							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
 					new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D),
 					new AcWait(2D),
 					new AcTankDrive(new ChTime(0.5D), 0.5D, 0.5D),
+					new AcTankDrive(new ChNumSen(10, sensors.yaw), 0.5D, -0.5D),
+					new AcWait(1D),
+					new AcTankDrive(new ChTime(1.5D), -0.5D, -0.5D),
+					new AcWait(2D),
+					new AcTankDrive(new ChTime(0.5D), 0.5D, 0.5D),
+					new AcTankDrive(new ChNumSen(20, sensors.yaw), -0.5D, 0.5D),
 					new AcWait(1D),
 					new AcTankDrive(new ChTime(1.5D), -0.5D, -0.5D)
 			);

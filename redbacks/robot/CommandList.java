@@ -53,7 +53,7 @@ public class CommandList extends CommandListStart
 		);
 	
 	static {subsystemToUse = intake;}
-	private static double intakeFast = 1D, intakeMid = 0.60D, intakeSlow = 0.3D, iPS = 0.6D, iPF = 0.5D;
+	private static double intakeFast = 1D, intakeMid = 0.60D, intakeSlow = 0.3D, iPS = 0.50D, iPF = 0.50D;
 	public static CommandSetup
 		intakeIn = newCom(new AcMotor.Set(intake.intakeMotor, intakeFast, new ChFalse())),
 		intakeOut = newCom(new AcMotor.Set(intake.intakeMotor, -intakeFast, new ChFalse()));

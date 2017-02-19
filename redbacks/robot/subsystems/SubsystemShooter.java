@@ -20,7 +20,8 @@ public class SubsystemShooter extends SubsystemBase
 	
 	public SubsystemShooter() {
 		super();
-		
+
+		motShootL.setInverted(true);
 		motShootR.setInverted(true);
 	}
 }

@@ -24,6 +24,6 @@ public class SubsystemIntake extends SubsystemBase
 	public SubsystemIntake() {
 		super();
 		
-		motIntakeB.setInverted(true);
+		//motIntakeB.setInverted(true);
 	}
 }

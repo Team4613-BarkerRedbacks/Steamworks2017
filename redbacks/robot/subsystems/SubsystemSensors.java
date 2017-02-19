@@ -65,10 +65,11 @@ public class SubsystemSensors extends SubsystemBase
 		centreEncoderDis.setScaleFactor(-1);
 		centreEncoderRate.setScaleFactor(-1);
 		
-		shooterEncoderRateR.setScaleFactor(-1);
+		shooterEncoderRateL.setScaleFactor(-1);
 		
 		resetSensors();
 
+		idMotShootL.setStatusFrameRateMs(StatusFrameRate.QuadEncoder, 10);
 		idMotShootR.setStatusFrameRateMs(StatusFrameRate.QuadEncoder, 10);
 	}
 
