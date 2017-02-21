@@ -29,7 +29,13 @@ public class CommandList extends CommandListStart
 		intakeUp = newCom(new AcSolenoid.Single(intake.intakeSol, true)),
 
 		spitterDown = newCom(new AcSolenoid.Single(spitter.spitterSol, true)),
-		spitterUp = newCom(new AcSolenoid.Single(spitter.spitterSol, false));
+		spitterUp = newCom(new AcSolenoid.Single(spitter.spitterSol, false)),
+
+		hopperOut = newCom(new AcSolenoid.Single(hopper.hopperSol, true)),
+		hopperIn = newCom(new AcSolenoid.Single(hopper.hopperSol, false)),
+		
+		hopperVibrate = newCom(new AcVibrateHopper(new ChFalse(), 0)
+		);
 	
 	static {subsystemToUse = sensors;}
 	public static CommandSetup
@@ -64,7 +70,7 @@ public class CommandList extends CommandListStart
 		hopperFeed = newCom(
 				new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChTrue()),
 				new AcMotor.Set(intake.intakeMotor, iPS, new ChTrue()),
-				new AcMotor.RampTime(intake.intakeMotor, iPF, 10, new ChFalse(), true)
+				new AcMotor.RampTime(intake.intakeMotor, iPF, 10, new ChFalse(), false)
 //				new AcMotor.Set(intake.motIntakeB, intakeMid, new ChTrue()),
 //				new AcMotor.Set(intake.motIntakeF, intakeMid, new ChFalse())
 		),

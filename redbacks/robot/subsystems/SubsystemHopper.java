@@ -3,6 +3,8 @@ package redbacks.robot.subsystems;
 import redbacks.arachne.core.SubsystemBase;
 import redbacks.arachne.lib.motors.CtrlMotor;
 import redbacks.arachne.lib.motors.CtrlMotorList;
+import redbacks.arachne.lib.solenoids.SolSingle;
+import redbacks.robot.RobotMap;
 
 import static redbacks.robot.RobotMap.*;
 
@@ -17,6 +19,8 @@ public class SubsystemHopper extends SubsystemBase
 	public CtrlMotorList hopperMotor = new CtrlMotorList(
 			motHopperL, motHopperR
 	);
+	
+	public SolSingle hopperSol = new SolSingle(RobotMap.idSolHopper);
 	
 	public SubsystemHopper() {
 		super();

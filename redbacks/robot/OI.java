@@ -60,8 +60,11 @@ public class OI extends OIBase
 		whenPressedReleased(o_RT, deflect.c(), rel_deflect.c());
 		
 		whenPressed(o_B, shootSpeed.c());
-		whenHeld(d_RT, hopperFeed.c());
+		whenHeld(d_RT, hopperFeed.c(), hopperVibrate.c());
 		whenReleased(d_RT, rel_shoot.c());
+
+		whenPressed(d_X, hopperOut.c());
+		whenPressed(d_Y, hopperIn.c());
 		
 		whenPressedReleased(o_A, shooterIn.c(), rel_shooterIn.c());
 		

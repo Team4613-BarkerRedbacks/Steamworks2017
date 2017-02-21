@@ -21,8 +21,8 @@ public class AcReadSensors extends Action
 		putNumber("Centre Encoder", sensors.centreEncoderDis.get());
 		putNumber("Distance", sensors.centreEncoderDis.get() / RobotMap.encoderTicksPerMetre);
 		
-		if(i == 0) 
-			System.out.println(sensors.shooterEncoderRateL.get() + ", " + sensors.shooterEncoderRateR.get());
+		//if(i == 0) 
+			//System.out.println(sensors.shooterEncoderRateL.get() + ", " + sensors.shooterEncoderRateR.get());
 		i++;
 		i %= 6;
 		

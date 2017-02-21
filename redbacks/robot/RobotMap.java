@@ -43,7 +43,8 @@ public class RobotMap
 	
 	public static final int
 		idSolSpit	= 4,
-		idSolIntake	= 5;
+		idSolHopper	= 2,
+		idSolIntake	= 6;
 	
 	public static final double
 	//P = 0.00008D
