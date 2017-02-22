@@ -27,7 +27,8 @@ public class PIDMotor implements PIDOutput
 	}
 
 	public void pidWrite(double outputValue) {
-		motor.set(outputValue * multiplier, action.command);
+		//FIXME Check this doesn't break stuff.
+		motor.controller.set(outputValue * multiplier);
 	}
 
 	/**

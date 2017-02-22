@@ -34,8 +34,7 @@ public class CommandList extends CommandListStart
 		hopperOut = newCom(new AcSolenoid.Single(hopper.hopperSol, true)),
 		hopperIn = newCom(new AcSolenoid.Single(hopper.hopperSol, false)),
 		
-		hopperVibrate = newCom(new AcVibrateHopper(new ChFalse(), 0)
-		);
+		hopperVibrate = newCom(new AcVibrateHopper(new ChFalse(), 1));
 	
 	static {subsystemToUse = sensors;}
 	public static CommandSetup

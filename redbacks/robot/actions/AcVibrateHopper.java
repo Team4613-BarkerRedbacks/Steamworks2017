@@ -6,19 +6,15 @@ import redbacks.robot.Robot;
 
 public class AcVibrateHopper extends Action
 {
-	//TODO
-	double loopTime = 0;
+	double iterTime;
 	
-	public AcVibrateHopper(Check check, double loopTime) {
+	public AcVibrateHopper(Check check, double iterTime) {
 		super(check);
-		this.loopTime = loopTime;
+		this.iterTime = iterTime;
 	}
 	
 	public void onRun() {
-		int t = (int) this.timeSinceInitialized() % 2;
-		
-		if(t==0)System.out.println("Firing");
-		if(t==1)System.out.println("Closing");
+		int t = (int) (this.timeSinceInitialized() / iterTime) % 2;
 		
 		if(t == 0) Robot.hopper.hopperSol.set(true);
 		else Robot.hopper.hopperSol.set(false);

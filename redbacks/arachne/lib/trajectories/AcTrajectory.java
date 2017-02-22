@@ -1,10 +1,7 @@
 package redbacks.arachne.lib.trajectories;
 
-import static redbacks.robot.Robot.driver;
-import static redbacks.robot.Robot.sensors;
-import static redbacks.robot.RobotMap.drivePIDMotorkD;
-import static redbacks.robot.RobotMap.drivePIDMotorkI;
-import static redbacks.robot.RobotMap.drivePIDMotorkP;
+import static redbacks.robot.Robot.*;
+import static redbacks.robot.RobotMap.*;
 
 import edu.wpi.first.wpilibj.PIDSourceType;
 import redbacks.arachne.lib.actions.Action;
@@ -16,7 +13,6 @@ import redbacks.arachne.lib.pid.Tolerances;
 import redbacks.arachne.lib.pid.AcMultiPID.PIDAxis;
 import redbacks.arachne.lib.sensors.NumericSensor;
 import redbacks.robot.Robot;
-import redbacks.robot.TrajectoryList2;
 
 public class AcTrajectory extends Action
 {
