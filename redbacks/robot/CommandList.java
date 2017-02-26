@@ -58,7 +58,7 @@ public class CommandList extends CommandListStart
 		);
 	
 	static {subsystemToUse = intake;}
-	private static double intakeFast = 1D, intakeMid = 0.60D, intakeSlow = 0.3D, iPS = 0.50D, iPF = 0.50D;
+	private static double intakeFast = 1D, intakeMid = 0.60D, intakeSlow = 0.3D, iPS = .6D, iPF = .6D;
 	public static CommandSetup
 		intakeIn = newCom(new AcMotor.Set(intake.intakeMotor, intakeFast, new ChFalse())),
 		intakeOut = newCom(new AcMotor.Set(intake.intakeMotor, -intakeFast, new ChFalse()));
@@ -68,8 +68,9 @@ public class CommandList extends CommandListStart
 	public static CommandSetup
 		hopperFeed = newCom(
 				new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChTrue()),
-				new AcMotor.Set(intake.intakeMotor, iPS, new ChTrue()),
-				new AcMotor.RampTime(intake.intakeMotor, iPF, 10, new ChFalse(), false)
+				new AcMotor.Set(intake.motIntakeB, intakeFast, new ChTrue()),
+				new AcMotor.Set(intake.motIntakeF, iPS, new ChTime(1)),
+				new AcMotor.RampTime(intake.motIntakeF, iPF, 4, new ChFalse(), false)
 //				new AcMotor.Set(intake.motIntakeB, intakeMid, new ChTrue()),
 //				new AcMotor.Set(intake.motIntakeF, intakeMid, new ChFalse())
 		),
