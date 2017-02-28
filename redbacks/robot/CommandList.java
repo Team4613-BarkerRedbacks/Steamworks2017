@@ -57,8 +57,8 @@ public class CommandList extends CommandListStart
 				)
 		);
 	
-	static {subsystemToUse = intake;}
-	private static double intakeFast = 1D, intakeMid = 0.60D, intakeSlow = 0.3D, iPS = .6D, iPF = .6D;
+	static {subsystemToUse = intake;} //daiane can change
+	private static double intakeFast = 1D, intakeMid = 0.60D, intakeSlow = 0.3D, iPS = 0.8D, iPF = 0.8D;
 	public static CommandSetup
 		intakeIn = newCom(new AcMotor.Set(intake.intakeMotor, intakeFast, new ChFalse())),
 		intakeOut = newCom(new AcMotor.Set(intake.intakeMotor, -intakeFast, new ChFalse()));
@@ -71,8 +71,6 @@ public class CommandList extends CommandListStart
 				new AcMotor.Set(intake.motIntakeB, intakeFast, new ChTrue()),
 				new AcMotor.Set(intake.motIntakeF, iPS, new ChTime(1)),
 				new AcMotor.RampTime(intake.motIntakeF, iPF, 4, new ChFalse(), false)
-//				new AcMotor.Set(intake.motIntakeB, intakeMid, new ChTrue()),
-//				new AcMotor.Set(intake.motIntakeF, intakeMid, new ChFalse())
 		),
 		hopperOn = newCom(new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChFalse()));
 	
