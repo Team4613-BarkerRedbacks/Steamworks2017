@@ -28,7 +28,7 @@ public class AcDrive extends Action
 	 */
 	public void arcadeDrive(double sp, double rotation) {
 		double mod = minR + difR * Math.pow(1 - Math.abs(sp), 2);
-		double r = Math.pow(rotation, 3) * mod;
+		double r = Math.pow(rotation, 1) * mod;
 		Robot.driver.drivetrain.tankDrive(- sp - r, - sp + r);
 	}
 }
