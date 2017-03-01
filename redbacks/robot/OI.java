@@ -51,8 +51,8 @@ public class OI extends OIBase
 		//JARVIS
 		//whenPressed(new BtnCheck(new ChGettableBooleanList(LogicOperators.OR, Robot.sensors.gearLight, Robot.sensors.shooterLight)), spitterUp.c());*/
 
-		whenHeld(o_POV_U, gearFromHP.c());
-		whenHeld(o_POV_D, gearFromGround.c());
+		whenHeld(o_LUP, gearFromHP.c());
+		whenHeld(o_LDOWN, gearFromGround.c());
 		whenHeld(d_LT, gearPlace.c());
 		
 		whenPressedReleased(o_LT, shooterFeedHopper.c(), rel_shooterFeedHopper.c());
@@ -131,7 +131,10 @@ public class OI extends OIBase
 		o_POV_L = wrap(new BtnPOV(stick_o, 270)),
 
 		o_LT = wrap(new BtnAxis(axis_o_LT, false, 0.5D)),
-		o_RT = wrap(new BtnAxis(axis_o_RT, false, 0.5D));
+		o_RT = wrap(new BtnAxis(axis_o_RT, false, 0.5D)),
+		
+		o_LUP = wrap(new BtnAxis(axis_o_LY, true, 0.5D)),
+		o_LDOWN = wrap(new BtnAxis(axis_o_LY, false, 0.5D));
 	
 	private static final Joystick pad = new Joystick(2);
 	
