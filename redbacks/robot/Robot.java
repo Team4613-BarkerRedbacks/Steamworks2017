@@ -44,7 +44,7 @@ public class Robot extends ArachneRobot
 	}
 	
 	public void initialiseRobot() {
-		//CameraServer.getInstance().startAutomaticCapture();
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 	
 	public void disabledInit() {
