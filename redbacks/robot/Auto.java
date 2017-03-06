@@ -6,6 +6,7 @@ import redbacks.arachne.lib.actions.actuators.*;
 import redbacks.arachne.lib.checks.*;
 import redbacks.arachne.lib.checks.analog.*;
 import redbacks.arachne.lib.commands.CommandBase;
+import redbacks.arachne.lib.commands.CommandSetup;
 import redbacks.arachne.lib.pid.Tolerances;
 import redbacks.arachne.lib.trajectories.AcTrajectoryFast;
 import redbacks.arachne.lib.trajectories.AcTrajectoryMid;
@@ -147,5 +148,9 @@ public class Auto extends AutoStart
 
 			default: return null;
 		}
+	}
+
+	public static CommandBase createAuto(Action... actions) {
+		return new CommandSetup(null, new AcSeq.Parallel(actions)).c();
 	}
 }
