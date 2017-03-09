@@ -102,6 +102,7 @@ public class Auto extends AutoStart
 			case(11): return createAuto(
 					new AcSeq.Parallel(hopperOut),
 					new AcSeq.Parallel(spitterDown),
+					new AcSeq.Parallel(new AcMotor.Set(climber.climberMotor, /*This is the speed*/ 0.5D, new ChTime(/*This is the time*/ 0.5D))),
 					new AcTrajectoryFast(new ChTime(2), true, TrajectoryListBlue.blue_wallToHopper, driver.drivetrain, -1, -1, 
 							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
 					new AcTankDrive(new ChTime(2D), 0.8D, 0.8D),
@@ -125,6 +126,7 @@ public class Auto extends AutoStart
 			case(21): return createAuto(
 					new AcSeq.Parallel(hopperOut),
 					new AcSeq.Parallel(spitterDown),
+					new AcSeq.Parallel(new AcMotor.Set(climber.climberMotor, /*This is the speed*/ 0.5D, new ChTime(/*This is the time*/ 0.5D))),
 					new AcTrajectoryFast(new ChTime(2), true, TrajectoryListRed.red_wallToHopper, driver.drivetrain, -1, -1, 
 							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
 					new AcTankDrive(new ChTime(2D), 0.8D, 0.8D),
