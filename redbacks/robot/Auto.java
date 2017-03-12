@@ -107,16 +107,17 @@ public class Auto extends AutoStart
 					new AcTankDrive(new ChTime(2D), 0.8D, 0.8D),
 					new AcSeq.Parallel(shooterIn),
 					new AcSeq.Parallel(
-							new AcMotor.Set(intake.motIntakeF, -0.6D, new ChTime(0.6)),
+							new AcMotor.Set(intake.motIntakeF, -0.6D, new ChTime(1)),
 							new AcSeq.Parallel(shootSpeed)
 					),
 					new AcSeq.Parallel(deflect),
-					new AcTrajectoryFast(new ChTime(2D), true, TrajectoryListBlue.blue_hopperToBoiler, driver.drivetrain, -1, -1,
+					new AcTrajectoryFast(new ChTime(3D), true, TrajectoryListBlue.blue_hopperToBoiler, driver.drivetrain, -1, -1, 
 							sensors.yaw, 0.05, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
 					new AcSeq.Parallel(
 							new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D),
 							new AcInterrupt.KillSubsystem(spitter)
 					),
+					new AcWait(0.75D),
 					new AcSeq.Parallel(hopperFeed),
 					new AcSeq.Parallel(hopperVibrate)
 			);
@@ -130,16 +131,17 @@ public class Auto extends AutoStart
 					new AcTankDrive(new ChTime(2D), 0.8D, 0.8D),
 					new AcSeq.Parallel(shooterIn),
 					new AcSeq.Parallel(
-							new AcMotor.Set(intake.motIntakeF, -0.6D, new ChTime(0.6D)),
+							new AcMotor.Set(intake.motIntakeF, -0.6D, new ChTime(1)),
 							new AcSeq.Parallel(shootSpeed)
 					),
 					new AcSeq.Parallel(deflect),
-					new AcTrajectoryFast(new ChTime(2D), true, TrajectoryListRed.red_hopperToBoiler, driver.drivetrain, -1, -1, 
+					new AcTrajectoryFast(new ChTime(3D), true, TrajectoryListRed.red_hopperToBoiler, driver.drivetrain, -1, -1, 
 							sensors.yaw, 0.05, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
 					new AcSeq.Parallel(
 							new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D),
 							new AcInterrupt.KillSubsystem(spitter)
 					),
+					new AcWait(0.75D),
 					new AcSeq.Parallel(hopperFeed),
 					new AcSeq.Parallel(hopperVibrate)
 			);
