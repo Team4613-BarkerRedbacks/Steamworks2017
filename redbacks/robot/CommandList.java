@@ -86,7 +86,7 @@ public class CommandList extends CommandListStart
 		shootSpeed = newCom(
 //				new AcMotor.Set(shooter.shooterMotor, 1, new ChFalse())
 //				new AcMotor.RampTime(shooter.shooterMotor, shootFast, 2D, new ChFalse(), false)
-				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, 2D, new ChFalse(), true),
+				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, .5D, new ChFalse(), true),
 				new AcMulti(
 						new AcPIDControl(0.01D, new ChFalse(), false, 
 								3.0E-6, 0, 5.0E-5, 0.000004D, -22000,
