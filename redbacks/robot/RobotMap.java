@@ -43,7 +43,7 @@ public class RobotMap
 	
 	public static final int
 		idSolSpit	= 4,
-		idSolHopper	= 5, //FIXME SHOULD BE 2
+		idSolHopper	= 2, //FIXME SHOULD BE 2
 		idSolIntake	= 6;
 	
 	public static final double

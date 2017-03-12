@@ -102,16 +102,17 @@ public class Auto extends AutoStart
 			case(11): return createAuto(
 					new AcSeq.Parallel(hopperOut),
 					new AcSeq.Parallel(spitterDown),
+					new AcSeq.Parallel(new AcMotor.Set(climber.climberMotor, 0.5D, new ChTime(0.3D))),
 					new AcTrajectoryFast(new ChTime(2), true, TrajectoryListBlue.blue_wallToHopper, driver.drivetrain, -1, -1, 
 							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
 					new AcTankDrive(new ChTime(2D), 0.8D, 0.8D),
 					new AcSeq.Parallel(shooterIn),
 					new AcSeq.Parallel(
-							new AcMotor.Set(intake.motIntakeF, -0.6D, new ChTime(1)),
+							new AcMotor.Set(intake.motIntakeF, -0.6D, new ChTime(0.6D)),//before was ChTime(1)
 							new AcSeq.Parallel(shootSpeed)
 					),
 					new AcSeq.Parallel(deflect),
-					new AcTrajectoryFast(new ChTime(3D), true, TrajectoryListBlue.blue_hopperToBoiler, driver.drivetrain, -1, -1, 
+					new AcTrajectoryFast(new ChTime(2D), true, TrajectoryListBlue.blue_hopperToBoiler, driver.drivetrain, -1, -1, //before was ChTime(3D)
 							sensors.yaw, 0.05, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
 					new AcSeq.Parallel(
 							new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D),
@@ -126,16 +127,17 @@ public class Auto extends AutoStart
 			case(21): return createAuto(
 					new AcSeq.Parallel(hopperOut),
 					new AcSeq.Parallel(spitterDown),
+					new AcSeq.Parallel(new AcMotor.Set(climber.climberMotor, 0.5D, new ChTime(0.3D))),
 					new AcTrajectoryFast(new ChTime(2), true, TrajectoryListRed.red_wallToHopper, driver.drivetrain, -1, -1, 
 							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
 					new AcTankDrive(new ChTime(2D), 0.8D, 0.8D),
 					new AcSeq.Parallel(shooterIn),
 					new AcSeq.Parallel(
-							new AcMotor.Set(intake.motIntakeF, -0.6D, new ChTime(1)),
+							new AcMotor.Set(intake.motIntakeF, -0.6D, new ChTime(0.6D)),
 							new AcSeq.Parallel(shootSpeed)
 					),
 					new AcSeq.Parallel(deflect),
-					new AcTrajectoryFast(new ChTime(3D), true, TrajectoryListRed.red_hopperToBoiler, driver.drivetrain, -1, -1, 
+					new AcTrajectoryFast(new ChTime(2D), true, TrajectoryListRed.red_hopperToBoiler, driver.drivetrain, -1, -1, 
 							sensors.yaw, 0.05, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
 					new AcSeq.Parallel(
 							new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D),
