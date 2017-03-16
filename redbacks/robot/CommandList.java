@@ -34,7 +34,7 @@ public class CommandList extends CommandListStart
 		hopperOut = newCom(new AcSolenoid.Single(hopper.hopperSol, true)),
 		hopperIn = newCom(new AcSolenoid.Single(hopper.hopperSol, false)),
 		
-		hopperVibrate = newCom(new AcVibrateHopper(new ChFalse(), 1));
+		hopperVibrate = newCom(new AcVibrateHopper(new ChFalse(), 0.5D));
 	
 	static {subsystemToUse = sensors;}
 	public static CommandSetup
@@ -132,7 +132,7 @@ public class CommandList extends CommandListStart
 	public static CommandSetup
 		climbSlow = newCom(new AcMotor.Set(climber.climberMotor, 0.2D, new ChFalse())),
 		climb = newCom(new AcMotor.Set(climber.climberMotor, 1.0D, new ChFalse())),
-		climbRamp = newCom(new AcMotor.RampTime(climber.climberMotor, 1D, 2D, new ChFalse(), false));
+		climbRamp = newCom(new AcMotor.RampTime(climber.climberMotor, 1D, 0.5D, new ChFalse(), false));
 	
 	static {subsystemToUse = spitter;}
 	private static double spitFast = 1.0D, spitMid = 0.7D, spitSlow = 0.3D;

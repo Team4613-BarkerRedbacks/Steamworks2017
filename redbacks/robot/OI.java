@@ -66,6 +66,11 @@ public class OI extends OIBase
 		whenPressed(d_X, hopperOut.c());
 		whenPressed(d_Y, hopperIn.c());
 		
+		whenPressed(o_X, hopperOut.c());
+		whenPressed(o_Y, hopperIn.c());
+		whenPressed(d_LB, hopperOut.c());
+		whenPressed(d_RB, hopperIn.c());
+		
 		whenPressedReleased(o_A, shooterIn.c(), rel_shooterIn.c());
 		
 		whenHeld(new BtnMulti(LogicOperators.AND, o_LB, o_RB), climbRamp.c());
