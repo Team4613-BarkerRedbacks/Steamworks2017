@@ -147,6 +147,23 @@ public class Auto extends AutoStart
 					new AcSeq.Parallel(hopperFeed),
 					new AcSeq.Parallel(hopperVibrate)
 			);
+			
+			//Macquarie
+			case(12): return createAuto(
+					new AcSeq.Parallel(shootSpeed),
+					new AcWait(1),
+					sensors.new AcReset(),
+					new AcWait(0.1D),
+					new AcTankDrive(new ChNumSen(18, sensors.yaw), -0.2, 0.7),
+					sensors.new AcReset(),
+					new AcWait(0.1D),
+					new AcTankDrive(new ChNumSen(18, sensors.yaw), 0.7, -0.2),
+					new AcSeq.Parallel(hopperOut),
+					new AcSeq.Parallel(spitterDown),
+					new AcTankDrive(new ChTime(1D), -0.7D, -0.7D),
+					new AcSeq.Parallel(hopperFeed)
+//					new AcSeq.Parallel(hopperVibrate)
+			);
 
 			default: return null;
 		}
