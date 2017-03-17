@@ -35,5 +35,10 @@ public class AcReadSensors extends Action
 //		putBoolean("Shooter Light", sensors.shooterLight.get());
 		
 		putNumber("Yaw", sensors.yaw.get());
+		
+		putBoolean("Shooter Ready", 
+				Math.abs(Math.abs(sensors.shooterEncoderRateL.get()) - 22000) < 2000 && 
+				Math.abs(Math.abs(sensors.shooterEncoderRateR.get()) - 22000) < 2000
+		);
 	}	
 }
