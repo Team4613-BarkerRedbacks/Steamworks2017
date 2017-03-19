@@ -74,8 +74,9 @@ public class OI extends OIBase
 		whenPressedReleased(o_A, shooterIn.c(), rel_shooterIn.c());
 		
 		whenHeld(new BtnMulti(LogicOperators.AND, o_LB, o_RB), climbRamp.c());
-		
+
 		whenPressed(d_Start, killAll.c());
+		whenHeld(d_Back, intakeOut.c());
 	}
 	
 	private static final Joystick stick_d = new Joystick(0);
