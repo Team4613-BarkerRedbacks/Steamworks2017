@@ -149,7 +149,7 @@ public class CommandList extends CommandListStart
 
 	static {subsystemToUse = climber;}
 	public static CommandSetup
-		climbSlow = newCom(new AcMotor.Set(climber.climberMotor, 0.2D, new ChFalse())),
+		climbSlow = newCom(new AcMotor.Set(climber.climberMotor, 0.5D, new ChFalse())),
 		climb = newCom(new AcMotor.Set(climber.climberMotor, 1.0D, new ChFalse())),
 		climbRamp = newCom(new AcMotor.RampTime(climber.climberMotor, 1D, 0.5D, new ChFalse(), false));
 	

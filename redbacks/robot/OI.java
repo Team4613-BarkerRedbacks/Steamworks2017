@@ -17,40 +17,6 @@ public class OI extends OIBase
 	public static boolean isSingleControl = false;
 	
 	public void mapOperations() {
-		/*whenPressed(d_Start, resetSensors.c());
-		//whenHeld(d_RT, intakeIn.c());
-		whenHeld(d_Back, climbSlow.c());
-		whenHeld(d_RStick, climbRamp.c());
-		
-		//whenPressed(d_LStick, switchDir.c());
-		
-		whenPressedReleased(d_RT, shoot.c(), rel_shoot.c());
-		//whenPressedReleased(d_RT, shooterFeedHopper.c(), rel_shooterFeedHopper.c());
-		
-		whenPressed(d_RB, spitterUp.c());
-		whenReleased(d_RB, spitterDown.c());
-		
-		whenHeld(d_B, hopperOn.c());
-		whenHeld(d_LT, deflect.c());
-		whenHeld(d_LB, spitIn.c());
-		
-		if(isSingleControl) {
-			whenHeld(new BtnMulti(LogicOperators.AND, 
-							new BtnCheck(new ChGettableNumber(0.1, Robot.driver.leftMotor, true, false)), 
-							new BtnCheck(new ChGettableNumber(-0.1, Robot.driver.rightMotor, false, false)),
-							new BtnCheck(new ChGettableBoolean(Robot.spitter.spitterSol, true)),
-							new BtnCheck(new ChGettableBooleanList(LogicOperators.NOR, 
-									d_LB, 
-									Robot.sensors.gearLight)
-							)
-					),
-					deflect.c()
-			);
-		}
-
-		//JARVIS
-		//whenPressed(new BtnCheck(new ChGettableBooleanList(LogicOperators.OR, Robot.sensors.gearLight, Robot.sensors.shooterLight)), spitterUp.c());*/
-
 		whenHeld(o_LUP, gearFromHP.c());
 		whenHeld(o_LDOWN, gearFromGround.c());
 		whenHeld(d_LT, gearPlace.c());
@@ -74,6 +40,7 @@ public class OI extends OIBase
 		whenPressedReleased(o_A, shooterIn.c(), rel_shooterIn.c());
 		
 		whenHeld(new BtnMulti(LogicOperators.AND, o_LB, o_RB), climbRamp.c());
+		whenHeld(new BtnMulti(LogicOperators.XOR, o_LB, o_RB), climbSlow.c());
 
 		whenPressed(d_Start, killAll.c());
 		whenHeld(d_Back, intakeOut.c());
