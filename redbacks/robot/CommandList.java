@@ -64,13 +64,18 @@ public class CommandList extends CommandListStart
 		intakeOut = newCom(new AcMotor.Set(intake.intakeMotor, -intakeFast, new ChFalse()));
 	
 	static {subsystemToUse = hopper;}
-	private static double hopperFast = 0.6D;
+	private static double hopperFast = 0.6D, hopperSlow = 0.3D;
 	public static CommandSetup
 		hopperFeed = newCom(
 				new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChTrue()),
 				new AcMotor.Set(intake.motIntakeB, intakeFast, new ChTrue()),
 				new AcMotor.Set(intake.motIntakeF, iPS, new ChTime(1)),
 				new AcMotor.RampTime(intake.motIntakeF, iPF, 4, new ChFalse(), false)
+		),
+		hopperFeedSlow = newCom(
+				new AcMotor.Set(hopper.hopperMotor, hopperSlow, new ChTrue()),
+				new AcMotor.Set(intake.motIntakeB, intakeFast, new ChTrue()),
+				new AcMotor.Set(intake.motIntakeF, intakeFast, new ChFalse())
 		),
 		hopperFeedAuto = newCom(
 				new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChTrue()),
@@ -81,11 +86,9 @@ public class CommandList extends CommandListStart
 		hopperOn = newCom(new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChFalse()));
 	
 	static {subsystemToUse = shooter;}
-	private static double shootFast = 1.0D, shootPIDBase = 0.7D, shootFeed = 0.25D;
+	private static double shootFast = 1.0D, shootPIDBase = 0.7D, shootFeed = 0.15D;
 	public static CommandSetup
 		shootSpeed = newCom(
-//				new AcMotor.Set(shooter.shooterMotor, 1, new ChFalse())
-//				new AcMotor.RampTime(shooter.shooterMotor, shootFast, 2D, new ChFalse(), false)
 				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, .5D, new ChFalse(), true),
 				new AcMulti(
 						new AcPIDControl(0.01D, new ChFalse(), false, 
@@ -97,16 +100,32 @@ public class CommandList extends CommandListStart
 								new Tolerances.Percentage(1.0), sensors.shooterEncoderRateR, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootR).setMultiplier(-1)
 						)
 				)
-//				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, 2D, new ChFalse(), true),
-//				new AcPIDControl(0.01D, new ChFalse(), false, 
-//						1.0E-6, 0, 5.0E-5, 0.000008D, -5750,
-//						new Tolerances.Percentage(1.0), sensors.shooterEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooterMotor).setMultiplier(-1)
-//				)
-//				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, 2D, new ChFalse(), true),
-//				new AcPIDControl(0.01D, new ChFalse(), false, 
-//						1.0E-6, 0, 5.0E-5, 0.000008D, -7400,
-//						new Tolerances.Percentage(1.0), sensors.shooterEncoderRate, false, 0, 0, PIDSourceType.kRate, -1D, -0.75D, new PIDMotor(shooter.shooterMotor).setMultiplier(-1)
-//				)
+		),
+		shootToHopper = newCom(
+				new AcMotor.RampTime(shooter.shooterMotor, shootPIDBase, .5D, new ChFalse(), true),
+				new AcMulti(
+						new AcPIDControl(0.01D, new ChFalse(), false, 
+								3.0E-6, 0, 5.0E-5, 0.000004D, -25000,
+								new Tolerances.Percentage(1.0), sensors.shooterEncoderRateL, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootL).setMultiplier(-1)
+						),
+						new AcPIDControl(0.01D, new ChFalse(), false, 
+								3.0E-6, 0, 5.0E-5, 0.000004D, -25000,
+								new Tolerances.Percentage(1.0), sensors.shooterEncoderRateR, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootR).setMultiplier(-1)
+						)
+				)
+		),
+		shootFull = newCom(
+				new AcMotor.RampTime(shooter.shooterMotor, shootFast, .5D, new ChFalse(), true),
+				new AcMulti(
+						new AcPIDControl(0.01D, new ChFalse(), false, 
+							3.0E-6, 0, 5.0E-5, 0.0000045D, -27000,
+							new Tolerances.Percentage(1.0), sensors.shooterEncoderRateL, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootL).setMultiplier(-1)
+						),
+						new AcPIDControl(0.01D, new ChFalse(), false, 
+								3.0E-6, 0, 5.0E-5, 0.0000045D, -27000,
+								new Tolerances.Percentage(1.0), sensors.shooterEncoderRateR, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootR).setMultiplier(-1)
+						)
+				)
 		),
 		rel_shoot = newCom(
 				new AcMotor.Set(shooter.shooterMotor, shootPIDBase, new ChTrue()),
