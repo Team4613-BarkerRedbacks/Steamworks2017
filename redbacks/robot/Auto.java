@@ -122,6 +122,36 @@ public class Auto extends AutoStart
 					new AcSeq.Parallel(hopperFeed),
 					new AcSeq.Parallel(hopperVibrate)
 			);
+			
+			//Blue 10kpa, shoot
+			case(12): return createAuto(
+					new AcSeq.Parallel(shootSpeed),
+					new AcSeq.Parallel(hopperFeedSlow),
+					new AcWait(2.5D),
+					new AcInterrupt.KillSubsystem(shooter),
+					new AcInterrupt.KillSubsystem(hopper),
+					new AcWait(0.1D),
+					new AcTrajectoryMid(new ChTime(2.5D), true, TrajectoryListBlue.blue_angleShotToGear, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.05, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(1000), false, 0, 0),
+					new AcWait(0.1D),
+					new AcDriveStraight(new ChTime(1.25D), 0),
+			);
+			
+			//Blue Macquarie maneuver
+			case(19): return createAuto(
+					new AcSeq.Parallel(shootSpeed),
+					new AcWait(1),
+					sensors.new AcReset(),
+					new AcWait(0.1D),
+					new AcTankDrive(new ChNumSen(18, sensors.yaw), -0.2, 0.7),
+					sensors.new AcReset(),
+					new AcWait(0.1D),
+					new AcTankDrive(new ChNumSen(18, sensors.yaw), 0.7, -0.2),
+					new AcSeq.Parallel(hopperOut),
+					new AcSeq.Parallel(spitterDown),
+					new AcTankDrive(new ChTime(1D), -0.7D, -0.7D),
+					new AcSeq.Parallel(hopperFeed)
+			);
 
 			//Red kPa
 			case(21): return createAuto(
@@ -148,21 +178,33 @@ public class Auto extends AutoStart
 					new AcSeq.Parallel(hopperVibrate)
 			);
 			
-			//Macquarie
-			case(12): return createAuto(
+			//Red 10kpa, shoot
+			case(22): return createAuto(
+					new AcSeq.Parallel(shootSpeed),
+					new AcSeq.Parallel(hopperFeedSlow),
+					new AcWait(2.5D),
+					new AcInterrupt.KillSubsystem(shooter),
+					new AcInterrupt.KillSubsystem(hopper),
+					new AcWait(0.1D),
+							sensors.yaw, 0.05, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(1000), false, 0, 0),
+					new AcWait(0.1D),
+					new AcDriveStraight(new ChTime(1.25D), 0),
+			);
+			
+			//Red Macquarie maneuver
+			case(29): return createAuto(
 					new AcSeq.Parallel(shootSpeed),
 					new AcWait(1),
 					sensors.new AcReset(),
 					new AcWait(0.1D),
-					new AcTankDrive(new ChNumSen(18, sensors.yaw), -0.2, 0.7),
+					new AcTankDrive(new ChNumSen(18, sensors.yaw), 0.7, -0.2),
 					sensors.new AcReset(),
 					new AcWait(0.1D),
-					new AcTankDrive(new ChNumSen(18, sensors.yaw), 0.7, -0.2),
+					new AcTankDrive(new ChNumSen(18, sensors.yaw), -0.2, 0.7),
 					new AcSeq.Parallel(hopperOut),
 					new AcSeq.Parallel(spitterDown),
 					new AcTankDrive(new ChTime(1D), -0.7D, -0.7D),
 					new AcSeq.Parallel(hopperFeed)
-//					new AcSeq.Parallel(hopperVibrate)
 			);
 
 			default: return null;
