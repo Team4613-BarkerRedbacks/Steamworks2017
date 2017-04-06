@@ -126,6 +126,7 @@ public class Auto extends AutoStart
 			//Blue 10kpa, shoot
 			case(12): return createAuto(
 					new AcSeq.Parallel(shootSpeed),
+					new AcWait(2.5D),
 					new AcSeq.Parallel(hopperFeedSlow),
 					new AcWait(2.5D),
 					new AcInterrupt.KillSubsystem(shooter),
@@ -133,8 +134,10 @@ public class Auto extends AutoStart
 					new AcWait(0.1D),
 					new AcTrajectoryMid(new ChTime(2.5D), true, TrajectoryListBlue.blue_angleShotToGear, driver.drivetrain, -1, -1, 
 							sensors.yaw, 0.05, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(1000), false, 0, 0),
+					new AcSetNumSen(sensors.yaw, -170),
 					new AcWait(0.1D),
 					new AcDriveStraight(new ChTime(1.25D), 0),
+					new AcTankDrive(new ChTime(3D), -0.5, -0.5)
 			);
 			
 			//Blue Macquarie maneuver
@@ -181,14 +184,18 @@ public class Auto extends AutoStart
 			//Red 10kpa, shoot
 			case(22): return createAuto(
 					new AcSeq.Parallel(shootSpeed),
+					new AcWait(2.5D),
 					new AcSeq.Parallel(hopperFeedSlow),
 					new AcWait(2.5D),
 					new AcInterrupt.KillSubsystem(shooter),
 					new AcInterrupt.KillSubsystem(hopper),
 					new AcWait(0.1D),
+					new AcTrajectoryMid(new ChTime(2.5D), true, TrajectoryListRed.red_angleShotToGear, driver.drivetrain, -1, -1, 
 							sensors.yaw, 0.05, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(1000), false, 0, 0),
+					new AcSetNumSen(sensors.yaw, 170),
 					new AcWait(0.1D),
 					new AcDriveStraight(new ChTime(1.25D), 0),
+					new AcTankDrive(new ChTime(3D), -0.5, -0.5)
 			);
 			
 			//Red Macquarie maneuver
