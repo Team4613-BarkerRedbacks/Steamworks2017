@@ -2,7 +2,6 @@ package redbacks.robot.actions;
 
 import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.Check;
-import redbacks.arachne.lib.navx.NavX;
 import redbacks.robot.Robot;
 
 /**

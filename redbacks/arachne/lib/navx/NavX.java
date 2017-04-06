@@ -188,23 +188,21 @@ public class NavX
 	 */
 	public static class Yaw extends NumericSensor
 	{
+		double curSet = 0;
+		
 		protected double getSenVal() {
-			float yaw = (float) (getYaw() + offset);
-			if(yaw < -180) {
-				yaw += 360;
-			}
-			if(yaw > 180) {
-				yaw -= 360;
-			}
+			float yaw = (float) (getYaw() + curSet);
+			if(yaw < -180) yaw += 360;
+			else if(yaw > 180) yaw -= 360;
 			return yaw;
 		}
 		
 		public void set(double value) {
-			if(value == 0) {
-				offset = 0;
-				navx.reset();
-			}
-			else super.set(value);
+			curSet = value % 360;
+			if(curSet < -180) curSet -= 360;
+			else if(curSet > 180) curSet -= 360;
+			
+			navx.reset();
 		}
 	}
 }
