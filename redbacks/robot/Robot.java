@@ -45,6 +45,11 @@ public class Robot extends ArachneRobot
 	
 	public void initialiseRobot() {
 		CameraServer.getInstance().startAutomaticCapture();
+		hopper.eyebrowsSol.set(true);
+	}
+	
+	public void initialiseTeleop() {
+		hopper.eyebrowsSol.set(true);
 	}
 	
 	public void disabledInit() {

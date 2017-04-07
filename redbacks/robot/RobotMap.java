@@ -44,7 +44,8 @@ public class RobotMap
 	public static final int
 		idSolSpit	= 4,
 		idSolHopper	= 2, //FIXME SHOULD BE 2
-		idSolIntake	= 6;
+		idSolIntake	= 6,
+		idSolEyebrows = 7;
 	
 	public static final double
 	//P = 0.00008D

@@ -19,8 +19,9 @@ public class SubsystemHopper extends SubsystemBase
 	public CtrlMotorList hopperMotor = new CtrlMotorList(
 			motHopperL, motHopperR
 	);
-	
+
 	public SolSingle hopperSol = new SolSingle(RobotMap.idSolHopper);
+	public SolSingle eyebrowsSol = new SolSingle(RobotMap.idSolEyebrows);
 	
 	public SubsystemHopper() {
 		super();
