@@ -7,6 +7,10 @@ import redbacks.arachne.lib.checks.*;
 import redbacks.arachne.lib.checks.analog.*;
 import redbacks.arachne.lib.commands.CommandBase;
 import redbacks.arachne.lib.commands.CommandSetup;
+import redbacks.arachne.lib.pid.AcMultiPID;
+import redbacks.arachne.lib.pid.AcPIDControl;
+import redbacks.arachne.lib.pid.PIDMotor;
+import redbacks.arachne.lib.pid.PIDParams;
 import redbacks.arachne.lib.pid.Tolerances;
 import redbacks.arachne.lib.trajectories.AcTrajectoryFast;
 import redbacks.arachne.lib.trajectories.AcTrajectoryMid;
@@ -91,12 +95,11 @@ public class Auto extends AutoStart
 					new AcTankDrive(new ChTime(1.5D), 0.5D, 0.5D)
 			);
 			
-			//I am amazing!
-			case(7): return createAuto(
-					new AcTrajectorySlow(new ChTime(7), true, TrajectoryListAmbi.ambi_leftGear, driver.drivetrain, -1, -1, 
-							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(500), false, 0, 0),
-					new AcSeq.Parallel(gearPlace)
-			);
+			//2 Gear, left side
+			case(7): return create2GearAuto(1.0, 1.0, 200, -90, 13500, 3500, 14000, 4000);
+			
+			//2 Gear, right side
+			case(9): return create2GearAuto(1.0, 1.0, 200, 90, 13500, 3500, 14000, 4000);
 
 			//Blue kPa
 			case(11): return createAuto(
@@ -220,5 +223,74 @@ public class Auto extends AutoStart
 
 	public static CommandBase createAuto(Action... actions) {
 		return new CommandSetup(null, new AcSeq.Parallel(actions)).c();
+	}
+	
+	public static CommandBase create2GearAuto(double linearSp, double rotSp, int tolerance, double angle, int disToPeg, int disPegReturn, int disToGear, int disGearReturn) {
+		return createAuto(
+				new AcSetIndivDrive(),
+				sensors.new AcReset(),
+				new AcMulti(
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.leftMotor), new double[]{-linearSp, -rotSp}, 
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, -disToPeg, new Tolerances.Absolute(tolerance), sensors.centreEncoderDis),
+								new PIDParams(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, 0, new Tolerances.Absolute(3), sensors.yaw)
+						),
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.rightMotor), new double[]{linearSp, -rotSp},
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, -disToPeg, new Tolerances.Absolute(tolerance), sensors.centreEncoderDis),
+								new PIDParams(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, 0, new Tolerances.Absolute(3), sensors.yaw)
+						)
+				),
+				new AcSeq.Parallel(gearPlace),
+				new AcMulti(
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.leftMotor), new double[]{-linearSp, -rotSp}, 
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, -disPegReturn, new Tolerances.Absolute(tolerance), sensors.centreEncoderDis),
+								new PIDParams(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, 0, new Tolerances.Absolute(3), sensors.yaw)
+						),
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.rightMotor), new double[]{linearSp, -rotSp},
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, -disPegReturn, new Tolerances.Absolute(tolerance), sensors.centreEncoderDis),
+								new PIDParams(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, 0, new Tolerances.Absolute(3), sensors.yaw)
+						)
+				),
+				new AcPIDControl(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, -90, new Tolerances.Absolute(2), sensors.yaw, false, 0, 0, 
+						new PIDMotor(driver.leftMotor).setMultiplier(-1),
+						new PIDMotor(driver.rightMotor).setMultiplier(-1)
+				),
+				new AcSeq.Parallel(gearFromGround),
+				new AcMulti(
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.leftMotor), new double[]{-linearSp, -rotSp}, 
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, -disToGear, new Tolerances.Absolute(tolerance), sensors.centreEncoderDis),
+								new PIDParams(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, angle, new Tolerances.Absolute(3), sensors.yaw)
+						),
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.rightMotor), new double[]{linearSp, -rotSp},
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, -disToGear, new Tolerances.Absolute(tolerance), sensors.centreEncoderDis),
+								new PIDParams(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, angle, new Tolerances.Absolute(3), sensors.yaw)
+						)
+				),
+				new AcSeq.Parallel(gearFromHP),
+				new AcMulti(
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.leftMotor), new double[]{-linearSp, -rotSp}, 
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, -disGearReturn, new Tolerances.Absolute(tolerance), sensors.centreEncoderDis),
+								new PIDParams(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, angle, new Tolerances.Absolute(3), sensors.yaw)
+						),
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.rightMotor), new double[]{linearSp, -rotSp},
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, -disGearReturn, new Tolerances.Absolute(tolerance), sensors.centreEncoderDis),
+								new PIDParams(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, angle, new Tolerances.Absolute(3), sensors.yaw)
+						)
+				),
+				new AcInterrupt.KillSubsystem(spitter),
+				new AcPIDControl(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, 0, new Tolerances.Absolute(2), sensors.yaw, false, 0, 0, 
+						new PIDMotor(driver.leftMotor).setMultiplier(-1),
+						new PIDMotor(driver.rightMotor).setMultiplier(-1)
+				),
+				new AcMulti(
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.leftMotor), new double[]{-linearSp, -rotSp}, 
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, -disToPeg, new Tolerances.Absolute(tolerance), sensors.centreEncoderDis),
+								new PIDParams(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, 0, new Tolerances.Absolute(3), sensors.yaw)
+						),
+						new AcMultiPID(new ChFalse(), true, new PIDMotor(driver.rightMotor), new double[]{linearSp, -rotSp},
+								new PIDParams(drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, -disToPeg, new Tolerances.Absolute(tolerance), sensors.centreEncoderDis),
+								new PIDParams(drivePIDGyrokP, drivePIDGyrokI, drivePIDGyrokD, 0, new Tolerances.Absolute(3), sensors.yaw)
+						)
+				)
+		);
 	}
 }

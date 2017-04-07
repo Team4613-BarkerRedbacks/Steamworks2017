@@ -2,6 +2,7 @@ package redbacks.arachne.lib.pid;
 
 import edu.wpi.first.wpilibj.PIDOutput;
 import redbacks.arachne.lib.actions.Action;
+import redbacks.arachne.lib.motors.CtrlDrive;
 import redbacks.arachne.lib.motors.CtrlMotor;
 
 /**
@@ -27,8 +28,9 @@ public class PIDMotor implements PIDOutput
 	}
 
 	public void pidWrite(double outputValue) {
-		//FIXME Check this doesn't break stuff.
-		motor.controller.set(outputValue * multiplier);
+		//FIXME Check this doesn't break stuff. EDIT: Look, it broke stuff!
+		if(motor instanceof CtrlDrive) ((CtrlDrive) motor).set(outputValue * multiplier);
+		else motor.controller.set(outputValue * multiplier);
 	}
 
 	/**
