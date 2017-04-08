@@ -43,7 +43,7 @@ public class OI extends OIBase
 		whenHeld(new BtnMulti(LogicOperators.XOR, o_LB, o_RB), climbSlow.c());
 
 		whenPressed(d_Start, killAll.c());
-		whenHeld(d_Back, intakeOut.c());
+		whenHeld(o_Back, intakeOut.c());
 	}
 	
 	private static final Joystick stick_d = new Joystick(0);
