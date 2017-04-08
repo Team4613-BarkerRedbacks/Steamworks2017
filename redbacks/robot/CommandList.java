@@ -64,7 +64,7 @@ public class CommandList extends CommandListStart
 		intakeOut = newCom(new AcMotor.Set(intake.intakeMotor, -intakeFast, new ChFalse()));
 	
 	static {subsystemToUse = hopper;}
-	private static double hopperFast = 0.6D, hopperSlow = 0.3D;
+	private static double hopperFast = 0.7D, hopperSlow = 0.3D;
 	public static CommandSetup
 		hopperFeed = newCom(
 				new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChTrue()),
@@ -132,7 +132,7 @@ public class CommandList extends CommandListStart
 				new AcMotor.RampTime(shooter.shooterMotor, 0, 2)
 		),
 		shooterFeedHopper = newCom(
-				new AcMotor.Set(intake.intakeMotor, intakeFast, new ChTrue()),
+				new AcMotor.Set(intake.motIntakeB, intakeFast, new ChTrue()),
 				new AcMotor.RampTime(shooter.shooterMotor, shootFeed, 0.5D, new ChFalse(), false)
 		),
 		rel_shooterFeedHopper = newCom(
