@@ -8,6 +8,7 @@ import static redbacks.robot.CommandList.*;
 
 import java.util.ArrayList;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.PIDController;
 
@@ -44,7 +45,10 @@ public class Robot extends ArachneRobot
 	}
 	
 	public void initialiseRobot() {
-		CameraServer.getInstance().startAutomaticCapture();
+		UsbCamera camera = new UsbCamera("USB Camera 0", 0);
+		camera.setResolution(320, 240);
+		CameraServer.getInstance().startAutomaticCapture(camera);
+//		CameraServer.getInstance().startAutomaticCapture();
 		hopper.eyebrowsSol.set(true);
 	}
 	
