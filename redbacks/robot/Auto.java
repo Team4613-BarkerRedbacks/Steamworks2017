@@ -183,6 +183,31 @@ public class Auto extends AutoStart
 					new AcSeq.Parallel(hopperFeed),
 					new AcSeq.Parallel(hopperVibrate)
 			);
+
+			//Red kPa - NYC
+			case(30): return createAuto(
+					new AcSeq.Parallel(hopperOut),
+					new AcSeq.Parallel(spitterDown),
+					new AcSeq.Parallel(new AcMotor.Set(climber.climberMotor, 0.5D, new ChTime(0.3D))),
+					new AcTrajectoryFast(new ChTime(2), true, TrajectoryListRed.red_wallToHopper, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.1, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcTankDrive(new ChTime(2.5D), 0.8D, 0.8D),
+					new AcSeq.Parallel(shooterIn),
+					new AcSeq.Parallel(
+							new AcMotor.Set(intake.motIntakeF, -0.6D, new ChTime(0.6D)),
+							new AcSeq.Parallel(shootSpeed)
+					),
+					new AcSeq.Parallel(deflect),
+					new AcTrajectoryFast(new ChTime(2D), true, TrajectoryListRed.red_hopperToBoilerNYC, driver.drivetrain, -1, -1, 
+							sensors.yaw, 0.05, sensors.centreEncoderDis, true, drivePIDMotorkP, drivePIDMotorkI, drivePIDMotorkD, new Tolerances.Absolute(250), false, 0, 0),
+					new AcSeq.Parallel(
+							new AcTankDrive(new ChTime(0.7D), -0.5D, -0.5D),
+							new AcInterrupt.KillSubsystem(spitter)
+					),
+					new AcWait(0.75D),
+					new AcSeq.Parallel(hopperFeed),
+					new AcSeq.Parallel(hopperVibrate)
+			);
 			
 			//Red 10kpa, shoot
 			case(22): return createAuto(
