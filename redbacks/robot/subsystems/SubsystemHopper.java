@@ -13,8 +13,8 @@ import static redbacks.robot.RobotMap.*;
  */
 public class SubsystemHopper extends SubsystemBase
 {
-	CtrlMotor motHopperL = new CtrlMotor(idMotHopperL);
-	CtrlMotor motHopperR = new CtrlMotor(idMotHopperR);
+	public CtrlMotor motHopperL = new CtrlMotor(idMotHopperL);
+	public CtrlMotor motHopperR = new CtrlMotor(idMotHopperR);
 	
 	public CtrlMotorList hopperMotor = new CtrlMotorList(
 			motHopperL, motHopperR
