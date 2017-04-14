@@ -143,6 +143,17 @@ public class Auto extends AutoStart
 					new AcTankDrive(new ChTime(3D), -0.5, -0.5)
 			);
 			
+			//Blue hopper shot
+			case(13): return createAuto(
+					new AcSeq.Parallel(shootFromHopperBlue),
+					sensors.new AcReset(),
+					new AcDriveDirection(new ChNumSen(15000, sensors.centreEncoderDis), 0.8D, -12.5),
+					new AcDriveDirection(new ChNumSen(-2500, sensors.centreEncoderDis, false, false), -0.6D, 10),
+					new AcTankDrive(new ChTime(0.3D), 0.5D, 0.5D),
+					new AcSeq.Parallel(hopperFeedMid),
+					new AcSeq.Parallel(hopperVibrate)
+			);
+			
 			//Blue Macquarie maneuver
 			case(19): return createAuto(
 					new AcSeq.Parallel(shootSpeed),
@@ -241,7 +252,18 @@ public class Auto extends AutoStart
 					new AcTankDrive(new ChTime(1D), -0.7D, -0.7D),
 					new AcSeq.Parallel(hopperFeed)
 			);
-
+			
+			//Red hopper shot
+			case(23): return createAuto(
+					new AcSeq.Parallel(shootFromHopperRed),
+					sensors.new AcReset(),
+					new AcDriveDirection(new ChNumSen(15000, sensors.centreEncoderDis), 0.8D, 12.5),
+					new AcDriveDirection(new ChNumSen(-2500, sensors.centreEncoderDis, false, false), -0.6D, -10),
+					new AcTankDrive(new ChTime(0.3D), 0.5D, 0.5D),
+					new AcSeq.Parallel(hopperFeedMid),
+					new AcSeq.Parallel(hopperVibrate)
+			);
+			
 			default: return null;
 		}
 	}

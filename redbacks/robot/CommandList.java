@@ -64,13 +64,18 @@ public class CommandList extends CommandListStart
 		intakeOut = newCom(new AcMotor.Set(intake.intakeMotor, -intakeFast, new ChFalse()));
 	
 	static {subsystemToUse = hopper;}
-	private static double hopperFast = 0.7D, hopperSlow = 0.3D;
+	private static double hopperFast = 0.7D, hopperMid = 0.45D, hopperSlow = 0.3D;
 	public static CommandSetup
 		hopperFeed = newCom(
 				new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChTrue()),
 				new AcMotor.Set(intake.motIntakeB, intakeFast, new ChTrue()),
 				new AcMotor.Set(intake.motIntakeF, iPS, new ChTime(1)),
 				new AcMotor.RampTime(intake.motIntakeF, iPF, 4, new ChFalse(), false)
+		),
+		hopperFeedMid = newCom(
+				new AcMotor.Set(hopper.hopperMotor, hopperMid, new ChTrue()),
+				new AcMotor.Set(intake.motIntakeB, intakeFast, new ChTrue()),
+				new AcMotor.Set(intake.motIntakeF, intakeFast, new ChFalse())
 		),
 		hopperFeedSlow = newCom(
 				new AcMotor.Set(hopper.hopperMotor, hopperSlow, new ChTrue()),
@@ -114,16 +119,29 @@ public class CommandList extends CommandListStart
 						)
 				)
 		),
-		shootFull = newCom(
-				new AcMotor.RampTime(shooter.shooterMotor, shootFast, .5D, new ChFalse(), true),
+		shootFromHopperBlue = newCom(
+				new AcMotor.RampTime(shooter.shooterMotor, shootFast, 0.5D, new ChFalse(), true),
 				new AcMulti(
 						new AcPIDControl(0.01D, new ChFalse(), false, 
-							3.0E-6, 0, 5.0E-5, 0.0000045D, -27000,
+							3.0E-6, 0, 5.0E-5, 0.000005D, -25000,
 							new Tolerances.Percentage(1.0), sensors.shooterEncoderRateL, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootL).setMultiplier(-1)
 						),
 						new AcPIDControl(0.01D, new ChFalse(), false, 
-								3.0E-6, 0, 5.0E-5, 0.0000045D, -27000,
-								new Tolerances.Percentage(1.0), sensors.shooterEncoderRateR, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootR).setMultiplier(-1)
+							3.0E-6, 0, 5.0E-5, 0.0000055D, -26000,
+							new Tolerances.Percentage(1.0), sensors.shooterEncoderRateR, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootR).setMultiplier(-1)
+						)
+				)
+		),
+		shootFromHopperRed = newCom(
+				new AcMotor.RampTime(shooter.shooterMotor, shootFast, 0.5D, new ChFalse(), true),
+				new AcMulti(
+						new AcPIDControl(0.01D, new ChFalse(), false, 
+							3.0E-6, 0, 5.0E-5, 0.0000055D, -26000,
+							new Tolerances.Percentage(1.0), sensors.shooterEncoderRateL, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootL).setMultiplier(-1)
+						),
+						new AcPIDControl(0.01D, new ChFalse(), false, 
+							3.0E-6, 0, 5.0E-5, 0.000005D, -25000,
+							new Tolerances.Percentage(1.0), sensors.shooterEncoderRateR, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootR).setMultiplier(-1)
 						)
 				)
 		),
