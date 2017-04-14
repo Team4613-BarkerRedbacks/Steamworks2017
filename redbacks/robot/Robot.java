@@ -8,7 +8,6 @@ import static redbacks.robot.CommandList.*;
 
 import java.util.ArrayList;
 
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.PIDController;
 
@@ -18,6 +17,7 @@ import edu.wpi.first.wpilibj.PIDController;
 public class Robot extends ArachneRobot
 {
 	public static ArrayList<PIDController> activePIDs = new ArrayList<PIDController>();
+	private boolean hasCameraStarted = false;
 	
 	/** The instance of the operator interface. This is used to map inputs to functions. */
 	public static OI oi = new OI();
@@ -45,10 +45,10 @@ public class Robot extends ArachneRobot
 	}
 	
 	public void initialiseRobot() {
-		UsbCamera camera = new UsbCamera("USB Camera 0", 0);
-		camera.setResolution(320, 240);
-		CameraServer.getInstance().startAutomaticCapture(camera);
-//		CameraServer.getInstance().startAutomaticCapture();
+		if(!hasCameraStarted) {
+			CameraServer.getInstance().startAutomaticCapture();
+			hasCameraStarted = true;
+		}
 		hopper.eyebrowsSol.set(true);
 	}
 	
