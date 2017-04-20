@@ -21,6 +21,7 @@ public class SubsystemHopper extends SubsystemBase
 	);
 
 	public SolSingle hopperSol = new SolSingle(RobotMap.idSolHopper);
+	public SolSingle hopperBackSol = new SolSingle(RobotMap.idSolBackHopper);
 	public SolSingle eyebrowsSol = new SolSingle(RobotMap.idSolEyebrows);
 	
 	public SubsystemHopper() {

@@ -31,8 +31,8 @@ public class CommandList extends CommandListStart
 		spitterDown = newCom(new AcSolenoid.Single(spitter.spitterSol, true)),
 		spitterUp = newCom(new AcSolenoid.Single(spitter.spitterSol, false)),
 
-		hopperOut = newCom(new AcSolenoid.Single(hopper.hopperSol, true)),
-		hopperIn = newCom(new AcSolenoid.Single(hopper.hopperSol, false)),
+		hopperOut = newCom(new AcSolenoid.Single(hopper.hopperSol, true), new AcSolenoid.Single(hopper.hopperBackSol, true)),
+		hopperIn = newCom(new AcSolenoid.Single(hopper.hopperSol, false), new AcSolenoid.Single(hopper.hopperBackSol, false)),
 		
 		hopperVibrate = newCom(new AcVibrateHopper(new ChFalse(), 0.5D));
 	
@@ -64,7 +64,7 @@ public class CommandList extends CommandListStart
 		intakeOut = newCom(new AcMotor.Set(intake.intakeMotor, -intakeFast, new ChFalse()));
 	
 	static {subsystemToUse = hopper;}
-	private static double hopperFast = 0.7D, hopperMid = 0.45D, hopperSlow = 0.3D;
+	private static double hopperFast = 0.7D, hopperMid = 0.4D, hopperSlow = 0.3D;
 	public static CommandSetup
 		hopperFeed = newCom(
 				new AcMotor.Set(hopper.hopperMotor, hopperFast, new ChTrue()),
@@ -123,11 +123,11 @@ public class CommandList extends CommandListStart
 				new AcMotor.RampTime(shooter.shooterMotor, shootFast, 0.5D, new ChFalse(), true),
 				new AcMulti(
 						new AcPIDControl(0.01D, new ChFalse(), false, 
-							3.0E-6, 0, 5.0E-5, 0.000005D, -25000,
+							3.0E-6, 0, 5.0E-5, 0.000005D, -24100,
 							new Tolerances.Percentage(1.0), sensors.shooterEncoderRateL, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootL).setMultiplier(-1)
 						),
 						new AcPIDControl(0.01D, new ChFalse(), false, 
-							3.0E-6, 0, 5.0E-5, 0.0000055D, -26000,
+							3.0E-6, 0, 5.0E-5, 0.0000055D, -24950,
 							new Tolerances.Percentage(1.0), sensors.shooterEncoderRateR, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootR).setMultiplier(-1)
 						)
 				)
@@ -136,11 +136,11 @@ public class CommandList extends CommandListStart
 				new AcMotor.RampTime(shooter.shooterMotor, shootFast, 0.5D, new ChFalse(), true),
 				new AcMulti(
 						new AcPIDControl(0.01D, new ChFalse(), false, 
-							3.0E-6, 0, 5.0E-5, 0.0000055D, -26000,
+							3.0E-6, 0, 5.0E-5, 0.0000055D, -24950,
 							new Tolerances.Percentage(1.0), sensors.shooterEncoderRateL, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootL).setMultiplier(-1)
 						),
 						new AcPIDControl(0.01D, new ChFalse(), false, 
-							3.0E-6, 0, 5.0E-5, 0.000005D, -25000,
+							3.0E-6, 0, 5.0E-5, 0.000005D, -24100,
 							new Tolerances.Percentage(1.0), sensors.shooterEncoderRateR, false, 0, 0, PIDSourceType.kRate, -1D, -0.5D, new PIDMotor(shooter.motShootR).setMultiplier(-1)
 						)
 				)

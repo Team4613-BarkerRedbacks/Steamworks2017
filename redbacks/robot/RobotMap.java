@@ -45,7 +45,8 @@ public class RobotMap
 		idSolSpit	= 4,
 		idSolHopper	= 2, //FIXME SHOULD BE 2
 		idSolIntake	= 6,
-		idSolEyebrows = 0;
+		idSolEyebrows = 0,
+		idSolBackHopper = 1;
 	
 	public static final double
 	//P = 0.00008D
